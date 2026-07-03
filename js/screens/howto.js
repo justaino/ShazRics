@@ -10,19 +10,21 @@ export function render(el, ctx) {
         </div>
       </div>
 
-      <p class="screen__copy">ShazRics is a loud, pass-the-phone lyrics party game. Teams take turns: the card shows an incomplete Nigerian lyric, and the team shouts the missing part before the timer runs out.</p>
+      <p class="screen__copy">ShazRics is a loud, pass-the-phone lyrics party game. One card shows an incomplete Nigerian lyric; the team shouts the missing part, then you flip the card to check the answer — like reading the back of a flashcard — and score it honestly.</p>
 
       <div>
         <div class="screen__eyebrow" style="margin-bottom:8px;">The flow</div>
         <ol class="howto-list">
           <li>Set up teams, timer, skip rule, win condition, and a lyric bank.</li>
           <li>Pass the phone to the active team.</li>
-          <li>Read the incomplete lyric aloud and shout the missing part.</li>
-          <li>Tap <strong>Got it!</strong> (or swipe right) if you nailed it — that's +1.</li>
-          <li>Tap <strong>Skip</strong> (or swipe left) to pass on a lyric.</li>
+          <li>Read the incomplete lyric aloud — the team shouts the missing part.</li>
+          <li>Tap <strong>Reveal answer</strong> (or swipe the card) to show the full line and the <em>artist — song</em> it's from.</li>
+          <li>Did they get it? Tap <strong>Got it!</strong> (or swipe right) for +1.</li>
+          <li>Missed it? Tap <strong>Skip</strong> (or swipe left) to move on.</li>
           <li>When time's up, review the turn and hand off to the next team.</li>
           <li>Tap <strong>End game</strong> any time to reveal the winner.</li>
         </ol>
+        <p class="screen__copy" style="margin-top:8px; font-size:0.86rem;">You have to reveal a card before you can score it — the answer is the judge.</p>
       </div>
 
       <div>

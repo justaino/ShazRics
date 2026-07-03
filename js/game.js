@@ -16,7 +16,7 @@ export function setCards(cards) {
 }
 
 function blankTurn(startedAt = null, endsAt = null) {
-  return { startedAt, endsAt, wonCards: [], skippedCards: [], skipsUsed: 0 };
+  return { startedAt, endsAt, wonCards: [], skippedCards: [], skipsUsed: 0, revealed: false };
 }
 
 // Build a fresh game from setup choices: { settings, teams:[{name,color}] }.
@@ -57,6 +57,14 @@ export function startTurn() {
   saveState();
 }
 
+// "Reveal answer" — flip the current card so its answer + credit show. Required
+// before scoring: the phone-holder judges "Got it / Skip" against the answer.
+export function reveal() {
+  if (gameState.phase !== 'play' || !gameState.currentCard) return;
+  gameState.turn.revealed = true;
+  saveState();
+}
+
 // "Got it!" — even +1 to the active team, card joins their pile, draw next.
 export function gotIt() {
   if (gameState.phase !== 'play' || !gameState.currentCard) return;
@@ -66,6 +74,7 @@ export function gotIt() {
   team.wonCards.push(card);
   gameState.turn.wonCards.push(card);
   gameState.currentCard = drawCard(gameState, bankCards);
+  gameState.turn.revealed = false; // next card starts face-down
   saveState();
 }
 
@@ -94,6 +103,7 @@ export function skip() {
   gameState.turn.skippedCards.push(card);
   gameState.discard.push(card);
   gameState.currentCard = drawCard(gameState, bankCards);
+  gameState.turn.revealed = false; // next card starts face-down
   saveState();
 }
 

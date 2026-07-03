@@ -127,6 +127,12 @@ ctx.actions = {
     render();         // render starts the timer
   },
 
+  // Persist-only: the play screen flips the card in place (so the reveal can
+  // animate); we just record it so a refresh mid-reveal resumes revealed.
+  reveal() {
+    game.reveal();
+  },
+
   gotIt() {
     game.gotIt();
     render();

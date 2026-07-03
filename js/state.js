@@ -56,6 +56,7 @@ export function freshState() {
       wonCards: [],              // cards won THIS turn
       skippedCards: [],          // cards skipped THIS turn
       skipsUsed: 0,
+      revealed: false,           // has the current card's answer been revealed?
     },
 
     startedAt: null,

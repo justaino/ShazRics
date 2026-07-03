@@ -39,6 +39,14 @@ export function flyToPile(cardEl, targetEl) {
   gsap.fromTo(targetEl, { scale: 1 }, { scale: 1.18, duration: 0.45, ease: 'back.out(3)', delay: 0.28, yoyo: true, repeat: 1 });
 }
 
+// Reveal: fade + settle the answer block into view. The caller has already made
+// the element visible, so this is purely cosmetic — under reduced motion / no
+// GSAP the answer simply appears.
+export function revealAnswer(el) {
+  if (!canAnimate() || !el) return;
+  gsap.from(el, { opacity: 0, y: 12, duration: 0.34, ease: 'power2.out' });
+}
+
 // Skip: slide the outgoing card off to the left.
 export function skipAway(cardEl) {
   if (!canAnimate() || !cardEl) return;

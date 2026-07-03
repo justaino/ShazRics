@@ -1,7 +1,12 @@
-// play.js — the live turn. Lyric card, Got it / Skip, the timer ring, a thinning
-// deck behind the card, and the urgency dot. On Got it the card flies to the
-// team's score pill (GSAP); on Skip it slides away.
-// (Phase 1 adds the Reveal-answer step; this is still the carried-over turn UI.)
+// play.js — the live turn. The card shows an incomplete lyric; the team shouts
+// the missing part, then the phone-holder taps Reveal to see the answer + the
+// artist — song credit and self-scores Got it / Skip. The timer ring, a thinning
+// deck behind the card, and the urgency dot carry over from Omo Naija.
+//
+// Reveal-gating rule: REVEAL BEFORE SCORING. Got it / Skip stay disabled until
+// Reveal is tapped. The phone-holder has to see the completed line to judge the
+// shout honestly — this is a read-the-back-of-the-flashcard game — so the answer
+// is the gate, and Reveal is the unmistakable first action on every card.
 import { currentTeam, canSkip, SKIP_LIMIT } from '../game.js';
 import { esc } from '../util.js';
 import * as anim from '../anim.js';
@@ -13,6 +18,7 @@ export function render(el, ctx) {
   const team = currentTeam();
   const card = state.currentCard;
   const deckLeft = state.deck.length;
+  let revealed = !!state.turn.revealed; // may flip to true in place on Reveal
 
   // Initial timer text from the timestamp so it doesn't flash a stale value.
   const remaining = Math.max(0, (state.turn.endsAt || 0) - Date.now());
@@ -27,6 +33,9 @@ export function render(el, ctx) {
   } else if (state.settings.skipRule === 'penalty') {
     skipLabel = '⤺ Skip (−1)';
   }
+
+  // The artist — song credit, from whichever fields the card carries.
+  const credit = card ? [card.artist, card.song].filter(Boolean).join(' — ') : '';
 
   // Deck visibly thins: fewer peek cards as the draw pile empties.
   const peeks = (deckLeft > 1 ? '<div class="peek-card peek-card--one"></div>' : '')
@@ -59,41 +68,73 @@ export function render(el, ctx) {
             <div class="word-card__tags">
               <span class="tag">${esc(card ? [card.era, card.difficulty].filter(Boolean).join(' · ') : '')}</span>
             </div>
-            <div class="word-card__word">${esc(card ? card.prompt : '')}</div>
+            <div class="word-card__body">
+              <div class="word-card__word">${esc(card ? card.prompt : '')}</div>
+              <div class="word-card__answer" id="answer-block"${revealed ? '' : ' hidden'}>
+                <div class="word-card__answer-label">Answer</div>
+                <div class="word-card__answer-text">${esc(card ? card.answer : '')}</div>
+                ${credit ? `<div class="word-card__credit">${esc(credit)}</div>` : ''}
+              </div>
+            </div>
             <div class="word-card__foot">
-              <span>Shout the missing part</span>
+              <span id="foot-hint">${revealed ? 'Did they get it?' : 'Shout the missing part'}</span>
               <span>●</span>
             </div>
           </div>
         </div>
 
-        <div class="actions">
-          <button class="action-btn action-btn--success" data-got>✓ Got it!</button>
-          <button class="action-btn action-btn--skip" data-skip ${skipDisabled ? 'disabled' : ''}>${skipLabel}</button>
+        <div class="actions" id="actions">
+          ${revealed ? '' : '<button class="action-btn action-btn--reveal" data-reveal style="grid-column:1/-1;">👁 Reveal answer</button>'}
+          <button class="action-btn action-btn--success" data-got ${revealed ? '' : 'disabled'}>✓ Got it!</button>
+          <button class="action-btn action-btn--skip" data-skip ${(!revealed || skipDisabled) ? 'disabled' : ''}>${skipLabel}</button>
         </div>
       </div>
     </div>`;
 
   const cardEl = el.querySelector('#word-card');
+  const answerBlock = el.querySelector('#answer-block');
+  const footHint = el.querySelector('#foot-hint');
+  const gotBtn = el.querySelector('[data-got]');
+  const skipBtn = el.querySelector('[data-skip]');
+  const revealBtn = el.querySelector('[data-reveal]');
 
-  // The two outcomes — used by both the buttons and the swipe gestures.
+  // Reveal: flip the card in place (no re-render, so the answer can fade in),
+  // unlock scoring, then persist so a refresh mid-reveal resumes revealed.
+  const doReveal = () => {
+    if (revealed || !card) return;
+    revealed = true;
+    haptics.tap();
+    answerBlock.hidden = false;
+    anim.revealAnswer(answerBlock);
+    footHint.textContent = 'Did they get it?';
+    revealBtn?.remove();
+    gotBtn.disabled = false;
+    if (!skipDisabled) skipBtn.disabled = false;
+    ctx.actions.reveal();
+  };
+
+  // The two scoring outcomes — used by both the buttons and the swipe gestures.
   // Each animates the outgoing card (cosmetic), then advances the game.
   const doGot = () => {
+    if (!revealed) return;
     sound.play('ding');
     haptics.tap();
     anim.flyToPile(cardEl, el.querySelector('#score-pill'));
     ctx.actions.gotIt();
   };
   const doSkip = () => {
+    if (!revealed || skipDisabled) return;
     anim.skipAway(cardEl);
     ctx.actions.skip();
   };
 
-  el.querySelector('[data-got]').addEventListener('click', doGot);
-  el.querySelector('[data-skip]').addEventListener('click', () => { if (!skipDisabled) doSkip(); });
+  revealBtn?.addEventListener('click', doReveal);
+  gotBtn.addEventListener('click', doGot);
+  skipBtn.addEventListener('click', doSkip);
   el.querySelector('[data-end]').addEventListener('click', () => ctx.actions.endGameConfirm());
 
-  // Swipe: right = Got it, left = Skip (alongside the buttons).
+  // Swipe: before reveal, a decisive swipe (either way) flips the card. After
+  // reveal, right = Got it, left = Skip (alongside the buttons).
   let dragging = false, startX = 0, startY = 0, dx = 0;
   const THRESHOLD = 90;
   const snapBack = () => { cardEl.style.transition = 'transform 0.2s ease'; cardEl.style.transform = ''; };
@@ -113,6 +154,11 @@ export function render(el, ctx) {
   const endDrag = () => {
     if (!dragging) return;
     dragging = false;
+    if (!revealed) {
+      if (Math.abs(dx) > THRESHOLD) doReveal();
+      snapBack();
+      return;
+    }
     if (dx > THRESHOLD) doGot();
     else if (dx < -THRESHOLD) { skipDisabled ? snapBack() : doSkip(); }
     else snapBack();
