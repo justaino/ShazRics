@@ -26,7 +26,7 @@ export function defaultSettings() {
     skipRule: 'free',                  // 'free' | 'limited' | 'penalty'
     winCondition: 'open',              // 'open' | 'firstToN' | 'fixedRounds'
     winTarget: 5,                      // score (firstToN) or rounds (fixedRounds)
-    wordbankId: 'naija-chorus-50-pack', // global sound/haptics live in preferences.js
+    wordbankId: 'naija-lyrics-v2', // global sound/haptics live in preferences.js
   };
 }
 

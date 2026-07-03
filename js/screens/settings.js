@@ -1,7 +1,7 @@
 // settings.js — global preferences: sound/haptics toggles, the defaults that
 // seed a new game, and custom word-bank management. Edits persist immediately.
 import { preferences, savePrefs } from '../preferences.js';
-import { availableBanks, customBanks, getCustomBank, addCustomBank, updateCustomBank, deleteCustomBank, parseWords, cardsToText } from '../banks.js';
+import { availableBanks, customBanks, getCustomBank, addCustomBank, updateCustomBank, deleteCustomBank, parseLyrics, cardsToText, LYRIC_DELIM } from '../banks.js';
 import * as sound from '../sound.js';
 import { esc } from '../util.js';
 
@@ -94,12 +94,18 @@ export function render(el, ctx) {
         <div style="margin-top:10px;">
           ${editing ? `<div class="screen__copy" style="font-size:0.86rem; margin-bottom:6px;">Editing <strong>${esc(editing.name)}</strong></div>` : ''}
           <input class="field" data-bankname placeholder="New bank name" aria-label="Bank name" value="${editing ? esc(editing.name) : ''}" />
-          <textarea class="field" data-bankwords rows="4" placeholder="One word per line. Optional hint after a | e.g. Wahala | trouble" aria-label="Words, one per line">${editing ? esc(cardsToText(editing.cards)) : ''}</textarea>
+          <div class="screen__copy" style="font-size:0.82rem; margin:0 0 6px;">
+            One lyric per line: <strong>prompt ${esc(LYRIC_DELIM)} answer ${esc(LYRIC_DELIM)} artist ${esc(LYRIC_DELIM)} song</strong>.
+            Artist and song are optional. Put a visible blank in the prompt.<br>
+            e.g. <code>Only you fi ______ ${esc(LYRIC_DELIM)} hold my body ${esc(LYRIC_DELIM)} Wizkid ${esc(LYRIC_DELIM)} Essence</code>
+          </div>
+          <textarea class="field" data-bankwords rows="5" placeholder="Only you fi ______ ${esc(LYRIC_DELIM)} hold my body ${esc(LYRIC_DELIM)} Wizkid ${esc(LYRIC_DELIM)} Essence" aria-label="Lyric rows, one per line">${editing ? esc(cardsToText(editing.cards)) : ''}</textarea>
+          <div class="lyric-preview" data-bankpreview hidden></div>
           ${editing ? `
           <div class="button-stack" style="margin-top:0;">
             <button class="btn btn--ghost" data-addbank style="min-height:44px;">Save changes</button>
             <button class="btn btn--secondary" data-canceledit style="min-height:44px;">Cancel</button>
-          </div>` : '<button class="btn btn--ghost" data-addbank style="min-height:44px;">+ Add word bank</button>'}
+          </div>` : '<button class="btn btn--ghost" data-addbank style="min-height:44px;">+ Add lyric bank</button>'}
           <div class="screen__copy" data-bankerr style="font-size:0.82rem; color:var(--color-coral); margin-top:6px; display:none;"></div>
         </div>
       </div>
@@ -138,17 +144,40 @@ export function render(el, ctx) {
     rerender();
   });
 
+  // Live preview + inline error: re-parse on each keystroke without a full
+  // re-render (that would drop textarea focus). Shows the first valid card as
+  // it will play, and the first malformed-row error as the user types.
+  const wordsField = el.querySelector('[data-bankwords]');
+  const preview = el.querySelector('[data-bankpreview]');
+  const err = el.querySelector('[data-bankerr]');
+  const refreshPreview = () => {
+    const { entries, errors } = parseLyrics(wordsField.value);
+    if (errors.length) {
+      showErr(err, errors[0].message + (errors.length > 1 ? ` (+${errors.length - 1} more)` : ''));
+    } else {
+      hideErr(err);
+    }
+    if (entries.length) {
+      preview.innerHTML = previewHtml(entries[0]);
+      preview.hidden = false;
+    } else {
+      preview.hidden = true;
+    }
+  };
+  wordsField?.addEventListener('input', refreshPreview);
+  refreshPreview();
+
   el.querySelector('[data-addbank]')?.addEventListener('click', () => {
     const name = el.querySelector('[data-bankname]').value.trim();
-    const words = parseWords(el.querySelector('[data-bankwords]').value);
-    const err = el.querySelector('[data-bankerr]');
+    const { entries, errors } = parseLyrics(wordsField.value);
     if (!name) return showErr(err, 'Give the bank a name.');
-    if (words.length < 1) return showErr(err, 'Add at least one word.');
+    if (errors.length) return showErr(err, errors[0].message + (errors.length > 1 ? ` (+${errors.length - 1} more)` : ''));
+    if (entries.length < 1) return showErr(err, `Add at least one lyric row (prompt ${LYRIC_DELIM} answer).`);
     if (editingId) {
-      updateCustomBank(editingId, name, words);
+      updateCustomBank(editingId, name, entries);
       editingId = null;
     } else {
-      addCustomBank(name, words);
+      addCustomBank(name, entries);
     }
     rerender();
   });
@@ -157,7 +186,7 @@ export function render(el, ctx) {
     if (!window.confirm(`Delete the "${b.dataset.delname}" word bank? This can't be undone.`)) return;
     deleteCustomBank(b.dataset.delbank);
     if (editingId === b.dataset.delbank) editingId = null;
-    if (p.defaultWordbankId === b.dataset.delbank) { p.defaultWordbankId = 'naija-chorus-50-pack'; savePrefs(); }
+    if (p.defaultWordbankId === b.dataset.delbank) { p.defaultWordbankId = 'naija-lyrics-v2'; savePrefs(); }
     rerender();
   }));
 
@@ -168,4 +197,24 @@ function showErr(el, msg) {
   if (!el) return;
   el.textContent = msg;
   el.style.display = 'block';
+}
+
+function hideErr(el) {
+  if (!el) return;
+  el.textContent = '';
+  el.style.display = 'none';
+}
+
+// Render the first parsed entry the way it plays: the prompt with its blank,
+// then the revealed answer and the "artist — song" credit.
+function previewHtml(e) {
+  const credit = [e.artist, e.song].filter(Boolean).join(' — ');
+  return `
+    <div class="lyric-preview__label">Card preview</div>
+    <div class="lyric-preview__prompt">${esc(e.prompt)}</div>
+    <div class="lyric-preview__answer">
+      <span class="lyric-preview__answer-label">Answer</span>
+      <span class="lyric-preview__answer-text">${esc(e.answer)}</span>
+      ${credit ? `<span class="lyric-preview__credit">${esc(credit)}</span>` : ''}
+    </div>`;
 }

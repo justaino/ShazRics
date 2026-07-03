@@ -12,6 +12,7 @@ As of start: **Not started.** First job is to fork the Omo Naija codebase, re-th
 
 - **Workflow:** work on `dev`; merge to `main` only when explicitly asked. Bump `CACHE` in `service-worker.js` on any app-shell change.
 - **Commit messages:** **never add a `Co-Authored-By` trailer** (or any "Generated with Claude" line). Plain messages only.
+- **Keep the docs current as you go.** On any user-visible or operational change, update **both** `documentation/RUNBOOK.md` (operations/how-to) and `documentation/WHATS-NEW.md` (player-facing changelog) in the same batch of work — don't leave them describing older behaviour.
 - **Phase 4 is deferred** (online multiplayer, stats/history, etc.) — don't build toward it unless asked.
 
 ## How this differs from Omo Naija (the only two real changes)

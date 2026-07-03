@@ -49,7 +49,7 @@ shazrics/
     components/           # card, pile, scoreboard, timer ring
     data/wordbank-loader.js
   data/wordbanks/
-    naija-chorus-50-pack.json  # bundled 50-song lyric bank
+    naija-lyrics-v2.json       # bundled 50-song lyric bank
   assets/sounds/  assets/icons/  assets/fonts/
   manifest.json  service-worker.js
   CLAUDE.md  ROADMAP.md  README.md

@@ -32,6 +32,12 @@ export function render(el, ctx) {
         <p class="screen__copy"><strong>Skips:</strong> Free (no cost), Limited (3 per turn), or Penalty (−1). <strong>Win:</strong> Open-ended (play until you End game), First to a score, or a Fixed number of rounds.</p>
       </div>
 
+      <div>
+        <div class="screen__eyebrow" style="margin-bottom:8px;">Make your own bank</div>
+        <p class="screen__copy">In <strong>Settings → Word banks</strong>, paste your own lyrics — one per line as <strong>prompt || answer || artist || song</strong>. Artist and song are optional; put a visible blank in the prompt.</p>
+        <p class="screen__copy" style="margin-top:6px; font-size:0.86rem;">e.g. <code>Only you fi ______ || hold my body || Wizkid || Essence</code></p>
+      </div>
+
       <div class="button-stack" style="margin-top:8px;">
         <button class="btn btn--primary" data-back>Got it</button>
       </div>

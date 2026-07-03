@@ -227,6 +227,16 @@ textarea.field { min-height: 88px; padding: 10px 12px; resize: vertical; margin:
 .setting-row > span { font-weight: 700; }
 .setting-row .segmented { min-width: 150px; }
 .bank-actions { display: flex; gap: 8px; flex-shrink: 0; }
+.screen__copy code { background: var(--plum-soft); color: var(--plum-deep); padding: 1px 5px; border-radius: 6px; font-size: 0.9em; word-break: break-word; }
+
+/* Live lyric-card preview inside the bank editor */
+.lyric-preview { border: 1px solid rgba(109,76,125,0.22); background: var(--cream-deep); border-radius: var(--radius-md); padding: 14px; margin: 0 0 10px; }
+.lyric-preview__label { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.lyric-preview__prompt { font-family: var(--font-display); font-size: clamp(1.05rem, 4.4vw, 1.5rem); line-height: 1.15; color: var(--ink); }
+.lyric-preview__answer { border-top: 1px solid rgba(44,36,48,0.16); margin-top: 12px; padding-top: 12px; }
+.lyric-preview__answer-label { display: block; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.09em; text-transform: uppercase; color: var(--plum); }
+.lyric-preview__answer-text { display: block; font-family: var(--font-display); font-size: clamp(1rem, 4.2vw, 1.4rem); line-height: 1.15; margin-top: 4px; color: var(--ink); }
+.lyric-preview__credit { display: block; margin-top: 8px; font-size: 0.85rem; font-weight: 700; color: var(--muted); }
 
 /* How to play */
 .howto-list { margin: 0; padding-left: 20px; line-height: 1.5; color: rgba(44,36,48,0.82); }

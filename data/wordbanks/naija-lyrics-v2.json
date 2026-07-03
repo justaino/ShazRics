@@ -1,7 +1,7 @@
 {
-  "id": "naija-chorus-50-pack",
-  "name": "The Ultimate Naija Chorus Game Bank",
-  "description": "50 iconic tracks focusing on the catchy, unforgettable chorus lines.",
+  "id": "naija-lyrics-v2",
+  "name": "The Ultimate Verified Naija Chorus Game Bank",
+  "description": "50 iconic tracks with strictly verified, accurate choruses and metadata.",
   "cards": [
     {
       "id": "l011",
@@ -212,8 +212,8 @@
     },
     {
       "id": "l034",
-      "prompt": "Is it because I love you? Is it because I care? Is it because you ______",
-      "answer": "know I will always be there?",
+      "prompt": "See bumper to bumper, continuous gridlock. Baby girl, your body ______",
+      "answer": "na correct asset",
       "artist": "Wande Coal",
       "song": "Bumper to Bumper",
       "era": "timeless",
@@ -401,8 +401,8 @@
     },
     {
       "id": "l055",
-      "prompt": "Fiesta, fiesta. We are partying all night, fiesta. No come ______",
-      "answer": "spoil our vibe, fiesta",
+      "prompt": "Oya wo, oya wo, oya wo. Sisi Ngozi, ______",
+      "answer": "oya wo",
       "artist": "Olamide",
       "song": "Wo",
       "era": "timeless",

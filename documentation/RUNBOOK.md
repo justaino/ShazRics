@@ -5,8 +5,9 @@ For product/design intent see `README.md`; for guardrails see `CLAUDE.md`; for
 the phased build plan see `ROADMAP.md`.
 
 > **Living document.** ShazRics is a fork of the Omo Naija engine; this runbook
-> is being updated to ShazRics as development goes deeper. Sections marked
-> _(Phase 1+)_ describe behaviour that is planned but not yet built.
+> tracks the app as it stands. Phases 0–2 are done: the re-skin, the
+> reveal-then-self-score mechanic, and in-app custom lyric banks are all live.
+> When you change behaviour, update this file **and** `WHATS-NEW.md`.
 
 ---
 
@@ -23,10 +24,12 @@ part, then the phone-holder taps **Reveal** to check and self-scores **Got it**
 - No backend, no accounts — everything is `localStorage`.
 
 **Fork status:** ShazRics keeps the Omo Naija architecture, card-stack
-scoreboard, and pass-and-play loop. The two deliberate differences: (1) **no
-game modes** (the mode system is fully removed), and (2) a **reveal-then-self-
-score** turn mechanic _(Phase 1)_. As of Phase 0 the play screen still shows the
-carried-over Got it / Skip UI without the Reveal step.
+scoreboard, and pass-and-play loop. The two deliberate differences are both
+live: (1) **no game modes** (the mode system is fully removed), and (2) a
+**reveal-then-self-score** turn mechanic — the card shows an incomplete lyric,
+the phone-holder taps **Reveal** to see the answer plus the `artist — song`
+credit, then self-scores **Got it** / **Skip**. Got it / Skip stay disabled
+until Reveal (the answer is the gate).
 
 ---
 
@@ -94,7 +97,7 @@ js/
   screens/                 # one render(el, ctx) per screen
   components/card-stack.js # JS-computed pile (offsets + "+N")
 data/wordbanks/            # bundled lyric bank JSON
-  naija-chorus-50-pack.json  # 50-song chorus bank (the default)
+  naija-lyrics-v2.json       # 50-song chorus bank (the default)
 assets/
   vendor/                  # GSAP, Flip, Howler, canvas-confetti (vendored, no CDN)
   fonts/anton-latin.woff2  # self-hosted display font
@@ -123,8 +126,12 @@ bank `id`** — the loader fetches `data/wordbanks/${id}.json`. Card shape:
 ```
 
 - `prompt` shows on the card (the incomplete lyric, with a visible blank).
-  `answer` is hidden until **Reveal** _(Phase 1)_; on reveal, `answer` plus the
+  `answer` is hidden until **Reveal**; on reveal, `answer` plus the
   `artist — song` credit are the payoff.
+- `artist` and `song` are **optional** (a card may carry just `prompt` +
+  `answer`); the credit line simply omits whatever is missing.
+- `era` and `difficulty` are metadata only (browsing/labels); if omitted the
+  in-app editor defaults them to `"modern"` / `"medium"`.
 - **No `modes` or `hint` fields** — the mode system was removed in Phase 0.
 - Keep all lyric text **ASCII-safe**.
 
@@ -174,20 +181,120 @@ Unregister, then Application → Storage → Clear site data.
 
 ## 7. Common tasks
 
-### Add a bundled lyric bank
-1. Add `data/wordbanks/<id>.json` — **file name must equal the internal `id`** —
-   with the card shape in §4 (ASCII-safe).
-2. Register it in `js/banks.js` → `BUNDLED` (`{ id, name }`; `name` is the picker
-   label).
-3. Add its file to `PRECACHE` in `service-worker.js` and bump `CACHE`.
+### Add a bundled lyric bank manually (in code) — full walkthrough
 
-### Add / delete a custom bank (in-app, no code)
-Settings → Word banks → Add word bank. Stored in `localStorage`
-(`shazrics:banks`), served offline by the loader.
+A "bundled" bank ships in the repo as a JSON file and shows in the picker for
+everyone (unlike a custom bank, which lives only in one device's
+`localStorage`). Adding one touches **three** files: the bank JSON, the registry
+in `banks.js`, and the service worker. Do all of it or the bank won't load
+offline / won't appear.
 
-> **Note:** the custom-bank editor still uses the old Omo Naija `word | hint`
-> format. Extending it to accept lyric rows (`prompt || answer || artist ||
-> song`) is **Phase 2**.
+**Step 1 — Choose an id.** Pick a short, kebab-case, ASCII id, e.g.
+`afrobeats-2010s`. This id is used in three places and they must match exactly:
+the file name, the `BUNDLED` entry, and (optionally) a default-bank preference.
+
+**Step 2 — Create the bank file** at `data/wordbanks/<id>.json` — the **file
+name must equal the id** (the loader fetches `data/wordbanks/${id}.json`). Shape:
+
+```json
+{
+  "id": "afrobeats-2010s",
+  "name": "Afrobeats 2010s",
+  "description": "Optional one-line blurb (shown nowhere critical).",
+  "cards": [
+    {
+      "id": "a001",
+      "prompt": "Johnny, Johnny, Johnny, ______",
+      "answer": "where you dey go?",
+      "artist": "Yemi Alade",
+      "song": "Johnny",
+      "era": "modern",
+      "difficulty": "easy"
+    }
+  ]
+}
+```
+
+Rules for the file:
+- The top-level `id` should equal the file name (the loader keys off the file
+  name, but keep them identical to avoid confusion).
+- `name` is the label shown in the picker and Settings — make it human-friendly.
+- `cards` is an array of the §4 card shape. Each card needs at least `prompt`
+  and `answer`; `artist`, `song`, `era`, `difficulty` are optional but
+  recommended. Give each card a unique `id` (any scheme — `a001`, `a002`…).
+- Put a **visible blank** in every `prompt` (e.g. a trailing `______` or a
+  mid-line gap) so players know what to shout.
+- **ASCII-safe only** — no smart quotes, em-dashes, or emoji in the text. Curly
+  apostrophes from copy-paste are the usual culprit; replace with plain `'`.
+- Valid JSON — no trailing commas, double-quoted keys/strings.
+
+**Step 3 — Register it** in `js/banks.js` → the `BUNDLED` array. Add
+`{ id, name }` (the `name` here should match the file's `name`):
+
+```js
+const BUNDLED = [
+  { id: 'naija-lyrics-v2', name: 'Naija Chorus (50 songs)' },
+  { id: 'afrobeats-2010s', name: 'Afrobeats 2010s' },
+];
+```
+
+This is what makes it appear in the Setup picker and the Settings default-bank
+list. (A bank file that exists but isn't registered here is invisible.)
+
+**Step 4 — Precache it for offline** in `service-worker.js`: add the file to the
+`PRECACHE` array (near the other `data/wordbanks/*.json` entry)…
+
+```js
+'data/wordbanks/naija-lyrics-v2.json',
+'data/wordbanks/afrobeats-2010s.json',
+```
+
+…and **bump `CACHE`** (e.g. `shazrics-v5` → `shazrics-v6`) so installed devices
+refetch. Skipping this means phones keep serving the old shell and the new bank
+404s offline.
+
+**Step 5 — (optional) Make it the default.** To have new games pre-select it,
+set `defaultWordbankId` in `js/preferences.js` to your id, or just pick it once
+in Settings → Default word bank (that choice persists per device).
+
+**Step 6 — Test it (required).** Serve over HTTP and confirm it loads and plays:
+
+```bash
+python3 -m http.server 8731
+```
+
+Open `http://localhost:8731`, then in DevTools console sanity-check the parse:
+
+```js
+const cards = await (await fetch('data/wordbanks/afrobeats-2010s.json')).json();
+console.log(cards.cards.length, cards.cards[0]);
+```
+
+Then start a game with the bank selected and play a card through Reveal →
+Got it. (Remember the SW serves stale files — use "Update on reload" while
+testing; see §2 and §6.)
+
+**Step 7 — Update the docs.** Note the new bank in `WHATS-NEW.md` if it's
+player-facing.
+
+### Add / edit / delete a custom bank (in-app, no code)
+Settings → Word banks. Custom banks are stored in `localStorage`
+(`shazrics:banks`) and served offline by the loader — they never touch the repo.
+
+- **Add:** name the bank, then paste lyric rows in the box, **one per line**, as
+  `prompt || answer || artist || song`. `||` is the delimiter; **artist and song
+  are optional** (a row can be just `prompt || answer`). Put a visible blank in
+  the prompt yourself (the app never auto-inserts one). A live **preview** shows
+  the first card, and malformed rows are flagged with a specific message (e.g.
+  _"Line 4: missing the answer after ||."_) — you can't save until they're fixed.
+  Tap **+ Add lyric bank**.
+- **Edit:** the ✎ button re-opens a bank's rows in the same editor; **Save
+  changes** keeps its id, so any default-bank / setup selection stays valid.
+- **Delete:** the **×** button (confirms first). If the deleted bank was the
+  default, it falls back to `naija-lyrics-v2`.
+
+The parse/serialize lives in `js/banks.js` (`parseLyrics`, `cardsToText`,
+`LYRIC_DELIM`); the editor UI is in `js/screens/settings.js`.
 
 ### Change default game settings
 Defaults that pre-fill Setup live in `js/preferences.js`

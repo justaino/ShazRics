@@ -61,7 +61,7 @@ function paint(el) {
 
   body.innerHTML = `
     <p class="screen__copy" style="font-size:0.86rem;">${cache.length} banks · ${totalCards} cards total</p>
-    <input class="field" data-filter placeholder="Filter words or hints…" aria-label="Filter cards" />
+    <input class="field" data-filter placeholder="Filter lyrics, artist or song…" aria-label="Filter cards" />
     <div class="bank-list">${cache.map(bankHtml).join('')}</div>`;
 
   const filter = body.querySelector('[data-filter]');

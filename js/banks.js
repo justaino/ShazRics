@@ -3,7 +3,7 @@
 const CUSTOM_KEY = 'shazrics:banks';
 
 const BUNDLED = [
-  { id: 'naija-chorus-50-pack', name: 'Naija Chorus (50 songs)' },
+  { id: 'naija-lyrics-v2', name: 'Naija Chorus (50 songs)' },
 ];
 
 export function isBundled(id) {
@@ -31,24 +31,29 @@ export function getCustomBank(id) {
   return customBanks().find((b) => b.id === id) || null;
 }
 
-// Build card objects for a bank from parsed word entries: [{ text, hint }].
-// NOTE: the custom-bank editor still uses the old word/hint format; Phase 2
-// extends it to the lyric shape (prompt | answer | artist | song).
-function toCards(bankId, words) {
-  return words.map((w, i) => ({
+// The delimiter between fields in the editor's textarea format.
+export const LYRIC_DELIM = '||';
+
+// Build lyric-card objects for a bank from parsed entries:
+// [{ prompt, answer, artist, song }]. Auto-generates ids and defaults the
+// optional era/difficulty so the cards match the bundled bank shape.
+function toCards(bankId, entries) {
+  return entries.map((e, i) => ({
     id: `${bankId}-${i}`,
-    text: w.text,
-    hint: w.hint || '',
-    era: 'custom',
-    difficulty: 'medium',
+    prompt: e.prompt,
+    answer: e.answer,
+    artist: e.artist || '',
+    song: e.song || '',
+    era: e.era || 'modern',
+    difficulty: e.difficulty || 'medium',
   }));
 }
 
-// Create a custom bank from parsed word entries: [{ text, hint }].
-export function addCustomBank(name, words) {
+// Create a custom bank from parsed lyric entries.
+export function addCustomBank(name, entries) {
   const banks = customBanks();
   const id = `custom-${Date.now()}`;
-  banks.push({ id, name, cards: toCards(id, words) });
+  banks.push({ id, name, cards: toCards(id, entries) });
   localStorage.setItem(CUSTOM_KEY, JSON.stringify(banks));
   return id;
 }
@@ -56,11 +61,11 @@ export function addCustomBank(name, words) {
 // Edit an existing custom bank in place: replace its name + cards but KEEP its
 // id, so the default-bank preference and any setup selection stay valid.
 // Returns the id on success, or null if no such bank.
-export function updateCustomBank(id, name, words) {
+export function updateCustomBank(id, name, entries) {
   const banks = customBanks();
   const idx = banks.findIndex((b) => b.id === id);
   if (idx === -1) return null;
-  banks[idx] = { id, name, cards: toCards(id, words) };
+  banks[idx] = { id, name, cards: toCards(id, entries) };
   localStorage.setItem(CUSTOM_KEY, JSON.stringify(banks));
   return id;
 }
@@ -70,22 +75,42 @@ export function deleteCustomBank(id) {
 }
 
 // Serialize a bank's cards back into the editor's textarea format:
-// "text | hint" per line (the "| hint" is dropped when there's no hint).
+// "prompt || answer || artist || song" per line. Trailing empty artist/song
+// fields are dropped so a bare "prompt || answer" round-trips cleanly.
 export function cardsToText(cards) {
   return (cards || [])
-    .map((c) => (c.hint ? `${c.text} | ${c.hint}` : c.text))
+    .map((c) => {
+      const fields = [c.prompt, c.answer, c.artist, c.song].map((v) => (v == null ? '' : String(v).trim()));
+      while (fields.length > 2 && fields[fields.length - 1] === '') fields.pop();
+      return fields.join(` ${LYRIC_DELIM} `);
+    })
     .join('\n');
 }
 
-// Parse a textarea into word entries. One per line; "word | hint" is supported.
-export function parseWords(text) {
-  return String(text || '')
-    .split('\n')
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .map((line) => {
-      const [word, ...rest] = line.split('|');
-      return { text: word.trim(), hint: rest.join('|').trim() };
-    })
-    .filter((w) => w.text);
+// Parse the editor textarea into lyric entries. Each non-blank line is:
+//   prompt || answer || artist || song   (artist and song optional)
+// Returns { entries, errors }:
+//   entries — valid rows as { prompt, answer, artist, song }
+//   errors  — [{ line, message }] for malformed rows (missing prompt or answer)
+// Line numbers are 1-based over the raw text so error messages point at the
+// exact line the user sees. Blank lines are skipped but still counted.
+export function parseLyrics(text) {
+  const entries = [];
+  const errors = [];
+  String(text || '').split('\n').forEach((raw, i) => {
+    const lineNo = i + 1;
+    const line = raw.trim();
+    if (!line) return;
+    const [prompt = '', answer = '', artist = '', song = ''] = line.split(LYRIC_DELIM).map((p) => p.trim());
+    if (!prompt) {
+      errors.push({ line: lineNo, message: `Line ${lineNo}: missing the lyric prompt before the ${LYRIC_DELIM}.` });
+      return;
+    }
+    if (!answer) {
+      errors.push({ line: lineNo, message: `Line ${lineNo}: missing the answer after ${LYRIC_DELIM}.` });
+      return;
+    }
+    entries.push({ prompt, answer, artist, song });
+  });
+  return { entries, errors };
 }

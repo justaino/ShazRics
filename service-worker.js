@@ -6,7 +6,7 @@
 //
 // IMPORTANT: bump CACHE on every deploy that changes files, so installed
 // devices pick up the new version (the old cache is cleaned on activate).
-const CACHE = 'shazrics-v4';
+const CACHE = 'shazrics-v6';
 
 const PRECACHE = [
   './',
@@ -28,7 +28,7 @@ const PRECACHE = [
   'assets/vendor/howler.min.js', 'assets/vendor/confetti.browser.min.js',
   // font, lyric banks, sounds, icons
   'assets/fonts/anton-latin.woff2',
-  'data/wordbanks/naija-chorus-50-pack.json',
+  'data/wordbanks/naija-lyrics-v2.json',
   'assets/sounds/ding.wav', 'assets/sounds/tick.wav', 'assets/sounds/buzzer.wav',
   'assets/icons/icon-192.png', 'assets/icons/icon-512.png', 'assets/icons/icon-1024.png',
 ];
