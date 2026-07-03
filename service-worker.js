@@ -6,7 +6,7 @@
 //
 // IMPORTANT: bump CACHE on every deploy that changes files, so installed
 // devices pick up the new version (the old cache is cleaned on activate).
-const CACHE = 'shazrics-v3';
+const CACHE = 'shazrics-v4';
 
 const PRECACHE = [
   './',
