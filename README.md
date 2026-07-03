@@ -7,7 +7,7 @@ A Nigerian song-lyrics party game for mobile, desktop, and web. Pass one device 
 It's a fork of the [Omo Naija](https://github.com/justaino/Omo-Naija) engine — same architecture, card-stack scoreboard, and pass-and-play loop, re-skinned to plum/cream with a lyrics turn mechanic.
 
 ## Status
-Early. Phase 0 of `ROADMAP.md` is done: the fork is re-skinned to ShazRics (plum/cream, "SR" mark), the sample lyric bank loads, and the Omo-Naija-only assets/word-banks/mode-system code are removed. The reveal-then-self-score turn mechanic lands in Phase 1. See `CLAUDE.md` → Status.
+Early. Phase 0 of `ROADMAP.md` is done: the fork is re-skinned to ShazRics (plum/cream, "SR" mark), the bundled 50-song Naija chorus lyric bank loads, and the Omo-Naija-only assets/word-banks/mode-system code are removed. The reveal-then-self-score turn mechanic lands in Phase 1. See `CLAUDE.md` → Status.
 
 ## How to play (the game)
 1. Set up teams, timer length, skip rule, and win condition.
@@ -49,7 +49,7 @@ shazrics/
     components/           # card, pile, scoreboard, timer ring
     data/wordbank-loader.js
   data/wordbanks/
-    naija-lyrics-sample.json   # sample lyric bank (replace with your own)
+    naija-chorus-50-pack.json  # bundled 50-song lyric bank
   assets/sounds/  assets/icons/  assets/fonts/
   manifest.json  service-worker.js
   CLAUDE.md  ROADMAP.md  README.md

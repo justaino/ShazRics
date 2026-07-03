@@ -9,7 +9,7 @@ export const preferences = {
   defaultSkipRule: 'free',
   defaultWinCondition: 'open',
   defaultWinTarget: 5,
-  defaultWordbankId: 'naija-lyrics-sample',
+  defaultWordbankId: 'naija-chorus-50-pack',
   // Global toggles.
   soundEnabled: true,
   hapticsEnabled: true,

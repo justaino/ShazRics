@@ -3,7 +3,7 @@
 const CUSTOM_KEY = 'shazrics:banks';
 
 const BUNDLED = [
-  { id: 'naija-lyrics-sample', name: 'Sample Lyrics' },
+  { id: 'naija-chorus-50-pack', name: 'Naija Chorus (50 songs)' },
 ];
 
 export function isBundled(id) {

@@ -40,7 +40,7 @@ export function render(el, ctx) {
   const s = draft.settings;
 
   const banks = availableBanks();
-  if (!banks.some((b) => b.id === s.wordbankId)) s.wordbankId = banks[0]?.id || 'naija-lyrics-sample';
+  if (!banks.some((b) => b.id === s.wordbankId)) s.wordbankId = banks[0]?.id || 'naija-chorus-50-pack';
 
   const seg = (active) => (active ? ' class="active"' : '');
   const showStepper = s.winCondition !== 'open';
