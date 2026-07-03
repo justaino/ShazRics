@@ -11,6 +11,7 @@ It is a **fork of the Omo Naija engine** (github.com/justaino/Omo-Naija). Same a
 As of start: **Not started.** First job is to fork the Omo Naija codebase, re-theme it to the plum/cream palette, and adapt the data model + turn mechanic. Phases 0–3 of Omo Naija are the reference for what "done" looks like on the shared engine.
 
 - **Workflow:** work on `dev`; merge to `main` only when explicitly asked. Bump `CACHE` in `service-worker.js` on any app-shell change.
+- **Commit messages:** **never add a `Co-Authored-By` trailer** (or any "Generated with Claude" line). Plain messages only.
 - **Phase 4 is deferred** (online multiplayer, stats/history, etc.) — don't build toward it unless asked.
 
 ## How this differs from Omo Naija (the only two real changes)
