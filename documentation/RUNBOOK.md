@@ -5,9 +5,10 @@ For product/design intent see `README.md`; for guardrails see `CLAUDE.md`; for
 the phased build plan see `ROADMAP.md`.
 
 > **Living document.** ShazRics is a fork of the Omo Naija engine; this runbook
-> tracks the app as it stands. Phases 0–2 are done: the re-skin, the
-> reveal-then-self-score mechanic, and in-app custom lyric banks are all live.
-> When you change behaviour, update this file **and** `WHATS-NEW.md`.
+> tracks the app as it stands. Phases 0–3 are done: the re-skin, the
+> reveal-then-self-score mechanic, in-app custom lyric banks, and the polish pass
+> (reveal animation + chime, optional artist hint, accessibility, dark mode) are
+> all live. When you change behaviour, update this file **and** `WHATS-NEW.md`.
 
 ---
 
@@ -29,7 +30,9 @@ live: (1) **no game modes** (the mode system is fully removed), and (2) a
 **reveal-then-self-score** turn mechanic — the card shows an incomplete lyric,
 the phone-holder taps **Reveal** to see the answer plus the `artist — song`
 credit, then self-scores **Got it** / **Skip**. Got it / Skip stay disabled
-until Reveal (the answer is the gate).
+until Reveal (the answer is the gate). An optional **artist hint** (off by
+default; set at Setup or as a Settings default) shows the artist on the card
+*before* Reveal for easier play — the song title still waits for the reveal.
 
 ---
 
@@ -61,8 +64,9 @@ There is **nothing to build or install** — it's static files.
   `localStorage.removeItem('shazrics:state')` (in-progress game),
   `…('shazrics:banks')` (custom banks), `…('shazrics:prefs')` (settings + theme).
 - **Test mobile layout** with DevTools' device toolbar (Cmd-Shift-M) at a phone
-  width. Check dark mode (🌙) too — it's carried over from Omo Naija and kept
-  working, but it's polish for a later phase, not the v1 focus.
+  width. Check dark mode (🌙 / ☀️) too — it follows the OS by default (`theme:
+  'system'` in prefs) and the topbar button sets an explicit light/dark choice;
+  the dark colours are an additive override layer in `css/dark.css`.
 
 When you change an app-shell file, bump `CACHE` (see §6) so installed devices
 refresh.
@@ -80,7 +84,7 @@ css/
   components.css           # reusable building blocks (cards, buttons, pills, piles)
   screens.css              # per-screen layout
   animations.css           # @keyframes + reduced-motion guard
-  dark.css                 # additive dark theme (later-phase polish)
+  dark.css                 # additive dark theme (system-aware, topbar toggle)
 js/
   app.js                   # controller: routing, actions, timer lifecycle, boot, SW registration
   state.js                 # gameState shape + localStorage (load/save/reset)
@@ -88,9 +92,10 @@ js/
   game.js                  # turn engine: scoring, skip rules, win conditions
   deck.js                  # shuffle / build deck / draw (lyric cards)
   timer.js                 # timestamp countdown + Wake Lock + tick/buzzer hooks
-  sound.js                 # Howler effects + global mute
+  sound.js                 # Howler effects (chime/ding/tick/buzzer) + global mute
   haptics.js               # navigator.vibrate (mobile)
-  anim.js                  # GSAP helpers (fly-to-pile, count-up, confetti) — reduced-motion aware
+  anim.js                  # GSAP helpers (reveal-answer, fly-to-pile, count-up, confetti) — reduced-motion aware
+  theme.js                 # light/dark theming (system-aware; topbar toggle)
   banks.js                 # lyric-bank registry (bundled + custom in localStorage)
   util.js                  # esc()
   data/wordbank-loader.js  # load a bank by id (custom from localStorage, else JSON)
@@ -101,7 +106,7 @@ data/wordbanks/            # bundled lyric bank JSON
 assets/
   vendor/                  # GSAP, Flip, Howler, canvas-confetti (vendored, no CDN)
   fonts/anton-latin.woff2  # self-hosted display font
-  sounds/                  # ding / tick / buzzer WAVs
+  sounds/                  # chime / ding / tick / buzzer WAVs
   icons/                   # PWA icons (192/512/1024) — cream "SR" on plum
 documentation/RUNBOOK.md   # this file
 ```
@@ -299,7 +304,9 @@ The parse/serialize lives in `js/banks.js` (`parseLyrics`, `cardsToText`,
 ### Change default game settings
 Defaults that pre-fill Setup live in `js/preferences.js`
 (`defaultTimerSeconds`, `defaultSkipRule`, `defaultWinCondition`,
-`defaultWinTarget`, `defaultWordbankId`) and are editable in-app via Settings.
+`defaultWinTarget`, `defaultWordbankId`, `defaultArtistHint`) and are editable
+in-app via Settings. The per-game copy is `gameState.settings.artistHint`
+(`play.js` reads it to show the up-front artist hint).
 
 ### Add a new screen
 1. Create `js/screens/<name>.js` exporting `render(el, ctx)`.

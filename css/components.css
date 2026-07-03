@@ -203,6 +203,9 @@
 .tag { display: inline-flex; align-items: center; justify-content: center; min-height: 28px; padding: 0 10px; border-radius: var(--radius-pill); background: rgba(255,255,255,0.18); font-size: 0.78rem; font-weight: 700; }
 .word-card__body { display: flex; flex-direction: column; gap: 14px; }
 .word-card__word { font-family: var(--font-display); font-size: clamp(1.4rem, 5.5vw, 2rem); line-height: 1.1; }
+/* Optional up-front artist hint (off by default) — shown before Reveal. */
+.word-card__hint { margin-top: 10px; font-size: 0.85rem; font-weight: 700; opacity: 0.9; }
+.word-card__hint-label { font-size: 0.66rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.72; margin-right: 4px; }
 /* The answer, shown only after Reveal. */
 .word-card__answer { border-top: 1px solid rgba(255,255,255,0.24); padding-top: 12px; }
 .word-card__answer-label { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.09em; text-transform: uppercase; opacity: 0.72; }

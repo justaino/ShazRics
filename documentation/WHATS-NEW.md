@@ -39,7 +39,14 @@ There's a **How to play** screen inside the app too (button on the home screen).
 - **Winning** — *Open-ended* (play until you End game), *First to a score*, or a
   *Fixed number of rounds*.
 - **Sound & haptics** — toggle in Settings, or mute instantly with the 🔊 button
-  in the top bar.
+  in the top bar. A soft chime plays on Reveal, a ding on **Got it!**, and the
+  buzzer when time runs out.
+- **Artist hint** — off by default. Turn it on (at game **Setup**, or as a
+  default in **Settings**) to show the artist on the card *before* you reveal —
+  handy for younger or mixed groups. The song title still stays hidden until the
+  reveal.
+- **Light or dark** — tap the 🌙 / ☀️ button in the top bar to switch themes; by
+  default it follows your phone's setting.
 
 After a turn, on the summary screen (with **Free** skips) you can tap any card to
 flip it between **won** and **skipped** if someone mis-tapped — the score updates

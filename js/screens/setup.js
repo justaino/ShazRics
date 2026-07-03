@@ -25,6 +25,7 @@ export function prepare(prefill) {
         winCondition: preferences.defaultWinCondition,
         winTarget: preferences.defaultWinTarget,
         wordbankId: preferences.defaultWordbankId,
+        artistHint: preferences.defaultArtistHint,
       },
       teams: [
         { name: 'Team A', color: TEAM_COLORS[0] },
@@ -109,6 +110,18 @@ export function render(el, ctx) {
         </div>` : ''}
       </div>
 
+      <div>
+        <div class="screen__eyebrow" style="margin-bottom:10px;">Artist hint</div>
+        <div class="setting-row">
+          <span>Show the artist before Reveal</span>
+          <div class="segmented segmented--2">
+            <button data-hint="on"${seg(s.artistHint)}>On</button>
+            <button data-hint="off"${seg(!s.artistHint)}>Off</button>
+          </div>
+        </div>
+        <div class="screen__copy" style="font-size:0.86rem;">Easier play for younger or mixed groups. Off by default.</div>
+      </div>
+
       <div class="button-stack" style="margin-top:8px;">
         <button class="btn btn--primary" data-start>Start game</button>
         <button class="btn btn--secondary" data-back>Back</button>
@@ -168,6 +181,9 @@ export function render(el, ctx) {
     draft.settings.winTarget = v;
     rerender();
   });
+
+  el.querySelectorAll('[data-hint]').forEach((b) =>
+    b.addEventListener('click', () => { draft.settings.artistHint = b.dataset.hint === 'on'; rerender(); }));
 
   // Back to Home — lets the player revisit Settings / How to play before starting.
   // The draft is module-level and uncommitted, so leaving doesn't touch gameState.

@@ -27,6 +27,7 @@ export function defaultSettings() {
     winCondition: 'open',              // 'open' | 'firstToN' | 'fixedRounds'
     winTarget: 5,                      // score (firstToN) or rounds (fixedRounds)
     wordbankId: 'naija-lyrics-v2', // global sound/haptics live in preferences.js
+    artistHint: false,                 // show the artist up-front, before Reveal (easier play)
   };
 }
 

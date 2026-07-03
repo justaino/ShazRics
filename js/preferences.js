@@ -10,6 +10,8 @@ export const preferences = {
   defaultWinCondition: 'open',
   defaultWinTarget: 5,
   defaultWordbankId: 'naija-lyrics-v2',
+  defaultArtistHint: false, // seed a new game's "show artist up-front" setting
+
   // Global toggles.
   soundEnabled: true,
   hapticsEnabled: true,

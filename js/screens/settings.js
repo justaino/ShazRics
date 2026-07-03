@@ -79,6 +79,13 @@ export function render(el, ctx) {
         <select class="bank-select" data-defbank aria-label="Default word bank">
           ${banks.map((b) => `<option value="${b.id}"${b.id === p.defaultWordbankId ? ' selected' : ''}>${esc(b.name)}${b.custom ? ' (custom)' : ''}</option>`).join('')}
         </select>
+        <div class="setting-row" style="margin-top:12px;">
+          <span>Artist hint <span style="color:var(--muted); font-weight:600;">(show artist before Reveal)</span></span>
+          <div class="segmented segmented--2">
+            <button data-arthint="on"${seg(p.defaultArtistHint)}>On</button>
+            <button data-arthint="off"${seg(!p.defaultArtistHint)}>Off</button>
+          </div>
+        </div>
       </div>
 
       <div>
@@ -133,6 +140,7 @@ export function render(el, ctx) {
     p.defaultWinTarget = Math.min(99, Math.max(1, Number(e.target.value) || 1));
   }));
   el.querySelector('[data-defbank]')?.addEventListener('change', (e) => { p.defaultWordbankId = e.target.value; savePrefs(); });
+  el.querySelectorAll('[data-arthint]').forEach((b) => b.addEventListener('click', () => set(() => { p.defaultArtistHint = b.dataset.arthint === 'on'; })));
 
   el.querySelectorAll('[data-editbank]').forEach((b) => b.addEventListener('click', () => {
     editingId = b.dataset.editbank;

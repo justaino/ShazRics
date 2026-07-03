@@ -10,6 +10,7 @@ let ready = false;
 export function initSound() {
   if (ready || typeof Howl === 'undefined') return;
   sounds = {
+    chime:  new Howl({ src: ['assets/sounds/chime.wav'],  volume: 0.4 }),
     ding:   new Howl({ src: ['assets/sounds/ding.wav'],   volume: 0.5 }),
     tick:   new Howl({ src: ['assets/sounds/tick.wav'],   volume: 0.35 }),
     buzzer: new Howl({ src: ['assets/sounds/buzzer.wav'], volume: 0.55 }),

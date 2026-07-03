@@ -37,6 +37,11 @@ export function render(el, ctx) {
   // The artist — song credit, from whichever fields the card carries.
   const credit = card ? [card.artist, card.song].filter(Boolean).join(' — ') : '';
 
+  // Optional up-front artist hint (Settings/Setup) — shown before Reveal to make
+  // play easier for younger/mixed groups. Hidden once the answer is revealed
+  // (the full credit shows there instead), and only when the card names an artist.
+  const showHint = !!state.settings.artistHint && !!(card && card.artist);
+
   // Deck visibly thins: fewer peek cards as the draw pile empties.
   const peeks = (deckLeft > 1 ? '<div class="peek-card peek-card--one"></div>' : '')
               + (deckLeft > 0 ? '<div class="peek-card peek-card--two"></div>' : '');
@@ -70,7 +75,10 @@ export function render(el, ctx) {
             </div>
             <div class="word-card__body">
               <div class="word-card__word">${esc(card ? card.prompt : '')}</div>
-              <div class="word-card__answer" id="answer-block"${revealed ? '' : ' hidden'}>
+              <div class="word-card__hint" id="artist-hint"${(showHint && !revealed) ? '' : ' hidden'}>
+                <span class="word-card__hint-label">Hint</span> ${esc(card ? card.artist : '')}
+              </div>
+              <div class="word-card__answer" id="answer-block" aria-live="polite"${revealed ? '' : ' hidden'}>
                 <div class="word-card__answer-label">Answer</div>
                 <div class="word-card__answer-text">${esc(card ? card.answer : '')}</div>
                 ${credit ? `<div class="word-card__credit">${esc(credit)}</div>` : ''}
@@ -93,6 +101,7 @@ export function render(el, ctx) {
 
   const cardEl = el.querySelector('#word-card');
   const answerBlock = el.querySelector('#answer-block');
+  const artistHintEl = el.querySelector('#artist-hint');
   const footHint = el.querySelector('#foot-hint');
   const gotBtn = el.querySelector('[data-got]');
   const skipBtn = el.querySelector('[data-skip]');
@@ -103,13 +112,16 @@ export function render(el, ctx) {
   const doReveal = () => {
     if (revealed || !card) return;
     revealed = true;
+    sound.play('chime');
     haptics.tap();
+    if (artistHintEl) artistHintEl.hidden = true; // the full credit shows below now
     answerBlock.hidden = false;
     anim.revealAnswer(answerBlock);
     footHint.textContent = 'Did they get it?';
     revealBtn?.remove();
     gotBtn.disabled = false;
     if (!skipDisabled) skipBtn.disabled = false;
+    gotBtn.focus(); // keyboard: move focus off the removed Reveal button to the primary action
     ctx.actions.reveal();
   };
 
