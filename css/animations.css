@@ -1,0 +1,36 @@
+/* animations.css — keyframes used across the app. Extracted verbatim from
+   the prototype. The rules that reference these (.timer--urgent, .confetti)
+   live with their components/screens; the @keyframes are global. */
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
+@keyframes drift {
+  0% { transform: translateY(-4%); }
+  100% { transform: translateY(4%); }
+}
+
+/* Final-seconds urgency dot on the word card. */
+@keyframes urgentPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.65); }
+}
+
+/* Winner gold glow on the reveal podium. */
+@keyframes goldGlow {
+  0%, 100% { box-shadow: 0 12px 28px rgba(198,161,91,0.18); }
+  50% { box-shadow: 0 12px 42px rgba(198,161,91,0.52); }
+}
+
+/* Honour reduced-motion: neutralise CSS animations/transitions. JS/GSAP motion
+   is gated separately in anim.js. (Full a11y pass is Phase 3.) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

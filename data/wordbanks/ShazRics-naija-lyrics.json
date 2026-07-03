@@ -1,0 +1,457 @@
+{
+  "id": "naija-chorus-50-pack",
+  "name": "The Ultimate Naija Chorus Game Bank",
+  "description": "50 iconic tracks focusing on the catchy, unforgettable chorus lines.",
+  "cards": [
+    {
+      "id": "l011",
+      "prompt": "You don't need no other body. You don't need no other body. Only you fi ______",
+      "answer": "hold my body",
+      "artist": "Wizkid ft. Tems",
+      "song": "Essence",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l012",
+      "prompt": "But my people dem go say: I no want kpai, I no want die. I no want kpeme, I want enjoy. I want ______",
+      "answer": "chop life, I want buy motor",
+      "artist": "Burna Boy",
+      "song": "Ye",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l013",
+      "prompt": "Dem wan dey check if my tap e no rush. But e dey rush, e dey rush well well, ______",
+      "answer": "e be much",
+      "artist": "Ayra Starr",
+      "song": "Rush",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l014",
+      "prompt": "I'm unavailable, dem no dey see me. Dem no dey ______",
+      "answer": "see me",
+      "artist": "Davido",
+      "song": "Unavailable",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l015",
+      "prompt": "Peru para, Peru peru para. I'm in San Francisco ______",
+      "answer": "jamming",
+      "artist": "Fireboy DML ft. Ed Sheeran",
+      "song": "Peru",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l016",
+      "prompt": "Soso take my pain away, cause I don't wanna ______",
+      "answer": "lose my mind",
+      "artist": "Omah Lay",
+      "song": "Soso",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l017",
+      "prompt": "Organise, every other day, organise. Some of us are wise, every other day, ______",
+      "answer": "organise",
+      "artist": "Asake",
+      "song": "Organise",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l018",
+      "prompt": "Wake up, collect your money. No go dey ______",
+      "answer": "sleep, wake up",
+      "artist": "Zlatan ft. Davido",
+      "song": "Osanle",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "l019",
+      "prompt": "Buga won, buga won. Lo lo lo lo ______",
+      "answer": "lo lo lo lo lo lo lo",
+      "artist": "Kizz Daniel ft. Tekno",
+      "song": "Buga",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l020",
+      "prompt": "I need, I need, I need an open mind. I need a ______",
+      "answer": "free mind",
+      "artist": "Tems",
+      "song": "Free Mind",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l021",
+      "prompt": "Girl, I want to be your man, and I no go let you go. Say my love na ______",
+      "answer": "forever",
+      "artist": "Chike ft. Mohbad",
+      "song": "Egwu",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l022",
+      "prompt": "Who's your guy? As I get you for my life, everything ______",
+      "answer": "is alright",
+      "artist": "Spyro",
+      "song": "Who Is Your Guy?",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l023",
+      "prompt": "If you fail, oh, making money, no be sin. When you make am, ______",
+      "answer": "buy your mama benz",
+      "artist": "Victony",
+      "song": "Soweto",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "l024",
+      "prompt": "No do, no do, no do gra gra for me. No do ______",
+      "answer": "gra gra for me",
+      "artist": "Rema",
+      "song": "Dumebi",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l025",
+      "prompt": "Gimme love, omo, gimme love. Treat me like say ______",
+      "answer": "I be your only one",
+      "artist": "Kizz Daniel",
+      "song": "Odo",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l026",
+      "prompt": "Dami duro, dami duro. Inside the club, you can ______",
+      "answer": "call me Davido",
+      "artist": "Davido",
+      "song": "Dami Duro",
+      "era": "timeless",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l027",
+      "prompt": "Eledumare ordered my steps, so I am moving, no look ______",
+      "answer": "back again",
+      "artist": "Olamide",
+      "song": "Science Student",
+      "era": "timeless",
+      "difficulty": "medium"
+    },
+    {
+      "id": "l028",
+      "prompt": "I can't shout, I can't shout. If you want to leave, make ______",
+      "answer": "you pack your load",
+      "artist": "Tiwa Savage",
+      "song": "All Over",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "l029",
+      "prompt": "Now I am living on the high life, everybody want to look ______",
+      "answer": "my face",
+      "artist": "Phyno ft. Olamide",
+      "song": "Fada Fada",
+      "era": "timeless",
+      "difficulty": "medium"
+    },
+    {
+      "id": "l030",
+      "prompt": "Nwa baby, clickam, clickam. If you give me love, I go ______",
+      "answer": "dance for you",
+      "artist": "Flavour",
+      "song": "Nwa Baby (Ashawo Remix)",
+      "era": "timeless",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l031",
+      "prompt": "Oliver, Oliver, Oliver Twist. I am D'banj, and I've got ______",
+      "answer": "a confession",
+      "artist": "D'banj",
+      "song": "Oliver Twist",
+      "era": "timeless",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l032",
+      "prompt": "Olufunmi ooo, ma pa mi ooo. Olo mi, ______",
+      "answer": "ma lo ba elomi lo",
+      "artist": "Styl-Plus",
+      "song": "Olufunmi",
+      "era": "timeless",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l033",
+      "prompt": "Personally, I love the way you dance, personally. Personally, I love the ______",
+      "answer": "way you move, personally",
+      "artist": "P-Square",
+      "song": "Personally",
+      "era": "timeless",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l034",
+      "prompt": "Is it because I love you? Is it because I care? Is it because you ______",
+      "answer": "know I will always be there?",
+      "artist": "Wande Coal",
+      "song": "Bumper to Bumper",
+      "era": "timeless",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l035",
+      "prompt": "Alcohol no dey solve problem, but I still dey drink the ______",
+      "answer": "alcohol",
+      "artist": "Joeboy",
+      "song": "Alcohol",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l036",
+      "prompt": "Monalisa, girl you fine pass Monalisa. Your body na ______",
+      "answer": "masterpiece",
+      "artist": "Lojay & Sarz",
+      "song": "Monalisa",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l037",
+      "prompt": "Cast! All my boys are cast. Evian dey ______",
+      "answer": "inside my bottle",
+      "artist": "Shallipopi",
+      "song": "Elon Musk",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "l038",
+      "prompt": "I no look back, I just dey move forward. Oluwa dey behind me, ______",
+      "answer": "I no dey fear",
+      "artist": "Seyi Vibez",
+      "song": "Chance (Na Ham)",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "l039",
+      "prompt": "Girl your bounce is a basic instinct, the way you wine ______",
+      "answer": "is a criminal intent",
+      "artist": "Ruger",
+      "song": "Bounce",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l040",
+      "prompt": "Jealous, me I dey jealous. I dey jealous when I see you ______",
+      "answer": "with another man",
+      "artist": "Fireboy DML",
+      "song": "Jealous",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l041",
+      "prompt": "Bad commando, I be bad commando. Girl I'm coming ______",
+      "answer": "for you",
+      "artist": "Rema",
+      "song": "Iron Man",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "l042",
+      "prompt": "Understand, I don't mean to complain. But you know say ______",
+      "answer": "I don't play with my heart",
+      "artist": "Omah Lay",
+      "song": "Understand",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l043",
+      "prompt": "Bloody Samaritan. You cannot vibe with my energy, you are a ______",
+      "answer": "bloody Samaritan",
+      "artist": "Ayra Starr",
+      "song": "Bloody Samaritan",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l044",
+      "prompt": "Sability, because I get the ability. Don't come and play with ______",
+      "answer": "my sensibility",
+      "artist": "Ayra Starr",
+      "song": "Sability",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l045",
+      "prompt": "Nobody like woman, but we can't do without woman. Woman na ______",
+      "answer": "fire, woman na water",
+      "artist": "Rema",
+      "song": "Woman",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "l046",
+      "prompt": "Baby, configuration, your body need decoration. Give me the ______",
+      "answer": "location",
+      "artist": "Kizz Daniel ft. Davido",
+      "song": "One Ticket",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l047",
+      "prompt": "Chop my money, I don't care, as long as you give me ______",
+      "answer": "your love",
+      "artist": "P-Square",
+      "song": "Chop My Money",
+      "era": "timeless",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l048",
+      "prompt": "Fall on you, good health fall on you. Prosperity fall on you, ______",
+      "answer": "money fall on you",
+      "artist": "Davido",
+      "song": "Fall",
+      "era": "timeless",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l049",
+      "prompt": "On the low, on the low. Girl you turn me out on the low, ______",
+      "answer": "on the low",
+      "artist": "Burna Boy",
+      "song": "On the Low",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l050",
+      "prompt": "It's plenty, it's plenty. Gbe body, make you enjoy your life, ______",
+      "answer": "it's plenty",
+      "artist": "Burna Boy",
+      "song": "It's Plenty",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l051",
+      "prompt": "Pakurumo, pakurumo, jo dada. Slide to the left, slide to the ______",
+      "answer": "right dada",
+      "artist": "Wizkid",
+      "song": "Pakurumo",
+      "era": "timeless",
+      "difficulty": "medium"
+    },
+    {
+      "id": "l052",
+      "prompt": "Anoti, anoti, girl you make me move, anoti. Your body ______",
+      "answer": "too sweet, anoti",
+      "artist": "Wizkid",
+      "song": "Anoti",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "l053",
+      "prompt": "Sungba, sungba, make you give me your love, sungba. Don't go ______",
+      "answer": "away from me, sungba",
+      "artist": "Asake ft. Burna Boy",
+      "song": "Sungba (Remix)",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "l054",
+      "prompt": "Terminator, terminate her. Omo, your body na terminator, ______",
+      "answer": "terminator",
+      "artist": "Asake",
+      "song": "Terminator",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l055",
+      "prompt": "Fiesta, fiesta. We are partying all night, fiesta. No come ______",
+      "answer": "spoil our vibe, fiesta",
+      "artist": "Olamide",
+      "song": "Wo",
+      "era": "timeless",
+      "difficulty": "medium"
+    },
+    {
+      "id": "l056",
+      "prompt": "No forget, no forget where you come from. Remember your home, ______",
+      "answer": "no forget",
+      "artist": "Adekunle Gold",
+      "song": "No Forget",
+      "era": "timeless",
+      "difficulty": "medium"
+    },
+    {
+      "id": "l057",
+      "prompt": "High, make we dey high. Pass the cup, make we fly go the ______",
+      "answer": "sky, make we high",
+      "artist": "Adekunle Gold ft. Davido",
+      "song": "High",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l058",
+      "prompt": "Calm down, calm down. Baby girl, make you slow down, ______",
+      "answer": "calm down",
+      "artist": "Rema",
+      "song": "Calm Down",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l059",
+      "prompt": "If you leave me, I go die o. If you go away, ______",
+      "answer": "I go kpai o",
+      "artist": "Wizkid ft. Tems",
+      "song": "Essence",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "l060",
+      "prompt": "Oshey, thank you my baby o, oshey. For everything you do for me, ______",
+      "answer": "oshey",
+      "artist": "Kizz Daniel",
+      "song": "Mama",
+      "era": "timeless",
+      "difficulty": "easy"
+    }
+  ]
+}

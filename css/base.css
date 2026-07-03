@@ -1,0 +1,179 @@
+/* base.css — design tokens, reset, typography, app shell
+   Extracted verbatim from the index.html prototype. Do not redesign. */
+
+/* Self-hosted display font (was Google Fonts) so the app works fully offline. */
+@font-face {
+  font-family: 'Anton';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/anton-latin.woff2') format('woff2');
+}
+
+:root {
+  /* ShazRics plum & cream palette (re-skin of the Omo Naija green tokens). */
+  --plum:        #6D4C7D;   /* primary brand / accents */
+  --plum-deep:   #43304F;   /* deep plum: headers, gradients, hero */
+  --plum-soft:   #EBE1EF;   /* soft plum tint on cream */
+  --cream:       #FAF5EE;   /* primary surface / card base */
+  --cream-deep:  #F0E8DC;   /* layered cream / page background */
+  --ink:         #2C2430;   /* plum-charcoal text */
+  --muted:       #8A7E8F;   /* muted/secondary text */
+  --gold:        #C6A15B;   /* muted winner gold (crown, glow) */
+  --mauve:       #A67BA0;   /* dusty-rose secondary accent */
+
+  /* Legacy Omo Naija token names, remapped to the new palette so the existing
+     stylesheets keep working without touching every `var(--color-*)` usage. */
+  --color-primary: var(--plum);
+  --color-white: #FFFFFF;      /* text on plum / control surfaces */
+  --color-charcoal: var(--ink);
+  --color-gold: var(--gold);
+  --color-coral: #C57B57;      /* terracotta: urgency, focus, errors */
+  --color-surface: var(--cream);
+  /* Display font: real bold display webfont (Anton) replacing the
+     "Arial Black" fallback. Fallbacks preserved so the feel is unchanged. */
+  --font-display: "Anton", "Arial Black", "Trebuchet MS", "Segoe UI", sans-serif;
+  --font-ui: "Inter", "General Sans", "Segoe UI", Roboto, sans-serif;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+}
+
+* { box-sizing: border-box; }
+
+/* Accessibility: a clear keyboard focus ring (coral reads on every surface). */
+:where(button, a, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--color-coral);
+  outline-offset: 2px;
+}
+
+/* Flat app background on the ROOT element so it paints the whole screen,
+   including the mobile overscroll/rubber-band gap — which is a single solid
+   colour, so the page background is solid too and the two match exactly (a
+   gradient can't line up with a solid overscroll at both ends). Colour is the
+   midpoint of the prototype's old cream gradient, so the look is unchanged. */
+html {
+  background-color: #F0E8DC;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh; /* track the dynamic mobile viewport (toolbars showing/hiding) */
+  font-family: var(--font-ui);
+  color: var(--color-charcoal);
+}
+
+/* Lock the shell to exactly one screen height so it never grows past the
+   viewport: the topbar stays pinned and the screen area below it scrolls
+   internally (see .screen-stack), instead of the whole page scrolling. */
+.app-shell {
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.8);
+  border: 1px solid rgba(44,36,48,0.08);
+  border-radius: 999px;
+  box-shadow: 0 8px 18px rgba(44,36,48,0.06);
+}
+
+.brand-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+}
+
+/* ShazRics "SR" brand mark: cream initials on a plum disc. */
+.brand-pill__mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(145deg, var(--plum) 0%, var(--plum-deep) 100%);
+  color: var(--cream);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.step-pill {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: rgba(44,36,48,0.7);
+}
+
+.topbar__right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mute-btn, .theme-btn {
+  min-width: 36px;
+  min-height: 36px;
+  padding: 0;
+  border: 1px solid rgba(44,36,48,0.1);
+  border-radius: 50%;
+  background: var(--color-white);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+/* The scroll region: fills the space under the fixed topbar and scrolls the
+   card within it. min-height:0 lets it shrink inside the flex column so the
+   overflow actually kicks in; overscroll-behavior stops scroll chaining to
+   the page. A little bottom padding keeps the card clear of the viewport edge
+   when scrolled to the end. */
+/* The scroll region: fills the space under the fixed topbar. The single visible
+   screen sits in a row that is AT LEAST the region height but grows with its
+   content (minmax(100%, auto)) — so a short screen fills exactly (no scroll)
+   and a tall screen extends and scrolls. The scrollbar is hidden for a clean,
+   app-like surface (works in the Android WebView used by a TWA/APK); scrolling
+   by touch/wheel still works. overscroll-behavior stops scroll chaining. */
+.screen-stack {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-auto-rows: minmax(100%, auto);
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* old Edge/IE */
+}
+.screen-stack::-webkit-scrollbar { display: none; } /* Chromium/WebKit + Android WebView */
+
+.screen {
+  display: none;
+}
+
+/* Flex column so the card (flex:1) stretches to fill the row when content is
+   short, and grows with content when it isn't. */
+.screen.is-visible {
+  display: flex;
+  flex-direction: column;
+}
