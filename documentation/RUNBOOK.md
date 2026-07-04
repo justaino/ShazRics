@@ -184,8 +184,39 @@ cache-first. Installed devices keep serving cached files until the SW updates.
 After deploying, an installed device updates on its next launch (the new SW
 calls `skipWaiting()` + `clients.claim()`).
 
-To wipe a stuck install during dev: DevTools → Application → Service Workers →
-Unregister, then Application → Storage → Clear site data.
+### "I changed a file but the browser still shows the old version"
+
+This is the SW doing its job (cache-first), not a bug. The dev server serving
+fresh files does **not** help — the service worker serves the app from its own
+Cache Storage until a new SW activates. Symptoms of a stale client: old styling,
+or a request in the server log for a file that no longer exists (e.g. an old
+bank id `…404`), which means that client is running a cached older build.
+
+**Prevent it while developing** — do one of these and you'll never chase it:
+
+- DevTools → **Application → Service Workers → tick "Update on reload"** (every
+  reload installs + activates the newest SW), or **Network → "Disable cache"**
+  (keep DevTools open), or
+- just test in a **private/Incognito window** (no persisted SW).
+
+**Recover a browser that's already stuck:**
+
+| Browser | Steps |
+|---|---|
+| **Chrome** | DevTools open → **right-click the reload button → "Empty Cache and Hard Reload."** If still stale: **Application → Storage → Clear site data** (Service workers + Cache storage + Local storage) → **close the tab** → reopen. A plain `Cmd+Shift+R` is *not* enough — it still goes through the SW. |
+| **Safari** | Settings → **Privacy → Manage Website Data…** → search the host → **Remove**. (Or enable the Develop menu → **Empty Caches**.) |
+| **Any** | Open in a private/Incognito window to bypass the SW entirely — also the quickest way to confirm the new build is fine and the problem is only cache. |
+
+Note: "Clear site data" / "Remove" also wipes that browser's `localStorage`, so
+an in-progress game, custom banks, and the saved theme on that device are reset —
+which is usually what you want, since stale saved data (e.g. a default-bank id
+from an old build) is often part of the problem.
+
+**For deployed players** it's gentler: the `CACHE` bump + `skipWaiting()` /
+`clients.claim()` means they pick up a new deploy on next launch automatically —
+at worst seeing the previous version for a single load before it swaps. (A
+`stale-while-revalidate` fetch strategy would close even that one-load gap; the
+SW is currently cache-first.)
 
 ---
 
