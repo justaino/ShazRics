@@ -57,8 +57,8 @@ export function startTurn() {
   saveState();
 }
 
-// "Reveal answer" — flip the current card so its answer + credit show. Required
-// before scoring: the phone-holder judges "Got it / Skip" against the answer.
+// "Reveal answer" — flip the current card so its answer + credit show. Optional:
+// a team can check the answer, but scoring (Got it / Skip) never depends on it.
 export function reveal() {
   if (gameState.phase !== 'play' || !gameState.currentCard) return;
   gameState.turn.revealed = true;
@@ -139,9 +139,18 @@ export function markCard(card, toWon) {
   saveState();
 }
 
-// End the active turn (timer hit zero, or the player chose to stop) -> summary.
+// End the active turn (timer hit zero) -> summary. The card still on screen when
+// time runs out is kept on the summary as SKIPPED — not a voluntary skip, so it
+// costs no penalty and doesn't burn a Limited skip — so players who knew it but
+// couldn't tap in time can flip it to "Got it" there (under the Free skip rule).
 export function endTurn() {
   if (gameState.phase !== 'play') return;
+  const card = gameState.currentCard;
+  if (card) {
+    gameState.turn.skippedCards.push(card);
+    gameState.discard.push(card);
+    gameState.currentCard = null;
+  }
   gameState.phase = 'turnsummary';
   saveState();
 }

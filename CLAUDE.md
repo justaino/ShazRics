@@ -3,7 +3,7 @@
 Persistent guardrails for this repo. Read before any work. These don't change between phases.
 
 ## What this is
-**ShazRics** — a Nigerian song-lyrics party game (name = "Shaz" from Shazam + "Rics" from lyrics). One device, passed around a room. Teams take turns: the card shows an **incomplete lyric**, the team shouts the missing part, then the phone-holder taps **Reveal** to check and self-scores **Got it** (+1) or **Skip**. Cards won pile up per team; the winner is revealed when the game ends.
+**ShazRics** — a Nigerian song-lyrics party game (name = "Shaz" from Shazam + "Rics" from lyrics). One device, passed around a room. Teams take turns: the card shows an **incomplete lyric**, the team shouts the missing part, and the phone-holder self-scores **Got it** (+1) or **Skip** (tapping **Reveal** to check the answer is optional). Cards won pile up per team; the winner is revealed when the game ends.
 
 It is a **fork of the Omo Naija engine** (github.com/justaino/Omo-Naija). Same architecture, same card-stack scoreboard, same pass-and-play loop — with two deliberate differences (see "How this differs from Omo Naija").
 
@@ -17,7 +17,7 @@ As of start: **Not started.** First job is to fork the Omo Naija codebase, re-th
 
 ## How this differs from Omo Naija (the only two real changes)
 1. **No Green / Grey / Mixed modes.** Drop the mode concept entirely — no mode setting on Setup, no mode chip on the card, no `modes` field in the data. Clue-giving style is irrelevant here; the card carries the challenge.
-2. **New turn mechanic: reveal-then-self-score.** Each card shows an incomplete lyric. The team completes it aloud; the phone-holder taps **Reveal answer** to show the completed line **and** the `artist — song` credit; then taps **Got it!** (+1) or **Skip**. No typing, no automatic answer-checking — honour-system self-scoring, exactly like reading the back of a flashcard.
+2. **New turn mechanic: self-score, reveal optional.** Each card shows an incomplete lyric. The team completes it aloud; the phone-holder taps **Got it!** (+1) or **Skip** — **at any time**. **Reveal answer** is *optional* (tap the button, or tap the card) and just shows the completed line **and** the `artist — song` credit when a team wants to check — it never gates scoring. No typing, no automatic answer-checking — honour-system self-scoring, like reading the back of a flashcard.
 
 **Everything else carries over unchanged:** teams (2–6, coloured), timestamp timer (30/60/90s) + Wake Lock, deck shuffle/draw, skip rules (Free/Limited/Penalty), win conditions (Open-ended/First-to-N/Fixed rounds), the JS-computed card-stack scoreboard with "+N", the GSAP + canvas-confetti end-game reveal, Howler sound + mute, swipe gestures (right = Got it, left = Skip), haptics, persistence/resume, custom + bundled banks, How-to screen, install button, and the buildless PWA.
 
@@ -83,7 +83,8 @@ Banks live in `data/wordbanks/*.json`, loaded via the same loader. Card shape:
 
 ## Game rules to honour
 - **Scoring is even**: every correct guess = +1.
-- **Reveal is required before scoring** on each card (the phone-holder needs to see the answer to judge). Got it / Skip are only enabled after Reveal — or keep them always enabled but make Reveal the obvious primary action; pick one and be consistent.
+- **Reveal is optional.** Got it / Skip are usable at any time (Got it always; Skip subject to the skip rule). Reveal answer — the button, or a tap on the card — just shows the answer + credit for a team that wants to check; it never gates scoring.
+- **Timed-out card is recoverable.** When the timer hits zero, the card still on screen is kept on the turn summary as **skipped** (no penalty, no skip-limit cost) so a team that knew it but ran out of time can flip it to **Got it** there (under the Free skip rule).
 - **Skips** configurable at setup: Free (default), Limited, Penalty.
 - **Win condition** configurable: Open-ended (default), First-to-N, Fixed rounds.
 - **End Game is always reachable** during play and on the scoreboard; it jumps to the reveal.

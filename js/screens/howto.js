@@ -9,7 +9,7 @@ export function render(el, ctx) {
         </div>
       </div>
 
-      <p class="screen__copy">ShazRics is a loud, pass-the-phone lyrics party game. One card shows an incomplete Nigerian lyric; the team shouts the missing part, then you flip the card to check the answer — like reading the back of a flashcard — and score it honestly.</p>
+      <p class="screen__copy">ShazRics is a loud, pass-the-phone lyrics party game. One card shows an incomplete Nigerian lyric; the team shouts the missing part, and you self-score honestly — <strong>Got it</strong> or <strong>Skip</strong>. Want to be sure? Flip the card to check the answer, like the back of a flashcard.</p>
 
       <div>
         <div class="screen__eyebrow" style="margin-bottom:8px;">The flow</div>
@@ -17,13 +17,12 @@ export function render(el, ctx) {
           <li>Set up teams, timer, skip rule, win condition, and a lyric bank.</li>
           <li>Pass the phone to the active team.</li>
           <li>Read the incomplete lyric aloud — the team shouts the missing part.</li>
-          <li>Tap <strong>Reveal answer</strong> (or swipe the card) to show the full line and the <em>artist — song</em> it's from.</li>
-          <li>Did they get it? Tap <strong>Got it!</strong> (or swipe right) for +1.</li>
-          <li>Missed it? Tap <strong>Skip</strong> (or swipe left) to move on.</li>
+          <li>Got it? Tap <strong>Got it!</strong> (or swipe right) for +1. Missed it? <strong>Skip</strong> (or swipe left).</li>
+          <li>Want to check first? Tap <strong>Reveal answer</strong> — or tap the card — to see the full line and the <em>artist — song</em>. Optional, any time.</li>
           <li>When time's up, review the turn and hand off to the next team.</li>
           <li>Tap <strong>End game</strong> any time to reveal the winner.</li>
         </ol>
-        <p class="screen__copy" style="margin-top:8px; font-size:0.86rem;">You have to reveal a card before you can score it — the answer is the judge.</p>
+        <p class="screen__copy" style="margin-top:8px; font-size:0.86rem;">Reveal is optional — score whenever you're ready. And the card left on screen when time runs out shows on the summary as <em>skipped</em>, so you can still flip it to <strong>Got it</strong> if the team knew it.</p>
       </div>
 
       <div>

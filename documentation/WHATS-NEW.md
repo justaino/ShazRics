@@ -17,13 +17,13 @@ offline**.
    condition, and a lyric bank.
 2. **Pass the phone** to the team whose turn it is. Read the incomplete lyric
    aloud; the team shouts the missing part.
-3. **Reveal answer** — tap it (or swipe the card) to show the full line and the
-   *artist — song* it's from. You have to reveal before you can score — the
-   answer is the judge.
-4. **Got it!** for a correct shout (tap or **swipe right**, +1) — or **Skip** to
-   move on (tap or **swipe left**).
+3. **Score it** — **Got it!** for a correct shout (tap or **swipe right**, +1),
+   or **Skip** to move on (tap or **swipe left**). Do this whenever you're ready.
+4. **Reveal answer** (optional) — tap the button, or tap the card, to show the
+   full line and the *artist — song* it's from, any time a team wants to check.
 5. When the timer buzzes, you'll see what that team scored, then the phone moves
-   to the next team.
+   to the next team. The card that was on screen when time ran out shows up as
+   *skipped* — tap it to mark it **Got it** if your team actually knew it.
 6. Tap **End game** any time to jump to the winner reveal — with a podium,
    counting scores, and confetti.
 

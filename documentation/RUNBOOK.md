@@ -18,8 +18,9 @@ the phased build plan see `ROADMAP.md`.
 
 A Nigerian **song-lyrics** party game. One device is passed around a room; teams
 take turns. The card shows an **incomplete lyric**; the team shouts the missing
-part, then the phone-holder taps **Reveal** to check and self-scores **Got it**
-(+1) or **Skip**. Won cards pile up per team; a winner is revealed at the end.
+part, and the phone-holder self-scores **Got it** (+1) or **Skip** (tapping
+**Reveal** to check the answer is optional). Won cards pile up per team; a winner
+is revealed at the end.
 
 - **Vanilla HTML / CSS / JS, buildless** — no framework, no bundler, no build step.
 - **Single source of truth:** one `gameState` object; screens render from it.
@@ -29,12 +30,16 @@ part, then the phone-holder taps **Reveal** to check and self-scores **Got it**
 **Fork status:** ShazRics keeps the Omo Naija architecture, card-stack
 scoreboard, and pass-and-play loop. The two deliberate differences are both
 live: (1) **no game modes** (the mode system is fully removed), and (2) a
-**reveal-then-self-score** turn mechanic — the card shows an incomplete lyric,
-the phone-holder taps **Reveal** to see the answer plus the `artist — song`
-credit, then self-scores **Got it** / **Skip**. Got it / Skip stay disabled
-until Reveal (the answer is the gate). An optional **artist hint** (off by
-default; set at Setup or as a Settings default) shows the artist on the card
-*before* Reveal for easier play — the song title still waits for the reveal.
+**self-score** turn mechanic — the card shows an incomplete lyric and the
+phone-holder self-scores **Got it** / **Skip** at any time (Got it always; Skip
+subject to the skip rule). **Reveal** is *optional* — the button, or a tap on the
+card, shows the answer plus the `artist — song` credit for a team that wants to
+check; it never gates scoring. When the timer hits zero the card still on screen
+is kept on the turn summary as **skipped** (no penalty / no skip-limit cost), so
+a team that knew it but ran out of time can flip it to Got it there (Free skip
+rule). An optional **artist hint** (off by default; set at Setup or as a Settings
+default) shows the artist on the card *before* Reveal for easier play — the song
+title still waits for the reveal.
 
 ---
 

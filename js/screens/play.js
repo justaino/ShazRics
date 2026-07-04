@@ -1,12 +1,12 @@
 // play.js — the live turn. The card shows an incomplete lyric; the team shouts
-// the missing part, then the phone-holder taps Reveal to see the answer + the
-// artist — song credit and self-scores Got it / Skip. The timer ring, a thinning
-// deck behind the card, and the urgency dot carry over from Omo Naija.
+// the missing part, then the phone-holder self-scores Got it / Skip. The timer
+// ring, a thinning deck behind the card, and the urgency dot carry over from
+// Omo Naija.
 //
-// Reveal-gating rule: REVEAL BEFORE SCORING. Got it / Skip stay disabled until
-// Reveal is tapped. The phone-holder has to see the completed line to judge the
-// shout honestly — this is a read-the-back-of-the-flashcard game — so the answer
-// is the gate, and Reveal is the unmistakable first action on every card.
+// Reveal is OPTIONAL: Got it / Skip are usable at any time (Skip still respects
+// the skip rule). Reveal answer — tapped, or a tap anywhere on the card — just
+// shows the completed line + the artist — song credit when a team wants to
+// check. Swipe right = Got it, left = Skip, whether or not the card was revealed.
 import { currentTeam, canSkip, SKIP_LIMIT } from '../game.js';
 import { esc } from '../util.js';
 import * as anim from '../anim.js';
@@ -93,8 +93,8 @@ export function render(el, ctx) {
 
         <div class="actions" id="actions">
           ${revealed ? '' : '<button class="action-btn action-btn--reveal" data-reveal style="grid-column:1/-1;">👁 Reveal answer</button>'}
-          <button class="action-btn action-btn--success" data-got ${revealed ? '' : 'disabled'}>✓ Got it!</button>
-          <button class="action-btn action-btn--skip" data-skip ${(!revealed || skipDisabled) ? 'disabled' : ''}>${skipLabel}</button>
+          <button class="action-btn action-btn--success" data-got>✓ Got it!</button>
+          <button class="action-btn action-btn--skip" data-skip ${skipDisabled ? 'disabled' : ''}>${skipLabel}</button>
         </div>
       </div>
     </div>`;
@@ -107,9 +107,11 @@ export function render(el, ctx) {
   const skipBtn = el.querySelector('[data-skip]');
   const revealBtn = el.querySelector('[data-reveal]');
 
-  // Reveal: flip the card in place (no re-render, so the answer can fade in),
-  // unlock scoring, then persist so a refresh mid-reveal resumes revealed.
-  const doReveal = () => {
+  // Reveal (optional): flip the card in place (no re-render, so the answer can
+  // fade in) to show the completed line + credit, then persist so a refresh
+  // mid-reveal resumes revealed. Scoring never depends on this. `focusNext`
+  // moves focus to Got it only when Reveal was the button (keyboard), not a tap.
+  const doReveal = (focusNext = false) => {
     if (revealed || !card) return;
     revealed = true;
     sound.play('chime');
@@ -119,36 +121,35 @@ export function render(el, ctx) {
     anim.revealAnswer(answerBlock);
     footHint.textContent = 'Did they get it?';
     revealBtn?.remove();
-    gotBtn.disabled = false;
-    if (!skipDisabled) skipBtn.disabled = false;
-    gotBtn.focus(); // keyboard: move focus off the removed Reveal button to the primary action
+    if (focusNext) gotBtn.focus(); // keyboard: don't orphan focus on the removed button
     ctx.actions.reveal();
   };
 
   // The two scoring outcomes — used by both the buttons and the swipe gestures.
-  // Each animates the outgoing card (cosmetic), then advances the game.
+  // Available any time (Skip still respects the skip rule). Each animates the
+  // outgoing card (cosmetic), then advances the game.
   const doGot = () => {
-    if (!revealed) return;
     sound.play('ding');
     haptics.tap();
     anim.flyToPile(cardEl, el.querySelector('#score-pill'));
     ctx.actions.gotIt();
   };
   const doSkip = () => {
-    if (!revealed || skipDisabled) return;
+    if (skipDisabled) return;
     anim.skipAway(cardEl);
     ctx.actions.skip();
   };
 
-  revealBtn?.addEventListener('click', doReveal);
+  revealBtn?.addEventListener('click', () => doReveal(true));
   gotBtn.addEventListener('click', doGot);
   skipBtn.addEventListener('click', doSkip);
   el.querySelector('[data-end]').addEventListener('click', () => ctx.actions.endGameConfirm());
 
-  // Swipe: before reveal, a decisive swipe (either way) flips the card. After
-  // reveal, right = Got it, left = Skip (alongside the buttons).
+  // Swipe: right = Got it, left = Skip (alongside the buttons), any time. A small
+  // touch that isn't a decisive swipe counts as a tap and reveals the answer.
   let dragging = false, startX = 0, startY = 0, dx = 0;
   const THRESHOLD = 90;
+  const TAP_SLOP = 8; // movement under this reads as a tap, not a swipe
   const snapBack = () => { cardEl.style.transition = 'transform 0.2s ease'; cardEl.style.transform = ''; };
 
   cardEl.style.touchAction = 'pan-y'; // vertical scroll stays; we own horizontal
@@ -166,14 +167,10 @@ export function render(el, ctx) {
   const endDrag = () => {
     if (!dragging) return;
     dragging = false;
-    if (!revealed) {
-      if (Math.abs(dx) > THRESHOLD) doReveal();
-      snapBack();
-      return;
-    }
-    if (dx > THRESHOLD) doGot();
-    else if (dx < -THRESHOLD) { skipDisabled ? snapBack() : doSkip(); }
-    else snapBack();
+    if (dx > THRESHOLD) { doGot(); return; }
+    if (dx < -THRESHOLD) { skipDisabled ? snapBack() : doSkip(); return; }
+    if (Math.abs(dx) < TAP_SLOP) doReveal(); // a tap on the card reveals it
+    snapBack();
   };
   cardEl.addEventListener('pointerup', endDrag);
   cardEl.addEventListener('pointercancel', endDrag);
