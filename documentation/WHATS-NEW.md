@@ -50,6 +50,13 @@ There's a **How to play** screen inside the app too (button on the home screen).
   gold crown for the winner. Prefer the original cream-and-plum look? Tap the
   ☀️ button in the top bar any time to switch to the light theme — your choice is
   remembered.
+- **Pick your palette 🎨** — new in **Settings → Theme**. Choose from **six**
+  looks: **Midnight & Gold** (the dark default), **Plum & Cream** (the original
+  light look), and four fresh light palettes — **Emerald & Cream**, **Teal & Sand**,
+  **Sunset Terracotta**, and **Cobalt & Cream**. Tap a swatch and the whole app
+  recolours instantly; your pick is remembered. There's also a **Match device**
+  option that follows your phone's light/dark setting automatically. (The ☀️/🌙
+  top-bar button is still there as a quick light↔dark flip.)
 
 After a turn, on the summary screen (with **Free** skips) you can tap any card to
 flip it between **won** and **skipped** if someone mis-tapped — the score updates

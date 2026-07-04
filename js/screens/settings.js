@@ -3,7 +3,23 @@
 import { preferences, savePrefs } from '../preferences.js';
 import { availableBanks, customBanks, getCustomBank, addCustomBank, updateCustomBank, deleteCustomBank, parseLyrics, cardsToText, LYRIC_DELIM } from '../banks.js';
 import * as sound from '../sound.js';
+import * as theme from '../theme.js';
 import { esc } from '../util.js';
+
+// One tappable theme tile, painted in its own palette's colours.
+function themeSwatch(t, selected) {
+  const s = t.swatch;
+  return `
+    <button class="theme-swatch${selected ? ' is-selected' : ''}" data-theme-id="${t.id}"
+      style="background:${s.bg}; color:${s.ink};" aria-pressed="${selected}" aria-label="${esc(t.name)} theme">
+      <span class="theme-swatch__check" aria-hidden="true">✓</span>
+      <span class="theme-swatch__dots">
+        <span class="theme-swatch__dot" style="background:${s.plum};"></span>
+        <span class="theme-swatch__dot" style="background:${s.gold};"></span>
+      </span>
+      <span class="theme-swatch__name">${esc(t.name)}</span>
+    </button>`;
+}
 
 // Which custom bank (if any) is currently being edited. Module-level so it
 // survives the re-renders triggered by other setting changes. Reset on
@@ -46,6 +62,17 @@ export function render(el, ctx) {
             <button data-haptics="on"${seg(p.hapticsEnabled)}>On</button>
             <button data-haptics="off"${seg(!p.hapticsEnabled)}>Off</button>
           </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="screen__eyebrow" style="margin-bottom:10px;">Theme</div>
+        <div class="theme-grid">
+          <button class="theme-swatch theme-swatch--system${p.theme === 'system' ? ' is-selected' : ''}" data-theme-id="system" aria-pressed="${p.theme === 'system'}" aria-label="Match device theme">
+            <span class="theme-swatch__check" aria-hidden="true">✓</span>
+            <span class="theme-swatch__name">Match device</span>
+          </button>
+          ${theme.THEMES.map((t) => themeSwatch(t, p.theme === t.id)).join('')}
         </div>
       </div>
 
@@ -129,6 +156,14 @@ export function render(el, ctx) {
   el.querySelectorAll('[data-haptics]').forEach((b) => b.addEventListener('click', () => set(() => {
     p.hapticsEnabled = b.dataset.haptics === 'on';
   })));
+
+  // Theme picker: apply instantly (no flash), persist, sync the topbar icon,
+  // then re-render so the selected tile updates.
+  el.querySelectorAll('[data-theme-id]').forEach((b) => b.addEventListener('click', () => {
+    theme.setTheme(b.dataset.themeId);
+    ctx.actions.syncTheme?.();
+    rerender();
+  }));
   el.querySelectorAll('[data-timer]').forEach((b) => b.addEventListener('click', () => set(() => { p.defaultTimerSeconds = Number(b.dataset.timer); })));
   el.querySelectorAll('[data-skip]').forEach((b) => b.addEventListener('click', () => set(() => { p.defaultSkipRule = b.dataset.skip; })));
   el.querySelectorAll('[data-win]').forEach((b) => b.addEventListener('click', () => set(() => { p.defaultWinCondition = b.dataset.win; })));

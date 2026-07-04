@@ -93,7 +93,9 @@ function paint(remaining) {
   const ring = document.getElementById('timer-ring');
   if (ring) {
     const fill = urgent ? 'var(--color-coral)' : 'var(--color-primary)';
-    const track = urgent ? 'rgba(197,123,87,0.16)' : 'rgba(109,76,125,0.16)';
+    // Tints reference theme tokens (resolved in-context) so the ring track
+    // follows the active palette; coral is theme-invariant.
+    const track = urgent ? 'rgba(197,123,87,0.16)' : 'rgba(var(--plum-rgb),0.16)';
     ring.style.background = `conic-gradient(${fill} 0 ${pct}%, ${track} 0 100%)`;
     ring.classList.toggle('timer--urgent', urgent);
   }

@@ -78,7 +78,7 @@ Done after Phase 3, on request — the plum/cream look was reworked into a dark-
 
 ---
 
-## Phase 6 — User-selectable themes (a theme picker)
+## Phase 6 — User-selectable themes (a theme picker) ✅
 Let players pick their palette from Settings, not just toggle light/dark. **Highly feasible** — it extends the token/`data-theme` system that Phases 3 & 5 already built (a theme is one `[data-theme="…"] { … }` block; `dark.css` is the proof). No architectural changes.
 
 **Designs already exist.** Six palettes are drawn up with exact token values in **`documentation/THEME-PALETTES.md`** (the authoritative source) — the two live ones (**Plum & Cream** light, **Midnight & Gold** dark) plus four ready-to-wire light alternatives (**Emerald**, **Teal**, **Sunset**, **Cobalt**), including copy-paste CSS blocks and a step-by-step implementation recipe. Visual reference: the palette-comparison Artifact (link in that file). **A fresh Claude Code session should start by reading `documentation/THEME-PALETTES.md`.**
@@ -89,11 +89,11 @@ Let players pick their palette from Settings, not just toggle light/dark. **High
 3. **Keep a single installed app icon** (the gold-on-midnight "SR"). The PWA home-screen icon is a static PNG and can't follow the in-app theme — a platform limit, not a code one; the in-app mark still recolours per theme.
 
 **Tasks:**
-- [ ] **Enabling cleanup:** tokenize the few remaining hardcoded accent colours (the `rgba(109,76,125,…)` plums, the timer track in `timer.js`, the `celebrate()` confetti + `.confetti` colours) so every palette looks intentional. Do this first.
-- [ ] Add the four light-theme `[data-theme]` blocks (from `THEME-PALETTES.md`) — e.g. a `css/themes.css`; register it in `index.html` + `PRECACHE`, bump `CACHE`.
-- [ ] Generalize `preferences.theme` (`system | light | dark` → any theme id), `js/theme.js` `apply()`/`resolved()`, and the pre-paint boot script in `index.html`; keep a light/dark map so the topbar icon + `Match device` stay correct.
-- [ ] **Theme picker in Settings** — a grid of tappable swatches (reuse the comparison-Artifact swatch style), persisted on tap. Decide the topbar button's role (quick light/dark toggle, or opens the picker).
-- [ ] Dynamic `<meta name="theme-color">` (and manifest-driven chrome) from the active theme's `--cream-deep` on switch.
-- [ ] Update docs (`CLAUDE.md` theme section, `RUNBOOK.md`, `WHATS-NEW.md`) and mark this phase done.
+- [x] **Enabling cleanup:** tokenized the remaining hardcoded accent colours — added `--plum-rgb`/`--gold-rgb` tint channels + `--plum-lift` (the play-card gradient stop), and pointed the `rgba(109,76,125,…)` plums, the timer track in `timer.js`, and the `celebrate()` confetti + `.confetti` colours at tokens. Verified light stays byte-identical (tokens resolve to the same values) and dark unchanged.
+- [x] Added the four light-theme `[data-theme]` blocks in `css/themes.css` (from `THEME-PALETTES.md`); registered in `index.html` + `PRECACHE`, bumped `CACHE` (v11 → v12).
+- [x] Generalized `preferences.theme` (`system | <any theme id>`), `js/theme.js` `apply()`/`resolved()` + a `THEMES` registry (id/name/kind/swatch), and the pre-paint boot script in `index.html`; `kind` map keeps the topbar icon + `Match device` correct.
+- [x] **Theme picker in Settings** — a grid of tappable swatches (each painted in its own palette) + a "Match device" tile, persisted on tap and applied instantly. The topbar button stays a quick light↔dark flip.
+- [x] Dynamic `<meta name="theme-color">` from the active theme's `--cream-deep` on switch.
+- [x] Updated docs (`CLAUDE.md` theme section, `RUNBOOK.md`, `WHATS-NEW.md`) and marked this phase done.
 
-**Done when:** a player can pick any bundled theme in Settings, the choice persists across sessions and applies before first paint (no flash), "Match device" still follows the OS, every screen looks intentional in every theme (light and dark), and PWA install/offline still works.
+**Done when:** a player can pick any bundled theme in Settings, the choice persists across sessions and applies before first paint (no flash), "Match device" still follows the OS, every screen looks intentional in every theme (light and dark), and PWA install/offline still works. ✅ — verified in a headless Chrome pass across Home/Settings/Play/Scoreboard/Reveal in all six themes; picker persists across reload with no flash, `theme-color` tracks the theme, and Match device resolves light/dark live.

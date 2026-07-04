@@ -1,0 +1,43 @@
+/* themes.css — the optional light-theme palettes for the Settings theme picker.
+   Each is a self-contained [data-theme="…"] block that re-sets the nine palette
+   tokens (plus the --plum-rgb / --gold-rgb tint channels and the --plum-lift
+   play-card stop). Because every screen reads through those tokens, that's all a
+   light theme needs — no component edits. Values are the authoritative ones from
+   documentation/THEME-PALETTES.md.
+
+   The two live themes live elsewhere: Plum & Cream is css/base.css :root (the
+   baseline), Midnight & Gold is css/dark.css ([data-theme="dark"]). Each block
+   also sets the html background-color to its own --cream-deep so the mobile
+   overscroll gap matches the page (mirrors what base.css/dark.css do). */
+
+[data-theme="emerald"] {
+  --plum:#2E6B4E; --plum-deep:#1C4433; --plum-soft:#DDEBE3;
+  --cream:#FAF7F0; --cream-deep:#EEE8DA; --ink:#1E2A24;
+  --muted:#7B8A82; --gold:#C6A15B; --mauve:#6FB49A;
+  --plum-rgb:46,107,78; --gold-rgb:198,161,91; --plum-lift:#427F62;
+  background-color: var(--cream-deep);
+}
+
+[data-theme="teal"] {
+  --plum:#1E7A8C; --plum-deep:#0E4B5A; --plum-soft:#DBEAEE;
+  --cream:#FBF7F0; --cream-deep:#EFE7D7; --ink:#1D2A2E;
+  --muted:#7C8A8E; --gold:#E0A34F; --mauve:#E07A5F;
+  --plum-rgb:30,122,140; --gold-rgb:224,163,79; --plum-lift:#328EA0;
+  background-color: var(--cream-deep);
+}
+
+[data-theme="sunset"] {
+  --plum:#C05A38; --plum-deep:#7C3620; --plum-soft:#F6E1D7;
+  --cream:#FBF6EE; --cream-deep:#F2E7D8; --ink:#2E201A;
+  --muted:#8F7C71; --gold:#E3A93C; --mauve:#4E8D86;
+  --plum-rgb:192,90,56; --gold-rgb:227,169,60; --plum-lift:#D46E4C;
+  background-color: var(--cream-deep);
+}
+
+[data-theme="cobalt"] {
+  --plum:#34558B; --plum-deep:#21375A; --plum-soft:#E0E7F1;
+  --cream:#FAF7F1; --cream-deep:#EDE7D9; --ink:#1E2733;
+  --muted:#7D8794; --gold:#D2A24C; --mauve:#E07A5F;
+  --plum-rgb:52,85,139; --gold-rgb:210,162,76; --plum-lift:#48699F;
+  background-color: var(--cream-deep);
+}

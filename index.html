@@ -5,15 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ShazRics — Nigerian lyrics party game</title>
 
-    <!-- Apply the saved theme before first paint (no flash). Midnight & Gold is
-         dark-first, so an unset preference defaults to dark. -->
+    <!-- Apply the saved theme before first paint (no flash). preferences.theme is
+         either 'system' (follow the OS: light=Plum & Cream, dark=Midnight & Gold)
+         or an explicit theme id. Midnight & Gold is dark-first, so an unset
+         preference defaults to 'dark'. Keep the id list in sync with theme.js. -->
     <script>
       (function () {
+        var KNOWN = { light: 1, dark: 1, emerald: 1, teal: 1, sunset: 1, cobalt: 1 };
         try {
           var p = JSON.parse(localStorage.getItem('shazrics:prefs') || '{}');
           var t = p.theme || 'dark';
-          var dark = t === 'dark' || (t === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-          document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+          var resolved;
+          if (t === 'system') {
+            resolved = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          } else {
+            resolved = KNOWN[t] ? t : 'dark';
+          }
+          document.documentElement.setAttribute('data-theme', resolved);
         } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
       })();
     </script>
@@ -33,6 +41,7 @@
     <link rel="stylesheet" href="css/screens.css" />
     <link rel="stylesheet" href="css/animations.css" />
     <link rel="stylesheet" href="css/dark.css" />
+    <link rel="stylesheet" href="css/themes.css" />
   </head>
   <body>
     <div class="app-shell">

@@ -76,8 +76,13 @@ export function revealPodium(rows) {
 // A celebratory confetti burst for the winner (canvas-confetti).
 export function celebrate() {
   if (prefersReduced() || typeof window.confetti !== 'function') return;
+  // Pull the confetti palette from the active theme's tokens so the burst
+  // matches whichever theme is showing (falls back to the plum/cream values).
+  const cs = getComputedStyle(document.documentElement);
+  const tok = (name, fallback) => (cs.getPropertyValue(name).trim() || fallback);
+  const colors = [tok('--plum', '#6D4C7D'), tok('--gold', '#C6A15B'), tok('--color-coral', '#C57B57'), '#FFFFFF'];
   const fire = (ratio, opts) => window.confetti(Object.assign({
-    origin: { y: 0.35 }, colors: ['#6D4C7D', '#C6A15B', '#C57B57', '#FFFFFF'],
+    origin: { y: 0.35 }, colors,
   }, opts, { particleCount: Math.floor(160 * ratio) }));
   fire(0.25, { spread: 26, startVelocity: 55 });
   fire(0.35, { spread: 60 });

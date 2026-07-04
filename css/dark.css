@@ -21,6 +21,12 @@
   --gold:        #C9A24E;   /* PRIMARY accent in dark */
   --mauve:       #A67BA0;
 
+  /* RGB channels for the tokenised rgba() tints (texture, confetti, timer track,
+     mini-cards) so they read as midnight-plum/gold rather than the light plums. */
+  --plum-rgb:    143,114,171;
+  --gold-rgb:    201,162,78;
+  --plum-lift:   #2C2540;   /* word-card is fully overridden below; kept in sync */
+
   /* Legacy aliases — flip primary to gold and text to cream so every
      var(--color-*) consumer recolours without per-component edits. */
   --color-primary:  #C9A24E;   /* gold: buttons, timer ring, active states */

@@ -202,6 +202,8 @@ ctx.actions = {
 
   // Let the Settings screen keep the topbar mute icon in sync.
   syncMute() { updateMuteButton(); },
+  // ...and the topbar light/dark icon, after a theme pick in Settings.
+  syncTheme() { updateThemeButton(); },
 };
 
 // --- Boot -------------------------------------------------------------------

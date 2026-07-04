@@ -8,7 +8,7 @@ Persistent guardrails for this repo. Read before any work. These don't change be
 It is a **fork of the Omo Naija engine** (github.com/justaino/Omo-Naija). Same architecture, same card-stack scoreboard, same pass-and-play loop — with two deliberate differences (see "How this differs from Omo Naija").
 
 ## Status (living — update as you go)
-As of start: **Not started.** First job is to fork the Omo Naija codebase, re-theme it to the plum/cream palette, and adapt the data model + turn mechanic. Phases 0–3 of Omo Naija are the reference for what "done" looks like on the shared engine.
+**Phases 0–3, 5, and 6 done.** The fork is a working ShazRics lyrics game: plum/cream re-skin, self-score + optional-reveal mechanic, custom lyric banks, polish, the dark-first Midnight & Gold identity (Phase 5), and now **user-selectable themes** (Phase 6 — six palettes picked in Settings). Phase 4 remains deferred.
 
 - **Workflow:** work on `dev`; merge to `main` only when explicitly asked. Bump `CACHE` in `service-worker.js` on any app-shell change.
 - **Commit messages:** **never add a `Co-Authored-By` trailer** (or any "Generated with Claude" line). Plain messages only.
@@ -30,10 +30,11 @@ As of start: **Not started.** First job is to fork the Omo Naija codebase, re-th
 - **Buildless — no build step, no bundler.** Plain ES modules served statically over HTTP.
 - Libraries are **vendored locally** in `assets/vendor/` (no CDN at runtime) so the app works offline. Display font self-hosted in `assets/fonts/`.
 
-## Theme — dark-first "Midnight & Gold" (default), plum & cream (light option)
-**Current identity (post-Phase 5):** the app is **dark-first**. The default theme is **Midnight & Gold** — deep plum-midnight surfaces, a **gold** primary accent, dusty-plum secondary, cream text. The plum/cream palette below is now the **light** theme (the optional topbar toggle) and its tokens in `css/base.css` `:root` are the baseline the dark layer overrides. **Two rules when touching theming:**
-- **Never restyle inside `css/dark.css` with component-specific hacks first.** Recolour at the token level under `[data-theme="dark"]` (as the file already does) so both themes stay in sync; add per-component overrides only where a plum value is baked in as a surface.
-- **Keep the light plum/cream theme working and unchanged.** It's the fallback and the original identity; changes to the dark look must not touch `base.css`/`components.css`/`screens.css` colours.
+## Theme — dark-first "Midnight & Gold" (default), six user-selectable palettes
+**Current identity (post-Phase 6):** the app is **dark-first**. The default theme is **Midnight & Gold** — deep plum-midnight surfaces, a **gold** primary accent, dusty-plum secondary, cream text. The plum/cream palette below is the **light** baseline; its tokens in `css/base.css` `:root` are what the other themes override. **Users pick from six themes in Settings → Theme** (Plum & Cream, Midnight & Gold, and four light alternatives — Emerald, Teal, Sunset, Cobalt), plus "Match device". A theme is **one `[data-theme="…"]` token block**: the four light alternatives live in `css/themes.css`, dark in `css/dark.css`; the switcher/registry is `js/theme.js`, the picker in `js/screens/settings.js`. Exact per-theme token values: `documentation/THEME-PALETTES.md`. **Three rules when touching theming:**
+- **Recolour through tokens only.** Every screen reads the palette tokens (the nine palette vars + `--plum-rgb`/`--gold-rgb` tint channels + `--plum-lift` for the play-card gradient + the `--color-*` aliases). Add a new theme as a token block; add per-component overrides only where a value is baked in as a surface (as `dark.css` does for `.word-card` etc.). When adding/removing a theme, keep the `THEMES` registry (`theme.js`) and the boot script's `KNOWN` id map (`index.html`) in sync.
+- **Never restyle inside `css/dark.css` (or `themes.css`) with component-specific hacks first.** Do it at the token level so all themes stay in sync.
+- **Keep the light plum/cream theme working and unchanged.** It's the fallback and the original identity; changes to any other theme must not touch `base.css`/`components.css`/`screens.css` colours.
 
 The plum/cream palette (the **light** theme baseline) — classy, understated, warm:
 
@@ -49,10 +50,10 @@ The plum/cream palette (the **light** theme baseline) — classy, understated, w
 --mauve:       #A67BA0;   /* dusty-rose secondary accent */
 ```
 
-- In the **light** theme, card surfaces are cream and plum is the brand/accent (ink on cream, cream on plum). In the **dark** default (Midnight & Gold), surfaces are midnight, gold is the primary accent, plum is secondary, and text is cream — see `css/dark.css` for the resolved values.
-- **Team colour options** (draw from the palette so the board stays cohesive, and read on both themes): plum `#6D4C7D`, mauve `#A67BA0`, gold `#C6A15B`, dusty teal `#5E8B87`, terracotta `#C57B57`, slate `#6B7A99`.
-- Brand mark: the **"SR"** tile — cream-on-plum in the light theme, gold-on-midnight in the dark default. PWA icons are the gold-on-midnight mark; `manifest.json` theme/background colours are midnight.
-- Theme is system-aware with an explicit topbar toggle; **dark is the default** for an unset preference (`preferences.theme` / the boot script in `index.html`).
+- In the **light** themes, card surfaces are cream and the primary token is the brand/accent (ink on cream, cream on primary). In the **dark** default (Midnight & Gold), surfaces are midnight, gold is the primary accent, plum is secondary, and text is cream — see `css/dark.css` for the resolved values. The four alternative light themes (`css/themes.css`) recolour the same slots.
+- **Team colour options** (draw from the palette so the board stays cohesive, and read across themes): plum `#6D4C7D`, mauve `#A67BA0`, gold `#C6A15B`, dusty teal `#5E8B87`, terracotta `#C57B57`, slate `#6B7A99`. Team colours are theme-independent (fixed identities), so a plum team dot on, say, the Emerald theme is expected.
+- Brand mark: the **"SR"** tile — cream-on-primary in light themes, gold-on-midnight in the dark default. The installed PWA icon is a **single static** gold-on-midnight mark (a home-screen icon can't follow the in-app theme); `manifest.json` theme/background colours are midnight, but `<meta name="theme-color">` is updated dynamically per active theme by `theme.js`.
+- Theme is system-aware with an explicit picker (Settings → Theme) + a quick light↔dark topbar toggle; **dark is the default** for an unset preference (`preferences.theme` / the boot script in `index.html`).
 
 ## Data model — lyric cards (words are data, not code)
 Banks live in `data/wordbanks/*.json`, loaded via the same loader. Card shape:

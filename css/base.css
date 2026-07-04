@@ -22,6 +22,13 @@
   --gold:        #C6A15B;   /* muted winner gold (crown, glow) */
   --mauve:       #A67BA0;   /* dusty-rose secondary accent */
 
+  /* RGB channels of the two theme-varying accents, so rgba(...) tints follow the
+     active theme too (a theme just re-sets these alongside the hexes above). */
+  --plum-rgb:    109,76,125;
+  --gold-rgb:    198,161,91;
+  /* Lighter play-card gradient stop (a lift of --plum); themed per palette. */
+  --plum-lift:   #835F94;
+
   /* Legacy Omo Naija token names, remapped to the new palette so the existing
      stylesheets keep working without touching every `var(--color-*)` usage. */
   --color-primary: var(--plum);

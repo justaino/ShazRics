@@ -70,13 +70,16 @@ There is **nothing to build or install** — it's static files.
   console:
   `localStorage.removeItem('shazrics:state')` (in-progress game),
   `…('shazrics:banks')` (custom banks), `…('shazrics:prefs')` (settings + theme).
-- **Test both themes.** The app is **dark-first**: an unset preference defaults
-  to **dark** (Midnight & Gold). The topbar button (🌙 / ☀️) sets an explicit
-  light/dark choice; `'system'` follows the OS. Always sanity-check the **light**
-  plum/cream theme too after any theming change — it's the fallback and must stay
-  unchanged. The dark colours live in `css/dark.css`; light lives in the base
-  stylesheets. Default lever: `preferences.theme` **and** the boot script in
-  `index.html` (which sets `data-theme` before first paint to avoid a flash).
+- **Test the themes.** The app is **dark-first**: an unset preference defaults to
+  **dark** (Midnight & Gold). Six themes are user-selectable in **Settings → Theme**
+  (Plum & Cream, Midnight & Gold, Emerald, Teal, Sunset, Cobalt), plus "Match device"
+  (`'system'`, follows the OS). The topbar button (🌙 / ☀️) is a quick light↔dark
+  flip between the two defaults. After any theming change, sanity-check the **light**
+  plum/cream theme especially — it's the fallback baseline and must stay unchanged.
+  Light themes live in `css/base.css` (`:root`) + `css/themes.css`; dark lives in
+  `css/dark.css`. Default lever: `preferences.theme` **and** the boot script in
+  `index.html` (which sets `data-theme` before first paint to avoid a flash). See
+  §7 → *Theme / palette* for the full mechanism and how to add a theme.
 
 When you change an app-shell file, bump `CACHE` (see §6) so installed devices
 refresh.
@@ -360,15 +363,20 @@ in-app via Settings. The per-game copy is `gameState.settings.artistHint`
 4. Add the new JS file to `PRECACHE` + bump `CACHE`.
 
 ### Theme / palette
-Two themes. **Light** (plum/cream) is the baseline: tokens live in `css/base.css`
-`:root` (`--plum`, `--plum-deep`, `--cream`, `--cream-deep`, `--ink`, `--muted`,
-`--gold`, `--mauve`), with legacy `--color-*` aliases so existing rules keep
-working. **Dark** (Midnight & Gold) is the **default** and lives entirely in
-`css/dark.css` as an override layer: it **redefines those same tokens** under
-`[data-theme="dark"]` (e.g. `--color-primary` → gold, surfaces → midnight, text
-→ cream), then adds a few component overrides only where plum was baked in as a
-surface (the play card `.word-card`, gold-button text, the brand mark). The
-resolved dark values (for reference):
+**Six user-selectable themes** (Phase 6). Every screen renders through the palette
+tokens, so **a theme is just one `[data-theme="…"]` token block** — no component
+edits. Where each lives:
+
+- **Plum & Cream** (light) — the baseline in `css/base.css` `:root`: `--plum`,
+  `--plum-deep`, `--plum-soft`, `--cream`, `--cream-deep`, `--ink`, `--muted`,
+  `--gold`, `--mauve`, plus the tint channels `--plum-rgb` / `--gold-rgb` (fed to
+  `rgba(var(--plum-rgb), …)` so tints recolour too) and `--plum-lift` (the play
+  card's lighter gradient stop). Legacy `--color-*` aliases map onto these.
+- **Midnight & Gold** (dark) — the **default**, in `css/dark.css` as a fuller
+  override under `[data-theme="dark"]`: it redefines the palette tokens **and**
+  the `--color-*` aliases (primary → gold, surfaces → midnight, text → cream),
+  then a few component overrides where plum was baked in as a surface (the play
+  card `.word-card`, gold-button text, the brand mark). Resolved values:
 
 ```
 gold (primary)  #C9A24E     midnight page      #14111C
@@ -377,14 +385,37 @@ plum (secondary)#8F72AB     raised surface     #2C2540
 cream text      #F1EADD     muted text         #9B9086
 ```
 
+- **Emerald, Teal, Sunset, Cobalt** (light alternatives) — `css/themes.css`, one
+  `[data-theme="…"]` block each. A *light* theme only needs the nine palette
+  tokens + `--plum-rgb`/`--gold-rgb`/`--plum-lift` + a `background-color:
+  var(--cream-deep)` (so the mobile overscroll gap matches). Authoritative values:
+  `documentation/THEME-PALETTES.md`.
+
+**How the switcher resolves.** `preferences.theme` is either `'system'` or a theme
+id. `js/theme.js` holds the `THEMES` registry (id, display name, `kind` light/dark,
+and picker `swatch` colours); `resolved()` maps `'system'` → `light`/`dark` from the
+OS and otherwise returns the id; `apply()` sets `data-theme` on `<html>` and syncs
+`<meta name="theme-color">` from the active `--cream-deep`. The **Settings** picker
+(`js/screens/settings.js`) is a grid of `theme.THEMES` swatches + a "Match device"
+tile; tapping calls `theme.setTheme()` (persist + apply instantly). The **topbar
+button** is a quick light↔dark flip between the two defaults; specific palettes are
+chosen in Settings.
+
+**Adding a theme:** add a `[data-theme="id"]` block to `css/themes.css` (light) or
+follow the `dark.css` recipe (dark), then add an entry to `THEMES` in `js/theme.js`
+(with `swatch`) **and** to the `KNOWN` id map in the boot script in `index.html`.
+`themes.css` is already in `PRECACHE` — bump `CACHE` on any change.
+
 **Changing the default theme:** three places must agree — `preferences.theme`
-(the JS default), the boot script in `index.html` (the pre-paint default), and
-the topbar button's static label/emoji in `index.html`. **PWA colours** for the
-dark identity: `manifest.json` `background_color`/`theme_color` and
-`<meta name="theme-color">` are midnight `#14111C`; the app icons
-(`assets/icons/icon-*.png`) are the gold "SR" on midnight (regenerated with
-Pillow + Arial Black). **Golden rule:** recolour via tokens in `dark.css`; never
-edit the light palette in the base stylesheets when adjusting dark.
+(the JS default), the `t = p.theme || 'dark'` fallback in the boot script in
+`index.html` (the pre-paint default), and the topbar button's static label/emoji
+in `index.html`. **PWA colours** for the dark identity: `manifest.json`
+`background_color`/`theme_color` are midnight `#14111C`; `<meta name="theme-color">`
+starts at `#14111C` but is then set dynamically per active theme by `theme.js`. The
+installed app icon (`assets/icons/icon-*.png`) is a single static gold "SR" on
+midnight — a PWA home-screen icon can't follow the in-app theme (platform limit).
+**Golden rule:** recolour via tokens; never edit the light plum/cream palette in the
+base stylesheets to make another theme work.
 
 ---
 
