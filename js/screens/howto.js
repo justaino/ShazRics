@@ -5,7 +5,6 @@ export function render(el, ctx) {
       <div class="texture" aria-hidden="true"></div>
       <div class="screen__header">
         <div>
-          <div class="screen__eyebrow">How to play</div>
           <h2 class="screen__title">How to play</h2>
         </div>
       </div>

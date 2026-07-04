@@ -54,6 +54,12 @@
   text-transform: uppercase;
 }
 
+/* When an eyebrow sits directly above a title, give it breathing room so the
+   two don't crowd (header eyebrows had no gap; section eyebrows set their own). */
+.screen__eyebrow:has(+ .screen__title) {
+  margin-bottom: 10px;
+}
+
 .screen__title {
   margin: 0;
   font-family: var(--font-display);

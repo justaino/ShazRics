@@ -52,7 +52,6 @@ export function render(el, ctx) {
       <div class="texture" aria-hidden="true"></div>
       <div class="screen__header">
         <div>
-          <div class="screen__eyebrow">Setup</div>
           <h2 class="screen__title">Game setup</h2>
         </div>
       </div>

@@ -36,7 +36,6 @@ export function render(el, ctx) {
       <div class="texture" aria-hidden="true"></div>
       <div class="summary-card">
         <div>
-          <div class="screen__eyebrow">Turn summary</div>
           <h2 class="screen__title">Time! ${esc(team ? team.name : 'Team')} got ${state.turn.wonCards.length}</h2>
         </div>
         <div class="screen__copy">${editable ? 'Cards this turn — tap one to switch won / skipped' : 'Cards this turn'}</div>
