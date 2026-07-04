@@ -30,8 +30,12 @@ As of start: **Not started.** First job is to fork the Omo Naija codebase, re-th
 - **Buildless — no build step, no bundler.** Plain ES modules served statically over HTTP.
 - Libraries are **vendored locally** in `assets/vendor/` (no CDN at runtime) so the app works offline. Display font self-hosted in `assets/fonts/`.
 
-## Theme — plum & cream (the re-skin)
-Swap the Omo Naija green tokens for this palette in `css/base.css` (or tokens file). Classy, understated, warm.
+## Theme — dark-first "Midnight & Gold" (default), plum & cream (light option)
+**Current identity (post-Phase 5):** the app is **dark-first**. The default theme is **Midnight & Gold** — deep plum-midnight surfaces, a **gold** primary accent, dusty-plum secondary, cream text. The plum/cream palette below is now the **light** theme (the optional topbar toggle) and its tokens in `css/base.css` `:root` are the baseline the dark layer overrides. **Two rules when touching theming:**
+- **Never restyle inside `css/dark.css` with component-specific hacks first.** Recolour at the token level under `[data-theme="dark"]` (as the file already does) so both themes stay in sync; add per-component overrides only where a plum value is baked in as a surface.
+- **Keep the light plum/cream theme working and unchanged.** It's the fallback and the original identity; changes to the dark look must not touch `base.css`/`components.css`/`screens.css` colours.
+
+The plum/cream palette (the **light** theme baseline) — classy, understated, warm:
 
 ```
 --plum:        #6D4C7D;   /* primary brand / accents */
@@ -45,10 +49,10 @@ Swap the Omo Naija green tokens for this palette in `css/base.css` (or tokens fi
 --mauve:       #A67BA0;   /* dusty-rose secondary accent */
 ```
 
-- This is a **cream/light** theme (Omo Naija was dark-first). Card surfaces are cream; plum is the brand/accent. Keep contrast high (ink on cream, cream on plum).
-- **Team colour options** (draw from the palette so the board stays cohesive): plum `#6D4C7D`, mauve `#A67BA0`, gold `#C6A15B`, dusty teal `#5E8B87`, terracotta `#C57B57`, slate `#6B7A99`.
-- Rework the brand mark: replace the Nigerian-flag "ON" tile with an **"SR"** mark on plum (or a music-note motif). Regenerate PWA icons + `manifest.json` theme/background colours to match.
-- A dark mode can come later as polish (mirror Omo Naija's system-aware toggle) — not required for v1.
+- In the **light** theme, card surfaces are cream and plum is the brand/accent (ink on cream, cream on plum). In the **dark** default (Midnight & Gold), surfaces are midnight, gold is the primary accent, plum is secondary, and text is cream — see `css/dark.css` for the resolved values.
+- **Team colour options** (draw from the palette so the board stays cohesive, and read on both themes): plum `#6D4C7D`, mauve `#A67BA0`, gold `#C6A15B`, dusty teal `#5E8B87`, terracotta `#C57B57`, slate `#6B7A99`.
+- Brand mark: the **"SR"** tile — cream-on-plum in the light theme, gold-on-midnight in the dark default. PWA icons are the gold-on-midnight mark; `manifest.json` theme/background colours are midnight.
+- Theme is system-aware with an explicit topbar toggle; **dark is the default** for an unset preference (`preferences.theme` / the boot script in `index.html`).
 
 ## Data model — lyric cards (words are data, not code)
 Banks live in `data/wordbanks/*.json`, loaded via the same loader. Card shape:

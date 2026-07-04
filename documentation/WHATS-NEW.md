@@ -45,8 +45,11 @@ There's a **How to play** screen inside the app too (button on the home screen).
   default in **Settings**) to show the artist on the card *before* you reveal —
   handy for younger or mixed groups. The song title still stays hidden until the
   reveal.
-- **Light or dark** — tap the 🌙 / ☀️ button in the top bar to switch themes; by
-  default it follows your phone's setting.
+- **A new look: Midnight & Gold** — ShazRics now opens in a warm, dark
+  "Midnight & Gold" theme: deep plum-black cards, gold buttons and timer, and a
+  gold crown for the winner. Prefer the original cream-and-plum look? Tap the
+  ☀️ button in the top bar any time to switch to the light theme — your choice is
+  remembered.
 
 After a turn, on the summary screen (with **Free** skips) you can tap any card to
 flip it between **won** and **skipped** if someone mis-tapped — the score updates

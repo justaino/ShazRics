@@ -5,20 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ShazRics — Nigerian lyrics party game</title>
 
-    <!-- Apply the saved/system theme before first paint (no flash of light). -->
+    <!-- Apply the saved theme before first paint (no flash). Midnight & Gold is
+         dark-first, so an unset preference defaults to dark. -->
     <script>
       (function () {
         try {
           var p = JSON.parse(localStorage.getItem('shazrics:prefs') || '{}');
-          var t = p.theme || 'system';
-          var dark = t === 'dark' || (t !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          var t = p.theme || 'dark';
+          var dark = t === 'dark' || (t === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
           document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
-        } catch (e) {}
+        } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
       })();
     </script>
 
     <!-- PWA: installable + offline (Anton font is self-hosted via @font-face in base.css) -->
-    <meta name="theme-color" content="#6D4C7D" />
+    <meta name="theme-color" content="#14111C" />
     <meta name="description" content="A Nigerian song-lyrics party game." />
     <link rel="manifest" href="manifest.json" />
     <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
@@ -39,7 +40,7 @@
         <div class="brand-pill"><span class="brand-pill__mark">SR</span> ShazRics</div>
         <div class="topbar__right">
           <div class="step-pill" id="step-pill">1 / 7 Home</div>
-          <button class="theme-btn" id="theme-btn" aria-label="Switch to dark mode">🌙</button>
+          <button class="theme-btn" id="theme-btn" aria-label="Switch to light mode">☀️</button>
           <button class="mute-btn" id="mute-btn" aria-label="Mute sound" aria-pressed="false">🔊</button>
         </div>
       </header>

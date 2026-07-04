@@ -15,7 +15,7 @@ export const preferences = {
   // Global toggles.
   soundEnabled: true,
   hapticsEnabled: true,
-  theme: 'system', // 'system' | 'light' | 'dark'
+  theme: 'dark', // 'system' | 'light' | 'dark' — dark-first (Midnight & Gold)
 };
 
 export function loadPrefs() {

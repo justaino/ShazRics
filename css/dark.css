@@ -1,93 +1,150 @@
-/* dark.css — additive dark theme. Activated by data-theme="dark" on <html>.
-   Overrides only the light-specific colours; the locked light design in the
-   other stylesheets is untouched. Brand accents (plum/gold/mauve) carry over;
-   the SR brand mark and the plum pre-turn/play cards stay as-is.
-   (Dark mode is polish for a later phase — kept working, not the v1 focus.) */
+/* dark.css — the DEFAULT theme: "Midnight & Gold".
+   Dark-first identity (deep plum-midnight surfaces, gold primary accent, dusty
+   plum secondary, cream text). Activated by data-theme="dark" on <html>, which
+   the boot script sets by default (light is the optional toggle).
 
-/* Flat background on the root (see base.css) so the whole screen incl. the
-   mobile overscroll gap is one solid colour; data-theme lives on <html>. */
-html[data-theme="dark"] {
-  background-color: #131618;
+   Structure: first redefine the palette TOKENS under [data-theme="dark"] so the
+   whole app recolours through the same variables the light theme uses; then a
+   handful of targeted overrides for the few places the plum was baked in as a
+   surface (the play card, the primary buttons' text, the brand mark). The light
+   plum/cream design in the other stylesheets is never touched. */
+
+[data-theme="dark"] {
+  /* Base palette, retinted to Midnight & Gold. */
+  --plum:        #8F72AB;   /* now the SECONDARY accent (Got it, pre-turn card) */
+  --plum-deep:   #2C2540;   /* raised midnight surface */
+  --plum-soft:   #33294A;   /* soft tint */
+  --cream:       #221C31;   /* primary surface / card base */
+  --cream-deep:  #14111C;   /* page background */
+  --ink:         #F1EADD;   /* cream text */
+  --muted:       #9B9086;   /* muted/secondary text */
+  --gold:        #C9A24E;   /* PRIMARY accent in dark */
+  --mauve:       #A67BA0;
+
+  /* Legacy aliases — flip primary to gold and text to cream so every
+     var(--color-*) consumer recolours without per-component edits. */
+  --color-primary:  #C9A24E;   /* gold: buttons, timer ring, active states */
+  --color-gold:     #E0BE6A;   /* brighter winner gold (reveal, podium, crown glow) */
+  --color-charcoal: #F1EADD;   /* was near-black; now the cream text colour */
+  --color-surface:  #221C31;
+  /* --color-white (#FFFFFF) and --color-coral (terracotta urgency) carry over. */
 }
-[data-theme="dark"] body {
-  color: #ECECEC;
-}
+
+/* Flat midnight background on the root (covers the mobile overscroll gap too). */
+html[data-theme="dark"] { background-color: #14111C; }
+[data-theme="dark"] body { color: var(--ink); }
 
 /* Topbar */
-[data-theme="dark"] .topbar { background: rgba(34,38,40,0.85); border-color: rgba(255,255,255,0.08); box-shadow: 0 8px 18px rgba(0,0,0,0.4); }
-[data-theme="dark"] .step-pill { color: rgba(255,255,255,0.65); }
+[data-theme="dark"] .topbar { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.10); box-shadow: 0 8px 18px rgba(0,0,0,0.45); }
+[data-theme="dark"] .step-pill { color: rgba(241,234,221,0.66); }
 [data-theme="dark"] .mute-btn,
-[data-theme="dark"] .theme-btn { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.16); }
+[data-theme="dark"] .theme-btn { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.16); }
+
+/* Brand mark: gold disc with midnight initials (both the topbar and Home hero). */
+[data-theme="dark"] .brand-pill__mark,
+[data-theme="dark"] .brand-mark { background: linear-gradient(145deg, #C9A24E, #8A6C33); color: #14111C; box-shadow: 0 12px 26px rgba(201,162,78,0.28); }
 
 /* Cards / surfaces */
-[data-theme="dark"] .card { background: rgba(34,38,40,0.96); border-color: rgba(255,255,255,0.1); box-shadow: 0 20px 42px rgba(0,0,0,0.55); }
-[data-theme="dark"] .texture { opacity: 0.14; }
+[data-theme="dark"] .card { background: var(--cream); border-color: rgba(255,255,255,0.08); box-shadow: 0 20px 42px rgba(0,0,0,0.55); }
+[data-theme="dark"] .texture { opacity: 0.12; }
 
-/* Muted text */
+/* Muted / body-copy text */
 [data-theme="dark"] .screen__copy,
 [data-theme="dark"] .deck-count,
-[data-theme="dark"] .modal__copy { color: rgba(255,255,255,0.7); }
-[data-theme="dark"] .howto-list { color: rgba(255,255,255,0.78); }
-[data-theme="dark"] .mini-card__meta { color: rgba(255,255,255,0.6); }
+[data-theme="dark"] .modal__copy { color: rgba(241,234,221,0.72); }
+[data-theme="dark"] .howto-list { color: rgba(241,234,221,0.8); }
+[data-theme="dark"] .mini-card__meta { color: rgba(241,234,221,0.6); }
 [data-theme="dark"] .mini-card__hint,
-[data-theme="dark"] .expanded-panel__hint { color: rgba(255,255,255,0.62); }
-[data-theme="dark"] .setting-row > span { color: #ECECEC; }
+[data-theme="dark"] .expanded-panel__hint { color: rgba(241,234,221,0.62); }
+[data-theme="dark"] .setting-row > span { color: var(--ink); }
 
-/* Eyebrow / green-tinted accents */
-[data-theme="dark"] .screen__eyebrow { background: rgba(109,76,125,0.25); color: #C9A9D6; }
+/* Eyebrow + inline code accents — gold on midnight. */
+[data-theme="dark"] .screen__eyebrow { background: rgba(201,162,78,0.16); color: #E0BE6A; }
+[data-theme="dark"] .screen__copy code { background: rgba(201,162,78,0.16); color: #E0BE6A; }
 
-/* Buttons (primary/accent keep their brand colours) */
-[data-theme="dark"] .btn--secondary { background: rgba(255,255,255,0.1); color: #ECECEC; }
-[data-theme="dark"] .btn--ghost { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.16); color: #ECECEC; }
+/* Buttons. Primary/reveal/accent sit on GOLD, so force midnight text on them. */
+[data-theme="dark"] .btn--primary { color: #201A0B; }
+[data-theme="dark"] .btn--accent { color: #201A0B; }
+[data-theme="dark"] .btn--secondary { background: rgba(255,255,255,0.1); color: var(--ink); }
+[data-theme="dark"] .btn--ghost { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.16); color: var(--ink); }
 [data-theme="dark"] .btn--dark { background: rgba(255,255,255,0.16); color: #fff; }
-[data-theme="dark"] .ghost-link { color: rgba(255,255,255,0.72); }
+[data-theme="dark"] .ghost-link { color: rgba(241,234,221,0.72); }
+[data-theme="dark"] .start-btn { background: var(--color-gold); color: #201A0B; }
+
+/* Play — timer ring, the signature play card, and the scoring actions. */
+[data-theme="dark"] .timer { box-shadow: inset 0 0 0 10px var(--cream); }
+[data-theme="dark"] .timer__inner { background: var(--cream); border-color: rgba(255,255,255,0.12); color: var(--ink); }
+[data-theme="dark"] .score-pill { background: rgba(201,162,78,0.16); color: var(--color-gold); }
+[data-theme="dark"] .peek-card { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.08); box-shadow: 0 10px 28px rgba(0,0,0,0.4); }
+
+/* The play card is a deep plum-midnight surface (not the gold primary), with
+   gold accents on the answer label, credit and hint. */
+[data-theme="dark"] .word-card {
+  background: linear-gradient(150deg, var(--plum-deep) 0%, var(--cream) 100%);
+  color: var(--ink);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.5);
+}
+[data-theme="dark"] .word-card__answer { border-top-color: rgba(255,255,255,0.18); }
+[data-theme="dark"] .word-card__answer-label,
+[data-theme="dark"] .word-card__credit,
+[data-theme="dark"] .word-card__hint-label { color: var(--color-gold); opacity: 1; }
+[data-theme="dark"] .tag { background: rgba(255,255,255,0.1); color: var(--ink); }
+
+/* Reveal button stays gold (needs midnight text); Got it becomes plum; Skip a
+   translucent light surface. */
+[data-theme="dark"] .action-btn--reveal { color: #201A0B; }
+[data-theme="dark"] .action-btn--success { background: var(--plum); color: var(--ink); }
+[data-theme="dark"] .action-btn--skip { background: rgba(255,255,255,0.1); color: var(--ink); }
+
+/* Turn summary */
+[data-theme="dark"] .mini-card { background: linear-gradient(145deg, rgba(143,114,171,0.32) 0%, rgba(143,114,171,0.14) 100%); color: var(--ink); }
+[data-theme="dark"] .mini-card--faded { background: rgba(255,255,255,0.06); }
+[data-theme="dark"] .team-chip { background: rgba(255,255,255,0.1); color: var(--ink); }
+[data-theme="dark"] .team-chip--active { background: rgba(201,162,78,0.2); color: var(--color-gold); }
+
+/* Scoreboard — pile cards keep their per-team tint (set inline); give them an
+   edge + shadow that reads on midnight. */
+[data-theme="dark"] .team-column { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
+[data-theme="dark"] .team-column.is-expanded { background: rgba(201,162,78,0.10); border-color: rgba(201,162,78,0.32); }
+[data-theme="dark"] .team-column__score { background: rgba(255,255,255,0.1); }
+[data-theme="dark"] .pile-card { color: var(--ink); border-color: rgba(255,255,255,0.12); box-shadow: 0 10px 24px rgba(0,0,0,0.45); }
+[data-theme="dark"] .pile-empty { color: rgba(241,234,221,0.4); }
+[data-theme="dark"] .pile-more { background: rgba(255,255,255,0.18); color: #fff; }
+[data-theme="dark"] .expanded-panel { background: rgba(255,255,255,0.05); }
+[data-theme="dark"] .expanded-panel__item { border-color: rgba(255,255,255,0.1); }
+
+/* Reveal — gold title, gold winner glow, plum runners-up. */
+[data-theme="dark"] .reveal-card__title { color: var(--color-gold); }
+[data-theme="dark"] .reveal-card__eyebrow { background: rgba(224,190,106,0.2); color: var(--color-gold); }
+[data-theme="dark"] .podium__team { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
+[data-theme="dark"] .podium__team--winner { background: linear-gradient(90deg, rgba(224,190,106,0.28) 0%, rgba(255,255,255,0.04) 100%); border-color: rgba(224,190,106,0.5); }
+[data-theme="dark"] .podium__team--winner .podium__pill { color: #201A0B; }
+[data-theme="dark"] .podium__pill { background: rgba(255,255,255,0.08); color: var(--ink); }
+[data-theme="dark"] .score-list__row { border-color: rgba(255,255,255,0.1); }
+
+/* Modal */
+[data-theme="dark"] .modal { background: var(--cream); color: var(--ink); border-color: rgba(255,255,255,0.1); }
 
 /* Form controls */
 [data-theme="dark"] .team-row input,
 [data-theme="dark"] .stepper input,
 [data-theme="dark"] .bank-select,
-[data-theme="dark"] .field { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.16); color: #ECECEC; }
-[data-theme="dark"] .icon-btn { background: rgba(255,255,255,0.1); color: #ECECEC; }
+[data-theme="dark"] .field { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.16); color: var(--ink); }
+[data-theme="dark"] .icon-btn { background: rgba(255,255,255,0.1); color: var(--ink); }
 [data-theme="dark"] .stepper button { background: rgba(255,255,255,0.16); color: #fff; }
 [data-theme="dark"] .swatch { border-color: rgba(255,255,255,0.25); }
-[data-theme="dark"] .segmented button { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.14); color: #ECECEC; }
-[data-theme="dark"] .segmented button.active { background: rgba(109,76,125,0.3); border-color: var(--color-primary); color: #fff; }
+[data-theme="dark"] .segmented button { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.14); color: var(--ink); }
+[data-theme="dark"] .segmented button.active { background: rgba(201,162,78,0.22); border-color: var(--color-gold); color: var(--ink); }
 
-/* Play */
-[data-theme="dark"] .timer__inner { background: #23282a; border-color: rgba(255,255,255,0.1); color: #ECECEC; }
-[data-theme="dark"] .peek-card { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); box-shadow: 0 10px 28px rgba(0,0,0,0.4); }
-[data-theme="dark"] .score-pill { background: rgba(109,76,125,0.3); color: #C9A9D6; }
+/* Lyric-bank preview (custom-bank editor) */
+[data-theme="dark"] .lyric-preview { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.1); }
+[data-theme="dark"] .lyric-preview__answer-label,
+[data-theme="dark"] .lyric-preview__credit { color: var(--color-gold); }
 
-/* Turn summary */
-[data-theme="dark"] .mini-card { background: linear-gradient(145deg, rgba(109,76,125,0.32) 0%, rgba(109,76,125,0.14) 100%); color: #ECECEC; }
-[data-theme="dark"] .mini-card--faded { background: rgba(255,255,255,0.06); }
-[data-theme="dark"] .team-chip { background: rgba(255,255,255,0.1); color: #ECECEC; }
-[data-theme="dark"] .team-chip--active { background: rgba(109,76,125,0.3); color: #C9A9D6; }
-
-/* Scoreboard */
-[data-theme="dark"] .team-column { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.08); }
-[data-theme="dark"] .team-column.is-expanded { background: rgba(109,76,125,0.16); }
-[data-theme="dark"] .team-column__score { background: rgba(255,255,255,0.1); }
-[data-theme="dark"] .pile-card { color: #ECECEC; border-color: rgba(255,255,255,0.12); box-shadow: 0 10px 24px rgba(0,0,0,0.4); }
-[data-theme="dark"] .pile-empty { color: rgba(255,255,255,0.4); }
-[data-theme="dark"] .pile-more { background: rgba(255,255,255,0.18); color: #fff; }
-[data-theme="dark"] .expanded-panel { background: rgba(255,255,255,0.05); }
-[data-theme="dark"] .expanded-panel__item { border-color: rgba(255,255,255,0.1); }
-
-/* Reveal */
-[data-theme="dark"] .reveal-card__title { color: #C6A15B; }
-[data-theme="dark"] .reveal-card__eyebrow { background: rgba(198,161,91,0.22); color: #C6A15B; }
-[data-theme="dark"] .podium__team { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
-[data-theme="dark"] .podium__team--winner { background: linear-gradient(90deg, rgba(198,161,91,0.3) 0%, rgba(255,255,255,0.06) 100%); border-color: rgba(198,161,91,0.5); }
-[data-theme="dark"] .podium__pill { background: rgba(109,76,125,0.3); color: #C9A9D6; }
-[data-theme="dark"] .score-list__row { border-color: rgba(255,255,255,0.1); }
-
-/* Modal */
-[data-theme="dark"] .modal { background: #23282a; color: #ECECEC; border-color: rgba(255,255,255,0.1); }
-
-/* Word-bank browser */
+/* Word-bank browser (hidden dev screen) */
 [data-theme="dark"] .bank-group { border-color: rgba(255,255,255,0.12); }
-[data-theme="dark"] .bank-group__count { color: rgba(255,255,255,0.55); }
+[data-theme="dark"] .bank-group__count { color: rgba(241,234,221,0.55); }
 [data-theme="dark"] .bank-card { border-color: rgba(255,255,255,0.1); }
-[data-theme="dark"] .bank-card__hint { color: rgba(255,255,255,0.62); }
-[data-theme="dark"] .bank-card__meta { color: rgba(255,255,255,0.45); }
+[data-theme="dark"] .bank-card__hint { color: rgba(241,234,221,0.62); }
+[data-theme="dark"] .bank-card__meta { color: rgba(241,234,221,0.45); }

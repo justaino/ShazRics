@@ -62,3 +62,16 @@ Make it yours to fill.
 
 ## Phase 4 — Deferred / optional (out of scope for v1)
 Online multiplayer, typed-answer auto-checking, multiple-choice mode, audio snippets, stats/history, shareable results. **Do not build toward these unless asked.**
+
+---
+
+## Phase 5 — Visual identity: Midnight & Gold (dark-first re-theme) ✅
+Done after Phase 3, on request — the plum/cream look was reworked into a dark-first identity. Kept entirely within the theming layer; no layout, flow, or logic changes.
+
+- [x] Retint `css/dark.css` from "slate + plum" to **Midnight & Gold** (deep plum-midnight surfaces, **gold** primary accent, dusty-plum secondary, cream text). Done at the token level (`--color-primary` → gold, palette tokens redefined under `[data-theme="dark"]`) so the whole app recolours through the same variables, with targeted overrides only where plum was baked in as a surface (the play card, primary-button text, the brand mark).
+- [x] **Flip the default theme to dark** (the boot script in `index.html`, `preferences.theme`, and the topbar button's pre-JS state). Light plum/cream stays as the optional toggle and is left byte-for-byte unchanged.
+- [x] Retint the brand mark (gold disc), regenerate the PWA icons (gold "SR" on midnight), and set `manifest.json` + `<meta name="theme-color">` to midnight.
+- [x] Bump `service-worker.js` `CACHE`.
+- [x] Update the docs (this file, `CLAUDE.md` theme section, `RUNBOOK.md`, `WHATS-NEW.md`).
+
+**Done when:** the app opens in Midnight & Gold by default across every screen, the light theme still renders identically to before when toggled, and PWA install/offline still works. ✅

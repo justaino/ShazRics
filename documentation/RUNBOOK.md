@@ -8,7 +8,9 @@ the phased build plan see `ROADMAP.md`.
 > tracks the app as it stands. Phases 0–3 are done: the re-skin, the
 > reveal-then-self-score mechanic, in-app custom lyric banks, and the polish pass
 > (reveal animation + chime, optional artist hint, accessibility, dark mode) are
-> all live. When you change behaviour, update this file **and** `WHATS-NEW.md`.
+> all live. The visual identity was then reworked (Phase 5) into a **dark-first
+> "Midnight & Gold"** default, with the plum/cream palette kept as the light
+> toggle. When you change behaviour, update this file **and** `WHATS-NEW.md`.
 
 ---
 
@@ -63,10 +65,13 @@ There is **nothing to build or install** — it's static files.
   console:
   `localStorage.removeItem('shazrics:state')` (in-progress game),
   `…('shazrics:banks')` (custom banks), `…('shazrics:prefs')` (settings + theme).
-- **Test mobile layout** with DevTools' device toolbar (Cmd-Shift-M) at a phone
-  width. Check dark mode (🌙 / ☀️) too — it follows the OS by default (`theme:
-  'system'` in prefs) and the topbar button sets an explicit light/dark choice;
-  the dark colours are an additive override layer in `css/dark.css`.
+- **Test both themes.** The app is **dark-first**: an unset preference defaults
+  to **dark** (Midnight & Gold). The topbar button (🌙 / ☀️) sets an explicit
+  light/dark choice; `'system'` follows the OS. Always sanity-check the **light**
+  plum/cream theme too after any theming change — it's the fallback and must stay
+  unchanged. The dark colours live in `css/dark.css`; light lives in the base
+  stylesheets. Default lever: `preferences.theme` **and** the boot script in
+  `index.html` (which sets `data-theme` before first paint to avoid a flash).
 
 When you change an app-shell file, bump `CACHE` (see §6) so installed devices
 refresh.
@@ -84,7 +89,7 @@ css/
   components.css           # reusable building blocks (cards, buttons, pills, piles)
   screens.css              # per-screen layout
   animations.css           # @keyframes + reduced-motion guard
-  dark.css                 # additive dark theme (system-aware, topbar toggle)
+  dark.css                 # DEFAULT theme: dark-first "Midnight & Gold" (token-level override of base)
 js/
   app.js                   # controller: routing, actions, timer lifecycle, boot, SW registration
   state.js                 # gameState shape + localStorage (load/save/reset)
@@ -316,9 +321,31 @@ in-app via Settings. The per-game copy is `gameState.settings.artistHint`
 4. Add the new JS file to `PRECACHE` + bump `CACHE`.
 
 ### Theme / palette
-Design tokens live in `css/base.css` `:root` (`--plum`, `--plum-deep`, `--cream`,
-`--cream-deep`, `--ink`, `--muted`, `--gold`, `--mauve`). Legacy `--color-*`
-names are aliased to these so existing rules keep working.
+Two themes. **Light** (plum/cream) is the baseline: tokens live in `css/base.css`
+`:root` (`--plum`, `--plum-deep`, `--cream`, `--cream-deep`, `--ink`, `--muted`,
+`--gold`, `--mauve`), with legacy `--color-*` aliases so existing rules keep
+working. **Dark** (Midnight & Gold) is the **default** and lives entirely in
+`css/dark.css` as an override layer: it **redefines those same tokens** under
+`[data-theme="dark"]` (e.g. `--color-primary` → gold, surfaces → midnight, text
+→ cream), then adds a few component overrides only where plum was baked in as a
+surface (the play card `.word-card`, gold-button text, the brand mark). The
+resolved dark values (for reference):
+
+```
+gold (primary)  #C9A24E     midnight page      #14111C
+gold (winner)   #E0BE6A     card surface       #221C31
+plum (secondary)#8F72AB     raised surface     #2C2540
+cream text      #F1EADD     muted text         #9B9086
+```
+
+**Changing the default theme:** three places must agree — `preferences.theme`
+(the JS default), the boot script in `index.html` (the pre-paint default), and
+the topbar button's static label/emoji in `index.html`. **PWA colours** for the
+dark identity: `manifest.json` `background_color`/`theme_color` and
+`<meta name="theme-color">` are midnight `#14111C`; the app icons
+(`assets/icons/icon-*.png`) are the gold "SR" on midnight (regenerated with
+Pillow + Arial Black). **Golden rule:** recolour via tokens in `dark.css`; never
+edit the light palette in the base stylesheets when adjusting dark.
 
 ---
 
