@@ -333,6 +333,16 @@ Static files, so Pages serves them directly — no build, no Actions needed.
    works under any subpath; the service worker registers with a relative path so
    its scope matches automatically.
 
+**`.nojekyll` (required).** An empty `.nojekyll` file at the repo root tells Pages
+to serve the files **as-is** and skip its automatic Jekyll build. Without it, the
+branch-deploy path runs Jekyll over the repo — which can fail the deployment on a
+buildless static app like this. Keep the file; don't delete it.
+
+> The "Node.js 20 is deprecated … forced to run on Node.js 24" notice on the
+> Pages deployment is a **harmless GitHub-side warning** from its built-in
+> actions (`actions/checkout`, `actions/upload-artifact`), not a build error. It
+> can't be fixed from this repo and does not affect the deploy.
+
 ### Branch policy
 Work happens on **`dev`**; **`main`** is merged only on explicit request. Point
 Pages at `dev` to test work-in-progress, or merge `dev → main` and point Pages at
