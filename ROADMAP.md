@@ -75,3 +75,25 @@ Done after Phase 3, on request — the plum/cream look was reworked into a dark-
 - [x] Update the docs (this file, `CLAUDE.md` theme section, `RUNBOOK.md`, `WHATS-NEW.md`).
 
 **Done when:** the app opens in Midnight & Gold by default across every screen, the light theme still renders identically to before when toggled, and PWA install/offline still works. ✅
+
+---
+
+## Phase 6 — User-selectable themes (a theme picker)
+Let players pick their palette from Settings, not just toggle light/dark. **Highly feasible** — it extends the token/`data-theme` system that Phases 3 & 5 already built (a theme is one `[data-theme="…"] { … }` block; `dark.css` is the proof). No architectural changes.
+
+**Designs already exist.** Six palettes are drawn up with exact token values in **`documentation/THEME-PALETTES.md`** (the authoritative source) — the two live ones (**Plum & Cream** light, **Midnight & Gold** dark) plus four ready-to-wire light alternatives (**Emerald**, **Teal**, **Sunset**, **Cobalt**), including copy-paste CSS blocks and a step-by-step implementation recipe. Visual reference: the palette-comparison Artifact (link in that file). **A fresh Claude Code session should start by reading `documentation/THEME-PALETTES.md`.**
+
+**Recommendations (defaults for the three open decisions):**
+1. **Flat list of self-contained themes** for v1 — each theme declares whether it's *light* or *dark*, and the user picks one. (Defer per-theme light/dark *pairs* — more surface area for little v1 gain.)
+2. **Keep one "Match device" option** that maps to a light default (Plum & Cream) + a dark default (Midnight & Gold); every other choice is explicit. Preserves today's system-aware behaviour without blocking explicit picks.
+3. **Keep a single installed app icon** (the gold-on-midnight "SR"). The PWA home-screen icon is a static PNG and can't follow the in-app theme — a platform limit, not a code one; the in-app mark still recolours per theme.
+
+**Tasks:**
+- [ ] **Enabling cleanup:** tokenize the few remaining hardcoded accent colours (the `rgba(109,76,125,…)` plums, the timer track in `timer.js`, the `celebrate()` confetti + `.confetti` colours) so every palette looks intentional. Do this first.
+- [ ] Add the four light-theme `[data-theme]` blocks (from `THEME-PALETTES.md`) — e.g. a `css/themes.css`; register it in `index.html` + `PRECACHE`, bump `CACHE`.
+- [ ] Generalize `preferences.theme` (`system | light | dark` → any theme id), `js/theme.js` `apply()`/`resolved()`, and the pre-paint boot script in `index.html`; keep a light/dark map so the topbar icon + `Match device` stay correct.
+- [ ] **Theme picker in Settings** — a grid of tappable swatches (reuse the comparison-Artifact swatch style), persisted on tap. Decide the topbar button's role (quick light/dark toggle, or opens the picker).
+- [ ] Dynamic `<meta name="theme-color">` (and manifest-driven chrome) from the active theme's `--cream-deep` on switch.
+- [ ] Update docs (`CLAUDE.md` theme section, `RUNBOOK.md`, `WHATS-NEW.md`) and mark this phase done.
+
+**Done when:** a player can pick any bundled theme in Settings, the choice persists across sessions and applies before first paint (no flash), "Match device" still follows the OS, every screen looks intentional in every theme (light and dark), and PWA install/offline still works.
