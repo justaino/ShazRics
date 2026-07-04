@@ -1,12 +1,13 @@
 // service-worker.js — buildless PWA offline support.
 //
 // Precaches the whole app shell (relative paths, so it works under any base
-// subpath) and serves cache-first with a network fallback that also
-// runtime-caches anything new.
+// subpath) and serves it stale-while-revalidate: the cached copy loads
+// instantly (and offline), while a background fetch refreshes the cache so the
+// next load is fresh — so a client never gets stuck on an old version.
 //
 // IMPORTANT: bump CACHE on every deploy that changes files, so installed
 // devices pick up the new version (the old cache is cleaned on activate).
-const CACHE = 'shazrics-v9';
+const CACHE = 'shazrics-v10';
 
 const PRECACHE = [
   './',
@@ -47,28 +48,39 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+// Stale-while-revalidate: serve the cached copy instantly (fast, offline-proof),
+// but always re-fetch in the background and update the cache, so the NEXT load
+// gets the fresh file. This means an updated deploy self-heals within one reload
+// — a client can never get permanently stuck on an old version — while the app
+// still opens instantly and works fully offline.
 self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
-  if (new URL(req.url).origin !== location.origin) return; // ignore cross-origin
+  if (new URL(req.url).origin !== location.origin) return; // same-origin only
 
   event.respondWith((async () => {
-    const cached = await caches.match(req);
-    if (cached) return cached;
-    try {
-      const res = await fetch(req);
-      if (res && res.ok) {
-        const cache = await caches.open(CACHE);
-        cache.put(req, res.clone());
-      }
-      return res;
-    } catch (err) {
-      // Offline and not cached: fall back to the app shell for navigations.
-      if (req.mode === 'navigate') {
-        const shell = (await caches.match('index.html')) || (await caches.match('./'));
-        if (shell) return shell;
-      }
-      throw err;
+    const cache = await caches.open(CACHE);
+    const cached = await cache.match(req);
+
+    // Background refresh: pull a fresh copy and store it for next time.
+    const network = fetch(req)
+      .then((res) => { if (res && res.ok) cache.put(req, res.clone()); return res; })
+      .catch(() => null);
+
+    if (cached) {
+      event.waitUntil(network); // keep the SW alive until the refresh completes
+      return cached;
     }
+
+    // Nothing cached yet: wait for the network.
+    const res = await network;
+    if (res) return res;
+
+    // Offline and not cached: fall back to the app shell for navigations.
+    if (req.mode === 'navigate') {
+      const shell = (await cache.match('index.html')) || (await cache.match('./'));
+      if (shell) return shell;
+    }
+    return Response.error();
   })());
 });

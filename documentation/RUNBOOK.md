@@ -170,8 +170,10 @@ bank `id`** — the loader fetches `data/wordbanks/${id}.json`. Card shape:
 
 ## 6. Service worker & cache busting  ⚠️ important
 
-`service-worker.js` precaches the app shell (`PRECACHE` list) and serves
-cache-first. Installed devices keep serving cached files until the SW updates.
+`service-worker.js` precaches the app shell (`PRECACHE` list) and serves it
+**stale-while-revalidate**: a cached copy loads instantly (and offline) while a
+background fetch refreshes the cache for the next load. Installed devices still
+run the SW that's active until a new one takes over (see the `CACHE` bump).
 
 **On every deploy that changes any app-shell file:**
 
@@ -212,11 +214,12 @@ an in-progress game, custom banks, and the saved theme on that device are reset 
 which is usually what you want, since stale saved data (e.g. a default-bank id
 from an old build) is often part of the problem.
 
-**For deployed players** it's gentler: the `CACHE` bump + `skipWaiting()` /
-`clients.claim()` means they pick up a new deploy on next launch automatically —
-at worst seeing the previous version for a single load before it swaps. (A
-`stale-while-revalidate` fetch strategy would close even that one-load gap; the
-SW is currently cache-first.)
+**For deployed players** it's gentle: the SW is **stale-while-revalidate**, so
+every load quietly refreshes each file in the background and the next load is
+fresh — a client can't get permanently stuck on an old build. The `CACHE` bump +
+`skipWaiting()` / `clients.claim()` still forces a clean swap of the whole shell
+on deploy. (During rapid dev iteration you can still *see* a one-load-old file
+between edits — that's why "Update on reload" above is the dev habit to keep on.)
 
 ---
 
