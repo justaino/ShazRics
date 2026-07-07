@@ -5,7 +5,7 @@ import { getCustomBank } from '../banks.js';
 
 const WORDBANK_BASE = 'data/wordbanks';
 
-export async function loadWordbank(id = 'naija-lyrics-v2') {
+export async function loadWordbank(id = 'naija-lyrics-bank-popular') {
   // Custom bank? Serve it straight from localStorage (works offline, no fetch).
   const custom = getCustomBank(id);
   if (custom) {

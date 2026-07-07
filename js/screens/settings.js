@@ -228,7 +228,7 @@ export function render(el, ctx) {
     if (!window.confirm(`Delete the "${b.dataset.delname}" word bank? This can't be undone.`)) return;
     deleteCustomBank(b.dataset.delbank);
     if (editingId === b.dataset.delbank) editingId = null;
-    if (p.defaultWordbankId === b.dataset.delbank) { p.defaultWordbankId = 'naija-lyrics-v2'; savePrefs(); }
+    if (p.defaultWordbankId === b.dataset.delbank) { p.defaultWordbankId = 'naija-lyrics-bank-popular'; savePrefs(); }
     rerender();
   }));
 

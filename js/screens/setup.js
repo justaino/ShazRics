@@ -41,7 +41,7 @@ export function render(el, ctx) {
   const s = draft.settings;
 
   const banks = availableBanks();
-  if (!banks.some((b) => b.id === s.wordbankId)) s.wordbankId = banks[0]?.id || 'naija-lyrics-v2';
+  if (!banks.some((b) => b.id === s.wordbankId)) s.wordbankId = banks[0]?.id || 'naija-lyrics-bank-popular';
 
   const seg = (active) => (active ? ' class="active"' : '');
   const showStepper = s.winCondition !== 'open';

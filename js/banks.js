@@ -3,6 +3,8 @@
 const CUSTOM_KEY = 'shazrics:banks';
 
 const BUNDLED = [
+  { id: 'naija-lyrics-bank-popular', name: 'Naija - Popular Songs' },
+  { id: 'naija-lyrics-bank-known', name: 'Naija - Other Songs' },
   { id: 'naija-lyrics-v2', name: 'Naija Chorus (50 songs)' },
 ];
 

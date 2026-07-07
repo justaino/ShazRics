@@ -9,13 +9,17 @@ export const preferences = {
   defaultSkipRule: 'free',
   defaultWinCondition: 'open',
   defaultWinTarget: 5,
-  defaultWordbankId: 'naija-lyrics-v2',
+  defaultWordbankId: 'naija-lyrics-bank-popular',
   defaultArtistHint: false, // seed a new game's "show artist up-front" setting
 
   // Global toggles.
   soundEnabled: true,
   hapticsEnabled: true,
   theme: 'neon', // 'system' | a theme id — dark-first, default Midnight Neon
+  // The last-used light + dark theme, so the topbar light↔dark toggle flips back
+  // to whichever palette of each kind you last had (see js/theme.js).
+  lastLightTheme: 'light',
+  lastDarkTheme: 'neon',
 };
 
 export function loadPrefs() {

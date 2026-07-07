@@ -52,9 +52,9 @@ There's a **How to play** screen inside the app too (button on the home screen).
 - **New default look: Midnight Neon 🌆** — ShazRics now opens in a 2am
   Afrobeats-rooftop club look: a warm near-black background lit by a
   magenta-and-cyan glow, frosted-glass cards that float over it, and the big
-  lyric and title text lit up in neon. It's a committed style, so while it's on,
-  the top-bar ☀️/🌙 button is tucked away — switch looks any time in **Settings →
-  Theme**.
+  lyric and title text lit up in neon. Use the top-bar ☀️/🌙 button to flip
+  between light and dark any time (it remembers the light and dark looks you last
+  used), or pick any theme in **Settings → Theme**.
 - **Pick your palette 🎨** — in **Settings → Theme**, choose from **seven**
   looks: **Midnight Neon** (the new default), **Midnight & Gold** (the earlier
   dark look), **Plum & Cream** (the original light look), and four light
@@ -72,9 +72,10 @@ live.
 
 ## Lyric banks — including your own ✍️
 
-ShazRics comes with a built-in bank, **Naija Chorus** (50 iconic chorus lines).
-Pick it at game setup — or make your own so the game is full of *your*
-favourites.
+ShazRics comes with built-in banks: **Naija - Popular Songs** (the default, 50
+big-hit lyrics), **Naija - Other Songs** (50 more), and the original **Naija
+Chorus** (50 iconic chorus lines). Pick one at game setup — or make your own so
+the game is full of *your* favourites.
 
 ### Make your own bank
 
@@ -117,7 +118,7 @@ and as the **Default word bank** option in Settings.
 
 In **Settings → Word banks**, tap the **✎** next to a bank you made to re-open
 its lyrics and **Save changes**, or the **×** to delete it (you'll be asked to
-confirm). The built-in Naija Chorus bank stays put.
+confirm). The built-in Naija banks stay put.
 
 ---
 

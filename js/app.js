@@ -53,14 +53,6 @@ function updateMuteButton() {
 
 function updateThemeButton() {
   if (!themeBtn) return;
-  // Some themes (Midnight Neon) are a committed look — hide the quick light/dark
-  // flip while they're active so the topbar button can't switch away from them.
-  // The theme is still changeable in Settings.
-  if (theme.toggleLocked()) {
-    themeBtn.style.display = 'none';
-    return;
-  }
-  themeBtn.style.display = '';
   const dark = theme.isDark();
   themeBtn.textContent = dark ? '☀️' : '🌙';
   themeBtn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');

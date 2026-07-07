@@ -1,0 +1,457 @@
+{
+  "id": "naija-lyrics-bank-popular",
+  "name": "Naija - Popular Songs",
+  "description": "50 iconic, instantly recognizable lyrics from Nigerian hits for your guessing game with Sharon. Mix of classics and modern Afrobeats bangers.",
+  "cards": [
+    {
+      "id": "pop-001",
+      "prompt": "You are my African ______",
+      "answer": "queen",
+      "artist": "2Baba",
+      "song": "African Queen",
+      "era": "timeless",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-002",
+      "prompt": "Ni Ojuelegba, they know my ______",
+      "answer": "story",
+      "artist": "Wizkid",
+      "song": "Ojuelegba",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-003",
+      "prompt": "Baby, calm down, calm down / Girl, this your body e put my heart for ______",
+      "answer": "lockdown",
+      "artist": "Rema",
+      "song": "Calm Down",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-004",
+      "prompt": "Oh-na-na, omo je ka shi ge ge / Girl, I no go let you ______",
+      "answer": "go",
+      "artist": "Wizkid ft. Tems",
+      "song": "Essence",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-005",
+      "prompt": "Ule, luv ______",
+      "answer": "nwantiti",
+      "artist": "CKay",
+      "song": "Love Nwantiti",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-006",
+      "prompt": "Oya Doro, ______",
+      "answer": "Dorobucci o",
+      "artist": "Mavins",
+      "song": "Dorobucci",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-007",
+      "prompt": "Money fall on you / Banana fall on you / Prada fall on you / 'Cause I'm in love with ______",
+      "answer": "you",
+      "artist": "Davido",
+      "song": "Fall",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-008",
+      "prompt": "Ye, ye, ye, ye / When it comes to money, I dey ______",
+      "answer": "concentrate",
+      "artist": "Burna Boy",
+      "song": "Ye",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-009",
+      "prompt": "I have a confession, don't take it personal / I have a confession, so you gotta ______",
+      "answer": "listen",
+      "artist": "D'Banj",
+      "song": "Oliver Twist",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pop-010",
+      "prompt": "Bad energy, stay far ______",
+      "answer": "away",
+      "artist": "Wizkid ft. Skepta",
+      "song": "Energy",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-011",
+      "prompt": "E dey rush, e dey rush / My cup full, my cup ______",
+      "answer": "runneth over",
+      "artist": "Ayra Starr",
+      "song": "Rush",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pop-012",
+      "prompt": "I need Igbo and ______",
+      "answer": "shayo",
+      "artist": "Asake",
+      "song": "Sungba (or similar party tracks)",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-013",
+      "prompt": "Omo ope, omo ope / I can shout, mo tun le ______",
+      "answer": "pariwo",
+      "artist": "Asake",
+      "song": "Omo Ope",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pop-014",
+      "prompt": "If you love me, you go ______",
+      "answer": "wait for me",
+      "artist": "2Baba",
+      "song": "African Queen / related",
+      "era": "timeless",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-015",
+      "prompt": "Last last, na everybody go chop ______",
+      "answer": "breakfast",
+      "artist": "Burna Boy",
+      "song": "Last Last",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-016",
+      "prompt": "Jaiye jaiye, no dey ______",
+      "answer": "carry heavy load",
+      "artist": "Wizkid",
+      "song": "Jaiye Jaiye",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pop-017",
+      "prompt": "Fall in love with you, I no go ______",
+      "answer": "lie",
+      "artist": "Davido / various",
+      "song": "Various hits",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pop-018",
+      "prompt": "Ada fine gan, ah fine na ______",
+      "answer": "ni",
+      "artist": "Mavins",
+      "song": "Dorobucci",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-019",
+      "prompt": "Sweet mother, I no go ______",
+      "answer": "forget you",
+      "artist": "Prince Nico Mbarga",
+      "song": "Sweet Mother",
+      "era": "timeless",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-020",
+      "prompt": "Gongo Aso, gongo aso / ______",
+      "answer": "E o ni baje o",
+      "artist": "9ice",
+      "song": "Gongo Aso",
+      "era": "timeless",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pop-021",
+      "prompt": "Oluwa, e to bi o / Make you ______",
+      "answer": "bless me more",
+      "artist": "Various (common in praise)",
+      "song": "Praise tracks",
+      "era": "timeless",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-022",
+      "prompt": "Baby girl, na you be my ______",
+      "answer": "one and only",
+      "artist": "Various (e.g., Davido style)",
+      "song": "Love songs",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-023",
+      "prompt": "Peru, para, peru para / Come my ______",
+      "answer": "way",
+      "artist": "Fireboy / Ed Sheeran collab style",
+      "song": "Peru",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-024",
+      "prompt": "My people dey pray for ______",
+      "answer": "blessing",
+      "artist": "Wizkid",
+      "song": "Ojuelegba",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-025",
+      "prompt": "Girl you sweet like ______",
+      "answer": "Fanta",
+      "artist": "Rema",
+      "song": "Calm Down",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-026",
+      "prompt": "I no fit die for ______",
+      "answer": "nothing",
+      "artist": "Burna Boy",
+      "song": "Ye",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pop-027",
+      "prompt": "Money dey come, money dey go but my ______",
+      "answer": "people dey remain",
+      "artist": "Common Naija sentiment (e.g., in many tracks)",
+      "song": "Various",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pop-028",
+      "prompt": "Owambe don start, gele don ______",
+      "answer": "tie for head",
+      "artist": "Party anthems",
+      "song": "Classic party",
+      "era": "timeless",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-029",
+      "prompt": "When the gbedu enter body, nobody fit ______",
+      "answer": "tell me sidon",
+      "artist": "Dance tracks",
+      "song": "Party hits",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-030",
+      "prompt": "See as you fine, God take time ______",
+      "answer": "when e make you",
+      "artist": "Various praise",
+      "song": "Love/party",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-031",
+      "prompt": "No be today we start this hustle, we go ______",
+      "answer": "finish am strong",
+      "artist": "Hustle anthems",
+      "song": "Motivational",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pop-032",
+      "prompt": "I go love you from Lagos reach ______",
+      "answer": "Aba and back",
+      "artist": "Various",
+      "song": "Love ballads",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pop-033",
+      "prompt": "For the dance floor we no dey tire, put your hands for the ______",
+      "answer": "sky make we higher",
+      "artist": "Dance hits",
+      "song": "Party anthems",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-034",
+      "prompt": "You don hit my ______",
+      "answer": "car",
+      "artist": "Tony Tetuila",
+      "song": "My Car",
+      "era": "timeless",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pop-035",
+      "prompt": "Oleku, oleku / I no be ______",
+      "answer": "thief",
+      "artist": "Ice Prince ft. Brymo",
+      "song": "Oleku",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pop-036",
+      "prompt": "If I tell you say I love you, no dey form ______",
+      "answer": "yanga",
+      "artist": "Rema",
+      "song": "Calm Down",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-037",
+      "prompt": "Tough times don't last, but tough people ______",
+      "answer": "do",
+      "artist": "Wizkid",
+      "song": "IDK",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pop-038",
+      "prompt": "Lagos today, London ______",
+      "answer": "tomorrow",
+      "artist": "Wizkid",
+      "song": "Jaiye Jaiye",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-039",
+      "prompt": "You don't need no other ______",
+      "answer": "body",
+      "artist": "Wizkid ft. Tems",
+      "song": "Essence",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-040",
+      "prompt": "Iskaba, iskele bete, iskolo ______",
+      "answer": "boto",
+      "artist": "Various (e.g., Flavour style)",
+      "song": "Highlife",
+      "era": "timeless",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pop-041",
+      "prompt": "My people suffer, them dey pray for ______",
+      "answer": "blessing",
+      "artist": "Wizkid",
+      "song": "Ojuelegba",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-042",
+      "prompt": "E don cast, last last na everybody go ______",
+      "answer": "chop breakfast",
+      "artist": "Burna Boy",
+      "song": "Last Last",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-043",
+      "prompt": "Omo, je ka shi ge ge, woah / Omo ge wa j'______",
+      "answer": "ogede",
+      "artist": "Wizkid",
+      "song": "Essence",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pop-044",
+      "prompt": "Don Jazzy, Don Dorobucci / Doro ______",
+      "answer": "boss",
+      "artist": "Mavins",
+      "song": "Dorobucci",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-045",
+      "prompt": "African Queen, the only one I've ever seen with a smile so ______",
+      "answer": "bright",
+      "artist": "2Baba",
+      "song": "African Queen",
+      "era": "timeless",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-046",
+      "prompt": "I no want die, I no want ______",
+      "answer": "permit",
+      "artist": "Burna Boy",
+      "song": "Ye",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pop-047",
+      "prompt": "Paparazzi follow you / 'Cause I'm in love with ______",
+      "answer": "you",
+      "artist": "Davido",
+      "song": "Fall",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pop-048",
+      "prompt": "Mo tun le pariwo, I can ______",
+      "answer": "shout",
+      "artist": "Asake",
+      "song": "Omo Ope",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pop-049",
+      "prompt": "No ordinary thing, you coulda make a brother ______",
+      "answer": "sin",
+      "artist": "2Baba",
+      "song": "African Queen",
+      "era": "timeless",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pop-050",
+      "prompt": "We been hustle to work eh / Ni Ojuelegba, my people dey ______",
+      "answer": "there",
+      "artist": "Wizkid",
+      "song": "Ojuelegba",
+      "era": "modern",
+      "difficulty": "easy"
+    }
+  ]
+}

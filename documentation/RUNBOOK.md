@@ -76,8 +76,8 @@ There is **nothing to build or install** — it's static files.
   **Midnight Neon**. Seven themes are user-selectable in **Settings → Theme**
   (Plum & Cream, Midnight & Gold, Midnight Neon, Emerald, Teal, Sunset, Cobalt), plus
   "Match device" (`'system'`, follows the OS). The topbar button (🌙 / ☀️) is a quick
-  light↔dark flip between the light + dark defaults — it's **hidden while Midnight Neon
-  is active** (a committed look; switch via Settings). After any theming change, sanity-check the
+  light↔dark flip that's **always visible** and returns to whichever light + dark
+  theme you last used. After any theming change, sanity-check the
   **light** plum/cream theme especially — it's the fallback baseline and must stay
   unchanged. Light themes live in `css/base.css` (`:root`) + `css/themes.css`; the two
   dark themes live in `css/dark.css` (Midnight & Gold) and `css/neon.css` (Midnight
@@ -120,8 +120,10 @@ js/
   data/wordbank-loader.js  # load a bank by id (custom from localStorage, else JSON)
   screens/                 # one render(el, ctx) per screen
   components/card-stack.js # JS-computed pile (offsets + "+N")
-data/wordbanks/            # bundled lyric bank JSON
-  naija-lyrics-v2.json       # 50-song chorus bank (the default)
+data/wordbanks/            # bundled lyric bank JSON (file name must equal bank id)
+  naija-lyrics-bank-popular.json  # "Naija - Popular Songs" (50 cards) — the DEFAULT
+  naija-lyrics-bank-known.json    # "Naija - Other Songs" (50 cards)
+  naija-lyrics-v2.json            # "Naija Chorus (50 songs)" — earlier bank, still bundled
 assets/
   vendor/                  # GSAP, Flip, Howler, canvas-confetti (vendored, no CDN)
   fonts/anton-latin.woff2  # self-hosted display font
@@ -291,13 +293,17 @@ Rules for the file:
 
 ```js
 const BUNDLED = [
+  { id: 'naija-lyrics-bank-popular', name: 'Naija - Popular Songs' }, // default (first)
+  { id: 'naija-lyrics-bank-known', name: 'Naija - Other Songs' },
   { id: 'naija-lyrics-v2', name: 'Naija Chorus (50 songs)' },
-  { id: 'afrobeats-2010s', name: 'Afrobeats 2010s' },
+  { id: 'afrobeats-2010s', name: 'Afrobeats 2010s' }, // ← a new bank you add
 ];
 ```
 
 This is what makes it appear in the Setup picker and the Settings default-bank
-list. (A bank file that exists but isn't registered here is invisible.)
+list, and the **display name** shown there comes from here (not the file's own
+`name`). Order matters: the first entry is what Setup falls back to. (A bank file
+that exists but isn't registered here is invisible.)
 
 **Step 4 — Precache it for offline** in `service-worker.js`: add the file to the
 `PRECACHE` array (near the other `data/wordbanks/*.json` entry)…
@@ -311,9 +317,14 @@ list. (A bank file that exists but isn't registered here is invisible.)
 refetch. Skipping this means phones keep serving the old shell and the new bank
 404s offline.
 
-**Step 5 — (optional) Make it the default.** To have new games pre-select it,
-set `defaultWordbankId` in `js/preferences.js` to your id, or just pick it once
-in Settings → Default word bank (that choice persists per device).
+**Step 5 — (optional) Make it the default.** Easiest: pick it once in Settings →
+Default word bank (persists per device). To change the **built-in** default (the
+current one is `naija-lyrics-bank-popular`), update every spot that hardcodes the
+id so they agree: `js/preferences.js` (`defaultWordbankId`), `js/state.js`
+(`defaultSettings().wordbankId`), the `loadWordbank(id = …)` default in
+`js/data/wordbank-loader.js`, and the delete-fallbacks in `js/screens/setup.js`
+and `js/screens/settings.js`. (Or just make it the first entry in `BUNDLED`, which
+Setup falls back to.)
 
 **Step 6 — Test it (required).** Serve over HTTP and confirm it loads and plays:
 
@@ -349,7 +360,7 @@ Settings → Word banks. Custom banks are stored in `localStorage`
 - **Edit:** the ✎ button re-opens a bank's rows in the same editor; **Save
   changes** keeps its id, so any default-bank / setup selection stays valid.
 - **Delete:** the **×** button (confirms first). If the deleted bank was the
-  default, it falls back to `naija-lyrics-v2`.
+  default, it falls back to `naija-lyrics-bank-popular`.
 
 The parse/serialize lives in `js/banks.js` (`parseLyrics`, `cardsToText`,
 `LYRIC_DELIM`); the editor UI is in `js/screens/settings.js`.
@@ -410,14 +421,15 @@ cream text      #F1EADD     muted text         #9B9086
 id. `js/theme.js` holds the `THEMES` registry (id, display name, `kind` light/dark,
 and picker `swatch` colours) and the light/dark defaults `SYSTEM_LIGHT` (`light`) /
 `SYSTEM_DARK` (**`neon`**); `resolved()` maps `'system'` → those from the OS and
-otherwise returns the id; `apply()` sets `data-theme` on `<html>` and syncs
-`<meta name="theme-color">` from the active `--cream-deep`. The **Settings** picker
-(`js/screens/settings.js`) is a grid of `theme.THEMES` swatches + a "Match device"
-tile; tapping calls `theme.setTheme()` (persist + apply instantly). The **topbar
-button** is a quick light↔dark flip between the two defaults — but it's **hidden**
-whenever `theme.toggleLocked()` is true (themes in the `LOCK_TOGGLE` set, currently
-`neon`), so a committed look isn't flipped away by it; specific palettes are chosen
-in Settings.
+otherwise returns the id; `apply()` sets `data-theme` on `<html>`, syncs
+`<meta name="theme-color">` from the active `--cream-deep`, and records the applied
+theme into `preferences.lastLightTheme` / `lastDarkTheme` (its kind's slot). The
+**Settings** picker (`js/screens/settings.js`) is a grid of `theme.THEMES` swatches
++ a "Match device" tile; tapping calls `theme.setTheme()` (persist + apply instantly).
+The **topbar button** is a quick light↔dark flip that's **always visible**; `toggle()`
+switches to the last-used theme of the *other* kind (`lastLightTheme` ↔ `lastDarkTheme`,
+falling back to the `SYSTEM_LIGHT`/`SYSTEM_DARK` defaults), so it's always reversible.
+Specific palettes are chosen in Settings.
 
 **Adding a theme:** add a `[data-theme="id"]` block to `css/themes.css` (light), or a
 new stylesheet following the `dark.css` / `neon.css` recipe (dark), then add an entry

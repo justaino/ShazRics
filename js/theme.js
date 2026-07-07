@@ -24,19 +24,29 @@ export const THEMES = [
 ];
 
 // 'system' maps to these light/dark defaults. Midnight Neon is the app default,
-// so the dark side (and an unset preference) resolves to it.
+// so the dark side (and an unset preference) resolves to it. They're also the
+// fallbacks for the "last used light/dark theme" the toggle restores.
 const SYSTEM_LIGHT = 'light';
 const SYSTEM_DARK = 'neon';
 
-// Themes whose committed look shouldn't be flipped by the quick topbar light/dark
-// toggle — the topbar button is hidden while one is active (switch via Settings).
-const LOCK_TOGGLE = new Set(['neon']);
-export function toggleLocked() {
-  return LOCK_TOGGLE.has(resolved());
-}
-
 function isKnownId(id) {
   return THEMES.some((t) => t.id === id);
+}
+
+// 'light' | 'dark' for a concrete theme id (defaults to dark for anything odd).
+function kindOf(id) {
+  const t = THEMES.find((x) => x.id === id);
+  return t ? t.kind : 'dark';
+}
+
+// Record the theme that's active right now into its matching light/dark slot, so
+// the topbar toggle can flip back to whichever palette of the other kind the user
+// last used (e.g. Emerald ↔ Neon). Leaves the opposite slot untouched.
+function remember() {
+  const r = resolved();
+  if (kindOf(r) === 'light') preferences.lastLightTheme = r;
+  else preferences.lastDarkTheme = r;
+  savePrefs();
 }
 
 // The concrete theme id applied to <html> right now (never 'system').
@@ -55,6 +65,7 @@ export function isDark() {
 export function apply() {
   document.documentElement.setAttribute('data-theme', resolved());
   syncMetaThemeColor();
+  remember(); // whatever we just applied is now the last-used theme of its kind
 }
 
 // Keep the browser chrome / status-bar colour in step with the active theme by
@@ -66,17 +77,21 @@ function syncMetaThemeColor() {
   if (bg) meta.setAttribute('content', bg);
 }
 
-// Pick a specific theme id (or 'system'); persist + apply instantly.
+// Pick a specific theme id (or 'system'); persist + apply instantly. apply()
+// remembers it as the last-used theme of its kind (so the toggle returns to it).
 export function setTheme(id) {
   preferences.theme = id;
   savePrefs();
   apply();
 }
 
-// Topbar button: a quick light/dark flip to the opposite kind's default theme.
-// (Specific palettes are chosen in Settings; this is just the fast light↔dark.)
+// Topbar button: a quick light↔dark flip. It restores whichever theme of the
+// OTHER kind was last active — Emerald ↔ Neon, Cobalt ↔ Midnight & Gold, etc. —
+// falling back to the light/dark defaults. Always available (never hidden).
 export function toggle() {
-  preferences.theme = isDark() ? SYSTEM_LIGHT : SYSTEM_DARK;
+  preferences.theme = isDark()
+    ? (preferences.lastLightTheme || SYSTEM_LIGHT)
+    : (preferences.lastDarkTheme || SYSTEM_DARK);
   savePrefs();
   apply();
   return resolved();

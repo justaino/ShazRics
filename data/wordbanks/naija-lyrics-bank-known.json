@@ -1,0 +1,457 @@
+{
+  "id": "naija-lyrics-bank-known",
+  "name": "Naija - Other Songs",
+  "description": "Another 50 iconic lyrics from massive Nigerian hits. Answers are slightly longer for richer guessing fun with Sharon.",
+  "cards": [
+    {
+      "id": "oth-001",
+      "prompt": "You are my African queen / Ooh lord ooh lord / Just like the sun lights up the earth, you ______",
+      "answer": "light up my life",
+      "artist": "2Baba",
+      "song": "African Queen",
+      "era": "timeless",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-002",
+      "prompt": "Ni Ojuelegba they know my story / For Mo'Dogg studio I been hustle to work / Ni Ojuelegba my people dey there my people ______",
+      "answer": "suffer them dey pray for blessing",
+      "artist": "Wizkid",
+      "song": "Ojuelegba",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-003",
+      "prompt": "Baby calm down calm down / Girl this your body e put my heart for lockdown / Girl you sweet like Fanta / If I tell you say I love you no dey form ______",
+      "answer": "yanga oh yanga oh",
+      "artist": "Rema",
+      "song": "Calm Down",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-004",
+      "prompt": "Oh na na omo je ka shi ge ge woah / Oh na na omo ge wa j'ogede / Oh na na girl I no go let you ______",
+      "answer": "go oh na na",
+      "artist": "Wizkid ft. Tems",
+      "song": "Essence",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-005",
+      "prompt": "Ule luv nwantiti / Come my way my way / Make we ______",
+      "answer": "dance together",
+      "artist": "CKay",
+      "song": "Love Nwantiti",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-006",
+      "prompt": "Oya Doro Dorobucci o / Doro Doro Dorobucci mama mo / Doro Dorobucci bo nye be ______",
+      "answer": "o",
+      "artist": "Mavins",
+      "song": "Dorobucci",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-007",
+      "prompt": "Money fall on you / Banana fall on you / Prada fall on you / 'Cause I'm in love with you / Money fall on you / Banana fall on you / Paparazzi ______",
+      "answer": "follow you",
+      "artist": "Davido",
+      "song": "Fall",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-008",
+      "prompt": "Ye ye ye ye ye ye ye oh / Oluwaburna ehn ehn / When it comes to money I dey ______",
+      "answer": "concentrate make I tell you straight you are not my mate",
+      "artist": "Burna Boy",
+      "song": "Ye",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "oth-009",
+      "prompt": "I have a confession don't take it personal / I have a confession so you gotta listen / I say I have a confession don't take it personal / I have a confession so you gotta ______",
+      "answer": "listen",
+      "artist": "D'Banj",
+      "song": "Oliver Twist",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-010",
+      "prompt": "Bad energy stay far away / Make e ______",
+      "answer": "stay far away",
+      "artist": "Wizkid ft. Skepta",
+      "song": "Energy",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-011",
+      "prompt": "E dey rush e dey rush / My cup full my cup runneth over / E dey rush e dey rush / God body I no fit ______",
+      "answer": "fall my hand",
+      "artist": "Ayra Starr",
+      "song": "Rush",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "oth-012",
+      "prompt": "I need Igbo and shayo / Make we ______",
+      "answer": "celebrate",
+      "artist": "Asake",
+      "song": "Party anthems (e.g. Sungba vibe)",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-013",
+      "prompt": "Omo ope / I can shout mo tun le ______",
+      "answer": "pariwo",
+      "artist": "Asake",
+      "song": "Omo Ope",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "oth-014",
+      "prompt": "Last last na everybody go chop breakfast / Na everybody go chop ______",
+      "answer": "breakfast",
+      "artist": "Burna Boy",
+      "song": "Last Last",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-015",
+      "prompt": "Jaiye jaiye / No dey carry heavy load / Lagos today London ______",
+      "answer": "tomorrow",
+      "artist": "Wizkid",
+      "song": "Jaiye Jaiye",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-016",
+      "prompt": "You don't need no other body / You don't need no other ______",
+      "answer": "body",
+      "artist": "Wizkid ft. Tems",
+      "song": "Essence",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-017",
+      "prompt": "Sweet mother I no go forget you / For the way you ______",
+      "answer": "take care of me",
+      "artist": "Prince Nico Mbarga",
+      "song": "Sweet Mother",
+      "era": "timeless",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-018",
+      "prompt": "Gongo Aso / E o ni baje o / Gongo Aso e o ni ______",
+      "answer": "baje o",
+      "artist": "9ice",
+      "song": "Gongo Aso",
+      "era": "timeless",
+      "difficulty": "medium"
+    },
+    {
+      "id": "oth-019",
+      "prompt": "Oleku oleku / I no be thief but I go ______",
+      "answer": "steal your heart",
+      "artist": "Ice Prince ft. Brymo",
+      "song": "Oleku",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "oth-020",
+      "prompt": "My car oh you don hit my car / You don hit my car you don ______",
+      "answer": "hit my car",
+      "artist": "Tony Tetuila",
+      "song": "My Car",
+      "era": "timeless",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-021",
+      "prompt": "If you love me you would wait for me / If you love me you would ______",
+      "answer": "wait for me",
+      "artist": "2Baba",
+      "song": "African Queen",
+      "era": "timeless",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-022",
+      "prompt": "No tell me no no no no whoa whoa / Baby come gimme your lo lo lo lo lo lo lo lo ______",
+      "answer": "whoa whoa whoa",
+      "artist": "Rema",
+      "song": "Calm Down",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-023",
+      "prompt": "Oluwa bless me more / I no fit die for ______",
+      "answer": "nothing",
+      "artist": "Burna Boy",
+      "song": "Ye",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "oth-024",
+      "prompt": "Money dey come money dey go but my people dey ______",
+      "answer": "remain",
+      "artist": "Common in many tracks",
+      "song": "Hustle anthems",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "oth-025",
+      "prompt": "For the dance floor we no dey tire / Put your hands for the sky make we ______",
+      "answer": "higher",
+      "artist": "Party hits",
+      "song": "Dance anthems",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-026",
+      "prompt": "I go love you from Lagos reach Aba and ______",
+      "answer": "back",
+      "artist": "Various love songs",
+      "song": "Love classics",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "oth-027",
+      "prompt": "When the gbedu enter body nobody fit tell me ______",
+      "answer": "sidon",
+      "artist": "Dance tracks",
+      "song": "Party bangers",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-028",
+      "prompt": "See as you fine God take time when e ______",
+      "answer": "make you",
+      "artist": "Various",
+      "song": "Praise/love",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-029",
+      "prompt": "No be today we start this hustle we go finish am ______",
+      "answer": "strong",
+      "artist": "Hustle anthems",
+      "song": "Motivational",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "oth-030",
+      "prompt": "Owambe don start gele don tie for ______",
+      "answer": "head",
+      "artist": "Party classics",
+      "song": "Owambe anthems",
+      "era": "timeless",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-031",
+      "prompt": "Tough times don't last but tough people ______",
+      "answer": "do",
+      "artist": "Wizkid",
+      "song": "IDK",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "oth-032",
+      "prompt": "You are my one and only / Baby girl na you be my ______",
+      "answer": "morning and my evening",
+      "artist": "Various (Davido style)",
+      "song": "Love hits",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-033",
+      "prompt": "Peru para peru para / Come my way come my ______",
+      "answer": "way",
+      "artist": "Fireboy DML",
+      "song": "Peru",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-034",
+      "prompt": "Iskaba iskele bete iskolo boto / Oh my ______",
+      "answer": "darling",
+      "artist": "Highlife/Afrobeats",
+      "song": "Party classics",
+      "era": "timeless",
+      "difficulty": "medium"
+    },
+    {
+      "id": "oth-035",
+      "prompt": "Don Jazzy Don Dorobucci / Doro jazzy ehn doro boss doro big you know say doro ______",
+      "answer": "heavy",
+      "artist": "Mavins",
+      "song": "Dorobucci",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-036",
+      "prompt": "The only one I've ever seen with a smile so bright / And just yesterday you came around my way and changed my whole scenery with your astonishing ______",
+      "answer": "beauty",
+      "artist": "2Baba",
+      "song": "African Queen",
+      "era": "timeless",
+      "difficulty": "medium"
+    },
+    {
+      "id": "oth-037",
+      "prompt": "I no want die I no want permit / I want life I want ______",
+      "answer": "enjoy my life",
+      "artist": "Burna Boy",
+      "song": "Ye",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "oth-038",
+      "prompt": "Are you done talking? Tell me baby are you done talking yeah? / Are you done talking? Tell me baby are you done ______",
+      "answer": "talking yeah",
+      "artist": "Davido",
+      "song": "Fall",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-039",
+      "prompt": "Mo tun le pariwo / I can shout I can ______",
+      "answer": "shout",
+      "artist": "Asake",
+      "song": "Omo Ope",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "oth-040",
+      "prompt": "My nigga die for nothing / Ma nigga die for nothing / Die for nothing / Ma nigga that's ______",
+      "answer": "enough",
+      "artist": "Burna Boy",
+      "song": "Ye",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "oth-041",
+      "prompt": "Lagos today London tomorrow / I fought through defeat now I'm living a ______",
+      "answer": "better life",
+      "artist": "Wizkid",
+      "song": "Jaiye Jaiye",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "oth-042",
+      "prompt": "No ordinary thing / You coulda make a brother sin no ______",
+      "answer": "ordinary thing",
+      "artist": "2Baba",
+      "song": "African Queen",
+      "era": "timeless",
+      "difficulty": "medium"
+    },
+    {
+      "id": "oth-043",
+      "prompt": "We been hustle to work eh / Ni Ojuelegba me and CD from Mo'Dogg studio we been hustle to ______",
+      "answer": "work eh",
+      "artist": "Wizkid",
+      "song": "Ojuelegba",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-044",
+      "prompt": "Girl this your body e put my heart for lockdown for lockdown oh lockdown / Girl you sweet like Fanta ooh ______",
+      "answer": "Fanta ooh",
+      "artist": "Rema",
+      "song": "Calm Down",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-045",
+      "prompt": "Ule luv nwantiti / Ule luv nwantiti / Come my way make we ______",
+      "answer": "dance together",
+      "artist": "CKay",
+      "song": "Love Nwantiti",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-046",
+      "prompt": "Doro get the biggest label wey you know of course / Doro frosh pass anybody wey Doro meet / Doro gather pass anybody for the gathering / Doro get money pass everybody ______",
+      "answer": "here",
+      "artist": "Mavins",
+      "song": "Dorobucci",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "oth-047",
+      "prompt": "E dey rush e dey rush / God body I no fit fall my hand / I go dey fine I go dey ______",
+      "answer": "shine",
+      "artist": "Ayra Starr",
+      "song": "Rush",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "oth-048",
+      "prompt": "I have a confession don't take it personal / I say I have a confession so you gotta listen / I have a confession don't take it personal / I have a confession so you gotta listen / Na who get ______",
+      "answer": "the plenty plenty plenty money",
+      "artist": "D'Banj",
+      "song": "Oliver Twist",
+      "era": "modern",
+      "difficulty": "medium"
+    },
+    {
+      "id": "oth-049",
+      "prompt": "Bad energy stay far away / Make it stay far away / Bad energy stay far ______",
+      "answer": "away",
+      "artist": "Wizkid",
+      "song": "Energy",
+      "era": "modern",
+      "difficulty": "easy"
+    },
+    {
+      "id": "oth-050",
+      "prompt": "Sweet mother I no go forget you / For the way you take care of me / When I dey hungry you go feed ______",
+      "answer": "me",
+      "artist": "Prince Nico Mbarga",
+      "song": "Sweet Mother",
+      "era": "timeless",
+      "difficulty": "easy"
+    }
+  ]
+}
