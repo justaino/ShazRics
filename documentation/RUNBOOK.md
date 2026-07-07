@@ -8,9 +8,11 @@ the phased build plan see `ROADMAP.md`.
 > tracks the app as it stands. Phases 0–3 are done: the re-skin, the
 > reveal-then-self-score mechanic, in-app custom lyric banks, and the polish pass
 > (reveal animation + chime, optional artist hint, accessibility, dark mode) are
-> all live. The visual identity was then reworked (Phase 5) into a **dark-first
-> "Midnight & Gold"** default, with the plum/cream palette kept as the light
-> toggle. When you change behaviour, update this file **and** `WHATS-NEW.md`.
+> all live. The visual identity was then reworked (Phase 5) into a **dark-first**
+> look, and Phase 6 added user-selectable themes; the current default is
+> **Midnight Neon** (glass + magenta/cyan glow), with Midnight & Gold and the
+> plum/cream light palette also selectable. When you change behaviour, update this
+> file **and** `WHATS-NEW.md`.
 
 ---
 
@@ -71,15 +73,17 @@ There is **nothing to build or install** — it's static files.
   `localStorage.removeItem('shazrics:state')` (in-progress game),
   `…('shazrics:banks')` (custom banks), `…('shazrics:prefs')` (settings + theme).
 - **Test the themes.** The app is **dark-first**: an unset preference defaults to
-  **dark** (Midnight & Gold). Six themes are user-selectable in **Settings → Theme**
-  (Plum & Cream, Midnight & Gold, Emerald, Teal, Sunset, Cobalt), plus "Match device"
-  (`'system'`, follows the OS). The topbar button (🌙 / ☀️) is a quick light↔dark
-  flip between the two defaults. After any theming change, sanity-check the **light**
-  plum/cream theme especially — it's the fallback baseline and must stay unchanged.
-  Light themes live in `css/base.css` (`:root`) + `css/themes.css`; dark lives in
-  `css/dark.css`. Default lever: `preferences.theme` **and** the boot script in
-  `index.html` (which sets `data-theme` before first paint to avoid a flash). See
-  §7 → *Theme / palette* for the full mechanism and how to add a theme.
+  **Midnight Neon**. Seven themes are user-selectable in **Settings → Theme**
+  (Plum & Cream, Midnight & Gold, Midnight Neon, Emerald, Teal, Sunset, Cobalt), plus
+  "Match device" (`'system'`, follows the OS). The topbar button (🌙 / ☀️) is a quick
+  light↔dark flip between the light + dark defaults — it's **hidden while Midnight Neon
+  is active** (a committed look; switch via Settings). After any theming change, sanity-check the
+  **light** plum/cream theme especially — it's the fallback baseline and must stay
+  unchanged. Light themes live in `css/base.css` (`:root`) + `css/themes.css`; the two
+  dark themes live in `css/dark.css` (Midnight & Gold) and `css/neon.css` (Midnight
+  Neon). Default lever: `preferences.theme` **and** the boot script in `index.html`
+  (which sets `data-theme` before first paint to avoid a flash). See §7 → *Theme /
+  palette* for the full mechanism and how to add a theme.
 
 When you change an app-shell file, bump `CACHE` (see §6) so installed devices
 refresh.
@@ -90,14 +94,16 @@ refresh.
 
 ```
 index.html                 # entry: topbar + screen shells + script tags
-manifest.json              # PWA manifest (plum theme colour, SR icons)
+manifest.json              # PWA manifest (near-black #08070E theme colour, SR icons)
 service-worker.js          # PWA offline cache (precache + cache-first)
 css/
   base.css                 # plum/cream tokens, reset, @font-face, app shell, focus ring
   components.css           # reusable building blocks (cards, buttons, pills, piles)
   screens.css              # per-screen layout
   animations.css           # @keyframes + reduced-motion guard
-  dark.css                 # DEFAULT theme: dark-first "Midnight & Gold" (token-level override of base)
+  dark.css                 # dark theme "Midnight & Gold" (token-level override of base)
+  neon.css                 # DEFAULT theme: "Midnight Neon" — glass + magenta/cyan glow on near-black (dark)
+  themes.css               # the four alternative light palettes (Emerald, Teal, Sunset, Cobalt)
 js/
   app.js                   # controller: routing, actions, timer lifecycle, boot, SW registration
   state.js                 # gameState shape + localStorage (load/save/reset)
@@ -363,9 +369,11 @@ in-app via Settings. The per-game copy is `gameState.settings.artistHint`
 4. Add the new JS file to `PRECACHE` + bump `CACHE`.
 
 ### Theme / palette
-**Six user-selectable themes** (Phase 6). Every screen renders through the palette
-tokens, so **a theme is just one `[data-theme="…"]` token block** — no component
-edits. Where each lives:
+**Seven user-selectable themes** (Phase 6, plus Midnight Neon). Every screen renders
+through the palette tokens, so **a light theme is just one `[data-theme="…"]` token
+block** — no component edits; a *dark* theme additionally overrides the `--color-*`
+aliases and a few baked-in surfaces (see Midnight & Gold / Midnight Neon below).
+Where each lives:
 
 - **Plum & Cream** (light) — the baseline in `css/base.css` `:root`: `--plum`,
   `--plum-deep`, `--plum-soft`, `--cream`, `--cream-deep`, `--ink`, `--muted`,
@@ -385,6 +393,13 @@ plum (secondary)#8F72AB     raised surface     #2C2540
 cream text      #F1EADD     muted text         #9B9086
 ```
 
+- **Midnight Neon** (dark) — `css/neon.css` under `[data-theme="neon"]`, following
+  the same fuller-override recipe as `dark.css` but with a **glass + glow** signature:
+  a warm near-black ground (`#08070E`) with an ambient magenta/cyan radial-gradient on
+  `body`, frosted translucent cards (`backdrop-filter: blur`, with an `@supports not`
+  opaque fallback), a magenta→purple gradient on primary actions, cyan glass on
+  secondary/skip, and a neon `text-shadow` on the display type. Magenta `#FF2BD6`
+  primary, purple `#8A2BE2`, cyan `#3AA0FF` / `#7EC5FF`, text `#EAF0FF`.
 - **Emerald, Teal, Sunset, Cobalt** (light alternatives) — `css/themes.css`, one
   `[data-theme="…"]` block each. A *light* theme only needs the nine palette
   tokens + `--plum-rgb`/`--gold-rgb`/`--plum-lift` + a `background-color:
@@ -393,25 +408,30 @@ cream text      #F1EADD     muted text         #9B9086
 
 **How the switcher resolves.** `preferences.theme` is either `'system'` or a theme
 id. `js/theme.js` holds the `THEMES` registry (id, display name, `kind` light/dark,
-and picker `swatch` colours); `resolved()` maps `'system'` → `light`/`dark` from the
-OS and otherwise returns the id; `apply()` sets `data-theme` on `<html>` and syncs
+and picker `swatch` colours) and the light/dark defaults `SYSTEM_LIGHT` (`light`) /
+`SYSTEM_DARK` (**`neon`**); `resolved()` maps `'system'` → those from the OS and
+otherwise returns the id; `apply()` sets `data-theme` on `<html>` and syncs
 `<meta name="theme-color">` from the active `--cream-deep`. The **Settings** picker
 (`js/screens/settings.js`) is a grid of `theme.THEMES` swatches + a "Match device"
 tile; tapping calls `theme.setTheme()` (persist + apply instantly). The **topbar
-button** is a quick light↔dark flip between the two defaults; specific palettes are
-chosen in Settings.
+button** is a quick light↔dark flip between the two defaults — but it's **hidden**
+whenever `theme.toggleLocked()` is true (themes in the `LOCK_TOGGLE` set, currently
+`neon`), so a committed look isn't flipped away by it; specific palettes are chosen
+in Settings.
 
-**Adding a theme:** add a `[data-theme="id"]` block to `css/themes.css` (light) or
-follow the `dark.css` recipe (dark), then add an entry to `THEMES` in `js/theme.js`
-(with `swatch`) **and** to the `KNOWN` id map in the boot script in `index.html`.
-`themes.css` is already in `PRECACHE` — bump `CACHE` on any change.
+**Adding a theme:** add a `[data-theme="id"]` block to `css/themes.css` (light), or a
+new stylesheet following the `dark.css` / `neon.css` recipe (dark), then add an entry
+to `THEMES` in `js/theme.js` (with `swatch`) **and** to the `KNOWN` id map in the boot
+script in `index.html`. If it's a new stylesheet, add the `<link>` in `index.html` and
+the file to `PRECACHE`. Bump `CACHE` on any change.
 
-**Changing the default theme:** three places must agree — `preferences.theme`
-(the JS default), the `t = p.theme || 'dark'` fallback in the boot script in
-`index.html` (the pre-paint default), and the topbar button's static label/emoji
-in `index.html`. **PWA colours** for the dark identity: `manifest.json`
-`background_color`/`theme_color` are midnight `#14111C`; `<meta name="theme-color">`
-starts at `#14111C` but is then set dynamically per active theme by `theme.js`. The
+**Changing the default theme:** four places must agree — `preferences.theme`
+(the JS default, currently `'neon'`), `SYSTEM_DARK` in `js/theme.js`, and the
+`t = p.theme || 'neon'` fallback **plus** the `'system'`→dark branch in the boot
+script in `index.html` (the pre-paint default). **PWA colours** for the dark identity:
+`manifest.json` `background_color`/`theme_color` are near-black `#08070E` (the neon
+ground); `<meta name="theme-color">` starts at `#08070E` but is then set dynamically
+per active theme by `theme.js`. The
 installed app icon (`assets/icons/icon-*.png`) is a single static gold "SR" on
 midnight — a PWA home-screen icon can't follow the in-app theme (platform limit).
 **Golden rule:** recolour via tokens; never edit the light plum/cream palette in the

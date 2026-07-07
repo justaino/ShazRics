@@ -15,7 +15,7 @@ export const preferences = {
   // Global toggles.
   soundEnabled: true,
   hapticsEnabled: true,
-  theme: 'dark', // 'system' | 'light' | 'dark' — dark-first (Midnight & Gold)
+  theme: 'neon', // 'system' | a theme id — dark-first, default Midnight Neon
 };
 
 export function loadPrefs() {

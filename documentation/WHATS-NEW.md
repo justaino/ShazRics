@@ -45,18 +45,24 @@ There's a **How to play** screen inside the app too (button on the home screen).
   default in **Settings**) to show the artist on the card *before* you reveal —
   handy for younger or mixed groups. The song title still stays hidden until the
   reveal.
-- **A new look: Midnight & Gold** — ShazRics now opens in a warm, dark
-  "Midnight & Gold" theme: deep plum-black cards, gold buttons and timer, and a
-  gold crown for the winner. Prefer the original cream-and-plum look? Tap the
-  ☀️ button in the top bar any time to switch to the light theme — your choice is
-  remembered.
-- **Pick your palette 🎨** — new in **Settings → Theme**. Choose from **six**
-  looks: **Midnight & Gold** (the dark default), **Plum & Cream** (the original
-  light look), and four fresh light palettes — **Emerald & Cream**, **Teal & Sand**,
-  **Sunset Terracotta**, and **Cobalt & Cream**. Tap a swatch and the whole app
-  recolours instantly; your pick is remembered. There's also a **Match device**
-  option that follows your phone's light/dark setting automatically. (The ☀️/🌙
-  top-bar button is still there as a quick light↔dark flip.)
+- **A dark look: Midnight & Gold** — a warm, dark theme: deep plum-black cards,
+  gold buttons and timer, and a gold crown for the winner. It's one of the
+  selectable themes (see below); pick it, or the original cream-and-plum light
+  look, in **Settings → Theme** — your choice is remembered.
+- **New default look: Midnight Neon 🌆** — ShazRics now opens in a 2am
+  Afrobeats-rooftop club look: a warm near-black background lit by a
+  magenta-and-cyan glow, frosted-glass cards that float over it, and the big
+  lyric and title text lit up in neon. It's a committed style, so while it's on,
+  the top-bar ☀️/🌙 button is tucked away — switch looks any time in **Settings →
+  Theme**.
+- **Pick your palette 🎨** — in **Settings → Theme**, choose from **seven**
+  looks: **Midnight Neon** (the new default), **Midnight & Gold** (the earlier
+  dark look), **Plum & Cream** (the original light look), and four light
+  palettes — **Emerald & Cream**, **Teal & Sand**, **Sunset Terracotta**, and
+  **Cobalt & Cream**. Tap a swatch and the whole app recolours instantly; your
+  pick is remembered. There's also a **Match device** option that follows your
+  phone's light/dark setting automatically. (The ☀️/🌙 top-bar button is a quick
+  light↔dark flip for the themes that use it.)
 
 After a turn, on the summary screen (with **Free** skips) you can tap any card to
 flip it between **won** and **skipped** if someone mis-tapped — the score updates

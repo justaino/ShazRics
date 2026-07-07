@@ -1,0 +1,226 @@
+/* neon.css — the "Midnight Neon" theme: a 2am Afrobeats-rooftop club look.
+   A committed-dark palette like Midnight & Gold, but its signature is glass +
+   glow: a warm near-black ground with an ambient magenta/cyan gradient, frosted
+   translucent cards floating over it, and neon text-shadow on the big display
+   type. Activated by data-theme="neon" on <html>.
+
+   Structure mirrors dark.css: first re-set the palette TOKENS under
+   [data-theme="neon"] so the whole app recolours through the same variables;
+   then targeted overrides for the surfaces where glass/glow is baked in (cards,
+   buttons, timer, tags, piles, forms). The light plum/cream design in the other
+   stylesheets is never touched.
+
+   Backdrop-filter fallback: an @supports block at the end swaps the translucent
+   card fills for more opaque ones where the browser can't blur, so text stays
+   legible. No pulsing/animated glow is added here (glows are static), so no
+   prefers-reduced-motion gating is needed beyond what already ships. */
+
+[data-theme="neon"] {
+  /* Neon accent helpers (used by the overrides below for readability). */
+  --neon-magenta:   #FF2BD6;
+  --neon-purple:    #8A2BE2;
+  --neon-cyan:      #3AA0FF;
+  --neon-cyan-lite: #7EC5FF;
+  --neon-glass:     rgba(255,255,255,0.05);
+  --neon-line:      rgba(255,255,255,0.14);
+  /* The signature neon glow on big display text (magenta + purple halo). */
+  --neon-glow-text: 0 0 10px rgba(255,43,214,0.9), 0 0 26px rgba(138,43,226,0.7);
+  --neon-grad:      linear-gradient(90deg, #FF2BD6, #8A2BE2);
+
+  /* Base palette, retinted to Midnight Neon. */
+  --plum:        #FF2BD6;   /* neon magenta — primary accent */
+  --plum-deep:   #8A2BE2;   /* neon purple — gradient partner */
+  --plum-soft:   rgba(255,43,214,0.14);
+  --cream:       #171226;   /* solid dark surface fallback (cards go glass below) */
+  --cream-deep:  #08070E;   /* page background (drives meta theme-color) */
+  --ink:         #EAF0FF;   /* primary text */
+  --muted:       #9AA3C4;   /* muted/secondary text */
+  --gold:        #FF2BD6;   /* winner accent → neon magenta (no warm gold here) */
+  --mauve:       #7EC5FF;   /* secondary accent → neon cyan tint */
+
+  /* RGB channels for the tokenised rgba() tints (texture, confetti, timer track,
+     mini-cards) so they read as neon magenta / purple rather than the plums. */
+  --plum-rgb:    255,43,214;
+  --gold-rgb:    138,43,226;
+  --plum-lift:   #8A2BE2;   /* word-card is fully overridden below; kept in sync */
+
+  /* Legacy aliases — primary → magenta, text → near-white so every
+     var(--color-*) consumer recolours without per-component edits. */
+  --color-primary:  #FF2BD6;
+  --color-gold:     #FF2BD6;   /* winner glow */
+  --color-charcoal: #EAF0FF;   /* was near-black; now the light text colour */
+  --color-surface:  #171226;
+  --color-coral:    #FF5C8A;   /* urgency: hot neon pink (reads on near-black) */
+  /* --color-white (#FFFFFF) carries over — text on the gradient buttons. */
+}
+
+/* Near-black ground on the root (covers the mobile overscroll gap too); the
+   ambient neon gradient goes on the body so it shows through the app-shell
+   padding and the translucent glass cards floating over it. */
+html[data-theme="neon"] { background-color: #08070E; }
+[data-theme="neon"] body {
+  color: var(--ink);
+  background:
+    radial-gradient(1100px 640px at 82% -6%, rgba(255,43,214,0.20), transparent 60%),
+    radial-gradient(1000px 620px at -6% 108%, rgba(58,160,255,0.20), transparent 55%),
+    radial-gradient(700px 500px at 50% 40%, rgba(138,43,226,0.10), transparent 60%),
+    #08070E;
+  background-attachment: fixed;
+}
+
+/* Topbar — glass. */
+[data-theme="neon"] .topbar { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); box-shadow: 0 8px 22px rgba(0,0,0,0.5); }
+[data-theme="neon"] .step-pill { color: rgba(234,240,255,0.66); }
+[data-theme="neon"] .mute-btn,
+[data-theme="neon"] .theme-btn { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.16); }
+
+/* Brand mark: magenta→purple gradient tile with white initials + glow (both the
+   topbar pill and the Home hero mark). */
+[data-theme="neon"] .brand-pill__mark,
+[data-theme="neon"] .brand-mark { background: var(--neon-grad); color: #fff; box-shadow: 0 0 20px rgba(255,43,214,0.6); }
+
+/* Cards / surfaces — the frosted glass floating over the glow. */
+[data-theme="neon"] .card {
+  background: var(--neon-glass);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-color: rgba(255,255,255,0.12);
+  box-shadow: 0 0 60px rgba(138,43,226,0.18), inset 0 0 40px rgba(255,43,214,0.04);
+}
+[data-theme="neon"] .texture { opacity: 0.10; }
+
+/* Muted / body-copy text. */
+[data-theme="neon"] .screen__copy,
+[data-theme="neon"] .deck-count,
+[data-theme="neon"] .modal__copy { color: rgba(234,240,255,0.72); }
+[data-theme="neon"] .howto-list { color: rgba(234,240,255,0.82); }
+[data-theme="neon"] .mini-card__meta { color: rgba(234,240,255,0.6); }
+[data-theme="neon"] .mini-card__hint,
+[data-theme="neon"] .expanded-panel__hint { color: rgba(234,240,255,0.62); }
+[data-theme="neon"] .setting-row > span { color: var(--ink); }
+
+/* Big display type carries the neon glow — the signature of the theme. */
+[data-theme="neon"] .screen__title,
+[data-theme="neon"] .turn-card__title { color: #fff; text-shadow: var(--neon-glow-text); }
+
+/* Eyebrow + inline code accents — cyan on near-black glass. */
+[data-theme="neon"] .screen__eyebrow { background: rgba(58,160,255,0.16); color: var(--neon-cyan-lite); }
+[data-theme="neon"] .screen__copy code { background: rgba(58,160,255,0.12); color: var(--neon-cyan-lite); }
+
+/* Buttons. Primary/accent = the glowing magenta→purple gradient with white text
+   (the purple end carries contrast). Secondary/ghost = cyan glass. */
+[data-theme="neon"] .btn--primary,
+[data-theme="neon"] .btn--accent { background: var(--neon-grad); color: #fff; box-shadow: 0 0 20px rgba(255,43,214,0.5); }
+[data-theme="neon"] .btn--secondary { background: rgba(255,255,255,0.06); color: var(--neon-cyan-lite); border: 1px solid rgba(58,160,255,0.4); }
+[data-theme="neon"] .btn--ghost { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.16); color: var(--ink); }
+[data-theme="neon"] .btn--dark { background: rgba(255,255,255,0.16); color: #fff; }
+[data-theme="neon"] .ghost-link { color: rgba(234,240,255,0.72); }
+[data-theme="neon"] .start-btn { background: var(--neon-grad); color: #fff; box-shadow: 0 0 24px rgba(255,43,214,0.5); }
+[data-theme="neon"] .chip { background: rgba(255,255,255,0.06); color: var(--neon-cyan-lite); border: 1px solid rgba(58,160,255,0.4); }
+
+/* Play — timer ring (magenta arc + glow, glass core with a glowing count), the
+   signature glass play card, and the scoring actions. */
+[data-theme="neon"] .timer { box-shadow: inset 0 0 0 10px rgba(20,15,32,0.92), 0 0 22px rgba(255,43,214,0.45); }
+/* Solid dark inner disc so the count stays readable inside the bright magenta
+   ring (a translucent inner let the ring show through behind magenta digits). */
+[data-theme="neon"] .timer__inner { background: rgba(18,13,30,0.94); border-color: rgba(255,255,255,0.14); color: #fff; text-shadow: 0 0 6px rgba(255,43,214,0.5); }
+[data-theme="neon"] .score-pill { background: rgba(255,43,214,0.16); color: var(--neon-magenta); }
+[data-theme="neon"] .peek-card { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.10); box-shadow: 0 10px 28px rgba(0,0,0,0.5); }
+
+/* The play card: frosted glass with a purple glow; the lyric gets the neon
+   text-shadow, and the answer/credit/hint read in cyan. */
+[data-theme="neon"] .word-card {
+  background: rgba(32,23,54,0.62);   /* more opaque frosted glass — the glow reads
+                                        through it without washing the card out */
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: 0 0 50px rgba(138,43,226,0.25), inset 0 0 30px rgba(255,43,214,0.06);
+  color: var(--ink);
+}
+/* The lyric on the card gets a soft, restrained glow (not the full neon of the
+   big screen titles) so it stays comfortable to read up close. */
+[data-theme="neon"] .word-card__word { color: #fff; text-shadow: 0 0 6px rgba(255,43,214,0.35); }
+[data-theme="neon"] .word-card__answer { border-top-color: rgba(255,255,255,0.18); }
+[data-theme="neon"] .word-card__answer-text { color: #fff; text-shadow: 0 0 5px rgba(255,43,214,0.3); }
+[data-theme="neon"] .word-card__answer-label,
+[data-theme="neon"] .word-card__credit,
+[data-theme="neon"] .word-card__hint-label { color: var(--neon-cyan-lite); opacity: 1; }
+[data-theme="neon"] .tag { background: rgba(58,160,255,0.16); color: var(--neon-cyan-lite); border: 1px solid rgba(58,160,255,0.4); }
+
+/* Got it = the glowing gradient; Reveal = magenta glass; Skip = cyan glass. */
+[data-theme="neon"] .action-btn--success { background: var(--neon-grad); color: #fff; box-shadow: 0 0 20px rgba(255,43,214,0.5); }
+[data-theme="neon"] .action-btn--reveal { background: rgba(255,43,214,0.10); color: var(--neon-magenta); border: 1px solid rgba(255,43,214,0.5); }
+[data-theme="neon"] .action-btn--skip { background: rgba(255,255,255,0.06); color: var(--neon-cyan-lite); border: 1px solid rgba(58,160,255,0.4); }
+
+/* Turn summary */
+[data-theme="neon"] .mini-card { background: linear-gradient(145deg, rgba(138,43,226,0.30) 0%, rgba(138,43,226,0.12) 100%); color: var(--ink); }
+[data-theme="neon"] .mini-card--faded { background: rgba(255,255,255,0.06); }
+[data-theme="neon"] .team-chip { background: rgba(255,255,255,0.08); color: var(--ink); }
+[data-theme="neon"] .team-chip--active { background: rgba(255,43,214,0.18); color: var(--neon-magenta); }
+
+/* Scoreboard — per-team pile cards on a translucent violet glass base; the "+N"
+   overflow chip is the glowing magenta→purple gradient. */
+[data-theme="neon"] .team-column { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.10); }
+[data-theme="neon"] .team-column.is-expanded { background: rgba(255,43,214,0.10); border-color: rgba(255,43,214,0.30); }
+[data-theme="neon"] .team-column__score { background: rgba(255,255,255,0.10); }
+[data-theme="neon"] .pile-card {
+  background: rgba(120,90,180,0.30);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: var(--ink);
+  border-color: rgba(255,255,255,0.14);
+  box-shadow: 0 3px 12px rgba(0,0,0,0.45);
+}
+[data-theme="neon"] .pile-empty { color: rgba(234,240,255,0.4); }
+[data-theme="neon"] .pile-more { background: var(--neon-grad); color: #fff; box-shadow: 0 0 14px rgba(255,43,214,0.5); }
+[data-theme="neon"] .expanded-panel { background: rgba(255,255,255,0.05); }
+[data-theme="neon"] .expanded-panel__item { border-color: rgba(255,255,255,0.10); }
+
+/* Reveal — neon title, magenta winner glow, glass runners-up. */
+[data-theme="neon"] .reveal-card__title { color: #fff; text-shadow: var(--neon-glow-text); }
+[data-theme="neon"] .reveal-card__eyebrow { background: rgba(255,43,214,0.18); color: var(--neon-magenta); }
+[data-theme="neon"] .podium__team { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.10); }
+[data-theme="neon"] .podium__team--winner { background: linear-gradient(90deg, rgba(255,43,214,0.30) 0%, rgba(138,43,226,0.10) 100%); border-color: rgba(255,43,214,0.5); box-shadow: 0 0 30px rgba(255,43,214,0.28); }
+[data-theme="neon"] .podium__team--winner .podium__pill { background: var(--neon-grad); color: #fff; }
+[data-theme="neon"] .podium__pill { background: rgba(255,255,255,0.08); color: var(--ink); }
+[data-theme="neon"] .score-list__row { border-color: rgba(255,255,255,0.10); }
+
+/* Modal — a solid dark surface (not glass) so it stays legible over the dim
+   overlay. */
+[data-theme="neon"] .modal { background: #14101F; color: var(--ink); border-color: rgba(255,255,255,0.10); }
+
+/* Form controls — glass fills; cyan border/magenta active state. */
+[data-theme="neon"] .team-row input,
+[data-theme="neon"] .stepper input,
+[data-theme="neon"] .bank-select,
+[data-theme="neon"] .field { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.16); color: var(--ink); }
+[data-theme="neon"] .icon-btn { background: rgba(255,255,255,0.10); color: var(--ink); }
+[data-theme="neon"] .stepper button { background: var(--neon-grad); color: #fff; }
+[data-theme="neon"] .swatch { border-color: rgba(255,255,255,0.25); }
+[data-theme="neon"] .segmented button { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.14); color: var(--ink); }
+[data-theme="neon"] .segmented button.active { background: rgba(255,43,214,0.20); border-color: var(--neon-magenta); color: #fff; }
+
+/* Lyric-bank preview (custom-bank editor) */
+[data-theme="neon"] .lyric-preview { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.12); }
+[data-theme="neon"] .lyric-preview__prompt,
+[data-theme="neon"] .lyric-preview__answer-text { color: var(--ink); }
+[data-theme="neon"] .lyric-preview__answer { border-top-color: rgba(255,255,255,0.14); }
+[data-theme="neon"] .lyric-preview__answer-label { color: var(--neon-magenta); }
+[data-theme="neon"] .lyric-preview__credit { color: var(--neon-cyan-lite); }
+
+/* Word-bank browser (hidden dev screen) */
+[data-theme="neon"] .bank-group { border-color: rgba(255,255,255,0.12); }
+[data-theme="neon"] .bank-group__count { color: rgba(234,240,255,0.55); }
+[data-theme="neon"] .bank-card { border-color: rgba(255,255,255,0.10); }
+[data-theme="neon"] .bank-card__hint { color: rgba(234,240,255,0.62); }
+[data-theme="neon"] .bank-card__meta { color: rgba(234,240,255,0.45); }
+
+/* Backdrop-filter fallback: where the browser can't blur, make the frosted
+   surfaces more opaque (over the near-black ground) so text stays legible. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  [data-theme="neon"] .card,
+  [data-theme="neon"] .word-card { background: rgba(30,20,45,0.82); }
+  [data-theme="neon"] .pile-card { background: rgba(70,50,110,0.85); }
+  [data-theme="neon"] .topbar { background: rgba(20,16,31,0.88); }
+}

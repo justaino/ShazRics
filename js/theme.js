@@ -16,15 +16,24 @@ const mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)')
 export const THEMES = [
   { id: 'light',   name: 'Plum & Cream',      kind: 'light', swatch: { bg: '#F0E8DC', plum: '#6D4C7D', gold: '#C6A15B', ink: '#2C2430' } },
   { id: 'dark',    name: 'Midnight & Gold',   kind: 'dark',  swatch: { bg: '#221C31', plum: '#8F72AB', gold: '#C9A24E', ink: '#F1EADD' } },
+  { id: 'neon',    name: 'Midnight Neon',     kind: 'dark',  swatch: { bg: '#0E0B1A', plum: '#FF2BD6', gold: '#3AA0FF', ink: '#EAF0FF' } },
   { id: 'emerald', name: 'Emerald & Cream',   kind: 'light', swatch: { bg: '#EEE8DA', plum: '#2E6B4E', gold: '#C6A15B', ink: '#1E2A24' } },
   { id: 'teal',    name: 'Teal & Sand',       kind: 'light', swatch: { bg: '#EFE7D7', plum: '#1E7A8C', gold: '#E0A34F', ink: '#1D2A2E' } },
   { id: 'sunset',  name: 'Sunset Terracotta', kind: 'light', swatch: { bg: '#F2E7D8', plum: '#C05A38', gold: '#E3A93C', ink: '#2E201A' } },
   { id: 'cobalt',  name: 'Cobalt & Cream',    kind: 'light', swatch: { bg: '#EDE7D9', plum: '#34558B', gold: '#D2A24C', ink: '#1E2733' } },
 ];
 
-// 'system' maps to these light/dark defaults (mirrors Phase 5's behaviour).
+// 'system' maps to these light/dark defaults. Midnight Neon is the app default,
+// so the dark side (and an unset preference) resolves to it.
 const SYSTEM_LIGHT = 'light';
-const SYSTEM_DARK = 'dark';
+const SYSTEM_DARK = 'neon';
+
+// Themes whose committed look shouldn't be flipped by the quick topbar light/dark
+// toggle — the topbar button is hidden while one is active (switch via Settings).
+const LOCK_TOGGLE = new Set(['neon']);
+export function toggleLocked() {
+  return LOCK_TOGGLE.has(resolved());
+}
 
 function isKnownId(id) {
   return THEMES.some((t) => t.id === id);

@@ -7,14 +7,14 @@
 //
 // IMPORTANT: bump CACHE on every deploy that changes files, so installed
 // devices pick up the new version (the old cache is cleaned on activate).
-const CACHE = 'shazrics-v12';
+const CACHE = 'shazrics-v14';
 
 const PRECACHE = [
   './',
   'index.html',
   'manifest.json',
   // styles
-  'css/base.css', 'css/components.css', 'css/screens.css', 'css/animations.css', 'css/dark.css', 'css/themes.css',
+  'css/base.css', 'css/components.css', 'css/screens.css', 'css/animations.css', 'css/dark.css', 'css/neon.css', 'css/themes.css',
   // app modules
   'js/app.js', 'js/state.js', 'js/preferences.js', 'js/game.js', 'js/deck.js',
   'js/timer.js', 'js/sound.js', 'js/haptics.js', 'js/anim.js', 'js/banks.js',

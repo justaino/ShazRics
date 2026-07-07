@@ -18,7 +18,8 @@ Artifact from the design session — <https://claude.ai/code/artifact/41bf3321-5
 | Theme | Kind | Wired up? | Where |
 |---|---|---|---|
 | **Plum & Cream** | light | ✅ live | `css/base.css` `:root` (the light baseline) |
-| **Midnight & Gold** | dark | ✅ live — **current default** | `css/dark.css` (`[data-theme="dark"]`) |
+| **Midnight & Gold** | dark | ✅ live | `css/dark.css` (`[data-theme="dark"]`) |
+| **Midnight Neon** | dark | ✅ live — **current default** | `css/neon.css` (`[data-theme="neon"]`) |
 | Emerald & Cream | light | designed, not wired | this file |
 | Teal & Sand | light | designed, not wired | this file |
 | Sunset Terracotta | light | designed, not wired | this file |
@@ -93,6 +94,28 @@ gold (winner)    #E0BE6A     card surface       #221C31
 gold (deep)      #8A6C33     raised surface     #2C2540
 plum (secondary) #8F72AB     cream text         #F1EADD     muted #9B9086
 ```
+
+## Midnight Neon (live dark theme) — resolved values
+
+Implemented in `css/neon.css`. A "2am Afrobeats rooftop" look: its signature is
+**glass + glow**, not just a palette swap, so like `dark.css` it overrides the
+`--color-*` aliases and several baked-in surfaces (cards → frosted glass, buttons
+→ gradient/glass, display type → neon `text-shadow`). Listed here for reference.
+
+```
+magenta (primary) #FF2BD6     ground (near-black) #08070E
+purple (partner)  #8A2BE2     glass fill          rgba(255,255,255,0.05)
+cyan (secondary)  #3AA0FF     glass border        rgba(255,255,255,0.12–0.14)
+cyan text tint    #7EC5FF     text                #EAF0FF     muted #9AA3C4
+```
+
+Key treatments (from the design reference): ambient background on `body` =
+`radial-gradient(...rgba(255,43,214,0.20)...) , radial-gradient(...rgba(58,160,255,0.20)...) , #08070E`;
+glass card = `backdrop-filter: blur(10–12px)` + faint white border +
+`box-shadow: 0 0 50px rgba(138,43,226,0.25)`; neon word =
+`text-shadow: 0 0 10px rgba(255,43,214,0.9), 0 0 26px rgba(138,43,226,0.7)`;
+primary button = `linear-gradient(90deg,#FF2BD6,#8A2BE2)` + magenta glow. A
+`@supports not (backdrop-filter)` block swaps the frosted fills for opaque ones.
 
 ## How a new session implements Phase 6 from this file
 

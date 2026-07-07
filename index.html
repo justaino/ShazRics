@@ -6,28 +6,28 @@
     <title>ShazRics — Nigerian lyrics party game</title>
 
     <!-- Apply the saved theme before first paint (no flash). preferences.theme is
-         either 'system' (follow the OS: light=Plum & Cream, dark=Midnight & Gold)
-         or an explicit theme id. Midnight & Gold is dark-first, so an unset
-         preference defaults to 'dark'. Keep the id list in sync with theme.js. -->
+         either 'system' (follow the OS: light=Plum & Cream, dark=Midnight Neon)
+         or an explicit theme id. Midnight Neon is the dark-first default, so an
+         unset preference defaults to 'neon'. Keep the id list in sync with theme.js. -->
     <script>
       (function () {
-        var KNOWN = { light: 1, dark: 1, emerald: 1, teal: 1, sunset: 1, cobalt: 1 };
+        var KNOWN = { light: 1, dark: 1, neon: 1, emerald: 1, teal: 1, sunset: 1, cobalt: 1 };
         try {
           var p = JSON.parse(localStorage.getItem('shazrics:prefs') || '{}');
-          var t = p.theme || 'dark';
+          var t = p.theme || 'neon';
           var resolved;
           if (t === 'system') {
-            resolved = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            resolved = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'neon' : 'light';
           } else {
-            resolved = KNOWN[t] ? t : 'dark';
+            resolved = KNOWN[t] ? t : 'neon';
           }
           document.documentElement.setAttribute('data-theme', resolved);
-        } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+        } catch (e) { document.documentElement.setAttribute('data-theme', 'neon'); }
       })();
     </script>
 
     <!-- PWA: installable + offline (Anton font is self-hosted via @font-face in base.css) -->
-    <meta name="theme-color" content="#14111C" />
+    <meta name="theme-color" content="#08070E" />
     <meta name="description" content="A Nigerian song-lyrics party game." />
     <link rel="manifest" href="manifest.json" />
     <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
@@ -41,6 +41,7 @@
     <link rel="stylesheet" href="css/screens.css" />
     <link rel="stylesheet" href="css/animations.css" />
     <link rel="stylesheet" href="css/dark.css" />
+    <link rel="stylesheet" href="css/neon.css" />
     <link rel="stylesheet" href="css/themes.css" />
   </head>
   <body>
